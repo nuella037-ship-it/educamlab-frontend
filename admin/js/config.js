@@ -1,7 +1,7 @@
 // admin/js/config.js - Admin Configuration
 window.ENV = {
     API_URL: 'https://educamlab-api.onrender.com/api/v1',
-    APP_URL: 'https://educamlab-frontend.onrender.com',
+    ADMIN_URL: 'https://educamlab-frontend.onrender.com/admin',
     APP_NAME: 'EduCamLab',
     APP_VERSION: '2.0.0'
 };
