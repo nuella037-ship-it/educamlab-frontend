@@ -1,7 +1,7 @@
 // public/js/config.js - Frontend Configuration
 window.ENV = {
-    API_URL: 'https://educamlab-api.onrender.com/api/v1',  // ← YOUR LIVE API
-    APP_URL: 'https://educamlab.page.gd',
+    API_URL: 'https://educamlab-api.onrender.com/api/v1',
+    APP_URL: 'https://educamlab-frontend.onrender.com',
     APP_NAME: 'EduCamLab',
     APP_VERSION: '2.0.0'
 };
