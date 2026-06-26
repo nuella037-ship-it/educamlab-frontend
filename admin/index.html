@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - EduCamLab</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <span class="brand-icon">📚</span>
+                <span class="brand-text">EduCamLab</span>
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="index.html" class="active">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                    <span class="nav-badge">Live</span>
+                </a>
+                <a href="users.html">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                    <span class="nav-badge" id="userCount">0</span>
+                </a>
+                <a href="courses.html">
+                    <i class="fas fa-book"></i>
+                    <span>Courses</span>
+                    <span class="nav-badge" id="courseCount">0</span>
+                </a>
+                <a href="messages.html">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                    <span class="nav-badge badge-danger" id="messageCount">0</span>
+                </a>
+                <a href="payments.html">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                    <span class="nav-badge badge-danger" id="pendingCount">0</span>
+                </a>
+                <a href="activity.html">
+                    <i class="fas fa-history"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="data-import.html">
+                    <i class="fas fa-database"></i>
+                    <span>Data Manager</span>
+                </a>
+                <a href="settings.html">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="bulk-email.html">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Broadcast</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar-small" id="adminAvatar">A</div>
+                    <div class="user-details">
+                        <span class="user-name" id="adminName">Admin</span>
+                        <span class="user-role">Administrator</span>
+                    </div>
+                </div>
+                <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div>
+                        <h1>Dashboard</h1>
+                        <span class="subtitle">
+                            <i class="fas fa-clock"></i>
+                            <span id="currentDateTime"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="header-search" style="position: relative;">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="globalSearch" placeholder="Search users, courses... (Ctrl+K)" oninput="globalSearch(this.value)">
+                            <div class="search-results" id="searchResults" style="position: absolute; top: calc(100% + 8px); left: 0; right: 0; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-lg); z-index: 1000; max-height: 400px; overflow-y: auto; display: none;"></div>
+                        </div>
+                    </div>
+                    
+                    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    
+                    <div style="position: relative;">
+                        <button onclick="toggleNotifications()" style="position: relative; width: 36px; height: 36px; border-radius: var(--border-radius-sm); border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-secondary); cursor: pointer; transition: all var(--transition);">
+                            <i class="fas fa-bell"></i>
+                            <span id="notificationBadge" style="display:none; position: absolute; top: -4px; right: -4px; background: var(--danger); color: white; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 10px; min-width: 18px; text-align: center;">0</span>
+                        </button>
+                        <div id="notificationsDropdown" style="display:none; position: absolute; right: 0; top: calc(100% + 8px); width: 360px; max-height: 400px; overflow-y: auto; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-lg); z-index: 1000;">
+                            <div style="padding: 12px 16px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                                <h4 style="margin: 0; font-size: 14px;"><i class="fas fa-bell"></i> Notifications</h4>
+                                <button onclick="markAllRead()" style="background: none; border: none; color: var(--primary); cursor: pointer; font-size: 12px; font-weight: 600;">Mark all read</button>
+                            </div>
+                            <div id="notificationsList" style="padding: 8px 0;">
+                                <div style="text-align: center; padding: 30px 16px; color: var(--text-muted);">
+                                    <i class="fas fa-check-circle" style="font-size: 32px; display: block; margin-bottom: 8px;"></i>
+                                    <p>All caught up!</p>
+                                </div>
+                            </div>
+                            <div style="padding: 12px 16px; border-top: 1px solid var(--border-color); text-align: center;">
+                                <a href="messages.html" style="color: var(--primary); text-decoration: none; font-size: 13px; font-weight: 600;">View all notifications</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 4px;">
+                        <button onclick="showQuickAction('user')" title="Add User" style="width: 36px; height: 36px; border-radius: var(--border-radius-sm); border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-secondary); cursor: pointer; transition: all var(--transition);">
+                            <i class="fas fa-user-plus"></i>
+                        </button>
+                        <button onclick="showQuickAction('payment')" title="Add Payment" style="width: 36px; height: 36px; border-radius: var(--border-radius-sm); border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-secondary); cursor: pointer; transition: all var(--transition);">
+                            <i class="fas fa-credit-card"></i>
+                        </button>
+                        <button onclick="refreshData()" title="Refresh" style="width: 36px; height: 36px; border-radius: var(--border-radius-sm); border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-secondary); cursor: pointer; transition: all var(--transition);">
+                            <i class="fas fa-sync-alt" id="refreshIcon"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Quick Stats -->
+            <section class="quick-stats">
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #dbeafe; color: #3b82f6;">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="growthRate">0%</span>
+                        <span class="quick-stat-label">Growth Rate</span>
+                    </div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #d1fae5; color: #10b981;">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="newUsers">0</span>
+                        <span class="quick-stat-label">New Users (30d)</span>
+                    </div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #fef3c7; color: #f59e0b;">
+                        <i class="fas fa-percent"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="conversionRate">0%</span>
+                        <span class="quick-stat-label">Conversion Rate</span>
+                    </div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #fce4ec; color: #ef4444;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="pendingActions">0</span>
+                        <span class="quick-stat-label">Pending Actions</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Cards -->
+            <section class="stats-grid" id="statsGrid">
+                <div class="stat-card" onclick="window.location.href='users.html'">
+                    <div class="stat-icon" style="background: #dbeafe; color: #3b82f6;">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalUsers">0</h3>
+                        <p>Total Users</p>
+                        <span class="stat-change positive" id="userChange">+0%</span>
+                    </div>
+                </div>
+                <div class="stat-card" onclick="window.location.href='courses.html'">
+                    <div class="stat-icon" style="background: #d1fae5; color: #10b981;">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalCourses">0</h3>
+                        <p>Total Courses</p>
+                        <span class="stat-change positive" id="courseChange">+0%</span>
+                    </div>
+                </div>
+                <div class="stat-card" onclick="window.location.href='payments.html'">
+                    <div class="stat-icon" style="background: #fef3c7; color: #f59e0b;">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalRevenue">0 XAF</h3>
+                        <p>Total Revenue</p>
+                        <span class="stat-change positive" id="revenueChange">+0%</span>
+                    </div>
+                </div>
+                <div class="stat-card" onclick="window.location.href='payments.html'">
+                    <div class="stat-icon" style="background: #fce4ec; color: #ef4444;">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalPins">0</h3>
+                        <p>Active PINs</p>
+                        <span class="stat-change" id="pinChange">0</span>
+                    </div>
+                </div>
+                <div class="stat-card" onclick="window.location.href='messages.html'">
+                    <div class="stat-icon" style="background: #f3e8ff; color: #8b5cf6;">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalMessages">0</h3>
+                        <p>New Messages</p>
+                        <span class="stat-change" id="messageChange">0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Server Status -->
+            <section style="background: var(--bg-card); border-radius: var(--border-radius); padding: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h3 style="font-size: 16px; font-weight: 600; margin: 0; display: flex; align-items: center; gap: 8px;"><i class="fas fa-server"></i> Server Status</h3>
+                    <span style="display: flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; background: #d1fae5; color: #065f46;">
+                        <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; display: inline-block; animation: pulse-dot 2s ease-in-out infinite;"></span> Online
+                    </span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 12px; color: var(--text-muted); min-width: 70px;">CPU Usage</span>
+                        <div style="flex: 1; height: 6px; background: var(--bg-secondary); border-radius: 3px; overflow: hidden;">
+                            <div id="cpuFill" style="height: 100%; width: 45%; background: #10b981; border-radius: 3px;"></div>
+                        </div>
+                        <span style="font-size: 12px; font-weight: 600; min-width: 40px; text-align: right;" id="cpuValue">45%</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 12px; color: var(--text-muted); min-width: 70px;">Memory</span>
+                        <div style="flex: 1; height: 6px; background: var(--bg-secondary); border-radius: 3px; overflow: hidden;">
+                            <div id="memoryFill" style="height: 100%; width: 62%; background: #f59e0b; border-radius: 3px;"></div>
+                        </div>
+                        <span style="font-size: 12px; font-weight: 600; min-width: 40px; text-align: right;" id="memoryValue">62%</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 12px; color: var(--text-muted); min-width: 70px;">Disk</span>
+                        <div style="flex: 1; height: 6px; background: var(--bg-secondary); border-radius: 3px; overflow: hidden;">
+                            <div id="diskFill" style="height: 100%; width: 78%; background: #ef4444; border-radius: 3px;"></div>
+                        </div>
+                        <span style="font-size: 12px; font-weight: 600; min-width: 40px; text-align: right;" id="diskValue">78%</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 12px; color: var(--text-muted); min-width: 70px;">Response</span>
+                        <div style="flex: 1; height: 6px; background: var(--bg-secondary); border-radius: 3px; overflow: hidden;">
+                            <div id="responseFill" style="height: 100%; width: 30%; background: #10b981; border-radius: 3px;"></div>
+                        </div>
+                        <span style="font-size: 12px; font-weight: 600; min-width: 40px; text-align: right;" id="responseValue">120ms</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts -->
+            <section class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3><i class="fas fa-chart-line"></i> Revenue Overview</h3>
+                        <div class="chart-controls">
+                            <select id="chartPeriod" onchange="updateChartPeriod()">
+                                <option value="7">Last 7 Days</option>
+                                <option value="30" selected>Last 30 Days</option>
+                                <option value="90">Last 90 Days</option>
+                            </select>
+                            <button onclick="toggleChartType()" style="padding: 4px 10px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-primary); color: var(--text-primary); cursor: pointer; font-size: 12px;" title="Toggle Chart Type">
+                                <i class="fas fa-chart-bar" id="chartTypeIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3><i class="fas fa-chart-doughnut"></i> Subscription Distribution</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="subscriptionChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="activity-section">
+                <div class="activity-header">
+                    <h3 style="font-size: 16px; font-weight: 600; margin: 0; display: flex; align-items: center; gap: 8px;"><i class="fas fa-clock"></i> Recent Activity</h3>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span class="activity-filter" style="display: flex; gap: 4px;">
+                            <button onclick="filterActivity('all')" class="active" data-filter="all" style="padding: 4px 12px; border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: 6px; cursor: pointer; font-size: 12px; color: var(--text-muted); transition: all var(--transition);">All</button>
+                            <button onclick="filterActivity('user')" data-filter="user" style="padding: 4px 12px; border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: 6px; cursor: pointer; font-size: 12px; color: var(--text-muted); transition: all var(--transition);">Users</button>
+                            <button onclick="filterActivity('payment')" data-filter="payment" style="padding: 4px 12px; border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: 6px; cursor: pointer; font-size: 12px; color: var(--text-muted); transition: all var(--transition);">Payments</button>
+                            <button onclick="filterActivity('pin')" data-filter="pin" style="padding: 4px 12px; border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: 6px; cursor: pointer; font-size: 12px; color: var(--text-muted); transition: all var(--transition);">PINs</button>
+                            <button onclick="filterActivity('admin')" data-filter="admin" style="padding: 4px 12px; border: 1px solid var(--border-color); background: var(--bg-secondary); border-radius: 6px; cursor: pointer; font-size: 12px; color: var(--text-muted); transition: all var(--transition);">Admin</button>
+                        </span>
+                        <a href="activity.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="activity-feed" id="activityFeed">
+                    <div class="activity-empty">
+                        <i class="fas fa-inbox"></i>
+                        <p>No recent activity</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Two Column Layout -->
+            <section style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <!-- Recent Users -->
+                <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-size: 16px; font-weight: 600; margin: 0; display: flex; align-items: center; gap: 8px;"><i class="fas fa-user-plus"></i> Recent Users</h3>
+                        <a href="users.html" class="view-all">View All</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentUsers">
+                                <tr>
+                                    <td colspan="4" style="text-align: center; padding: 20px; color: var(--text-muted);">
+                                        <div class="loading-spinner"></div>
+                                        Loading...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Recent Payments -->
+                <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-size: 16px; font-weight: 600; margin: 0; display: flex; align-items: center; gap: 8px;"><i class="fas fa-credit-card"></i> Recent Payments</h3>
+                        <a href="payments.html" class="view-all">View All</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Amount</th>
+                                    <th>Plan</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentPayments">
+                                <tr>
+                                    <td colspan="4" style="text-align: center; padding: 20px; color: var(--text-muted);">
+                                        <div class="loading-spinner"></div>
+                                        Loading...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Quick Action Modal -->
+    <div id="quickActionModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2 id="quickActionTitle">Quick Action</h2>
+                <button onclick="closeQuickAction()">&times;</button>
+            </div>
+            <div class="modal-body" id="quickActionBody">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

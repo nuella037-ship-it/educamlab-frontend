@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - EduCamLab</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">📚 EduCamLab</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="profile.html" class="active">Profile</a>
+                <a href="settings.html">Settings</a>
+                <a href="#" onclick="logout()" style="color: var(--danger);">Logout</a>
+            </div>
+            <button class="mobile-menu-btn" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <div style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
+        <h1 style="font-size: 28px; font-weight: 800;">👤 My Profile</h1>
+        <p style="color: var(--text-muted); margin-bottom: 24px;">Manage your account details</p>
+
+        <!-- Profile Card -->
+        <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 32px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 24px;">
+            <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 24px; flex-wrap: wrap;">
+                <div id="avatarPreview" style="width: 80px; height: 80px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700;">S</div>
+                <div>
+                    <h2 id="profileName" style="margin: 0;">Student</h2>
+                    <p id="profilePhone" style="color: var(--text-muted); margin: 0;"><i class="fas fa-phone"></i> Not set</p>
+                    <p id="profilePin" style="color: var(--primary); margin: 0; font-family: monospace; letter-spacing: 2px;"><i class="fas fa-key"></i> No PIN</p>
+                </div>
+            </div>
+
+            <form id="profileForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name <span class="required">*</span></label>
+                        <input type="text" id="firstName" placeholder="John" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name <span class="required">*</span></label>
+                        <input type="text" id="lastName" placeholder="Doe" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="phone" placeholder="677123456" disabled>
+                    <small>Phone number cannot be changed</small>
+                </div>
+                <button type="submit" class="btn btn-primary" id="updateBtn">
+                    <i class="fas fa-save"></i> Update Profile
+                </button>
+            </form>
+        </div>
+
+        <!-- Change Password -->
+        <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 32px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 24px;">
+            <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;"><i class="fas fa-key"></i> Change Password</h2>
+            <form id="passwordForm">
+                <div class="form-group">
+                    <label>Current Password <span class="required">*</span></label>
+                    <input type="password" id="currentPassword" placeholder="Enter current password" required>
+                </div>
+                <div class="form-group">
+                    <label>New Password <span class="required">*</span></label>
+                    <input type="password" id="newPassword" placeholder="Enter new password" required minlength="8">
+                    <small>Minimum 8 characters with uppercase, lowercase, and numbers</small>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password <span class="required">*</span></label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm new password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-key"></i> Change Password
+                </button>
+            </form>
+        </div>
+
+        <!-- Danger Zone -->
+        <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 32px; border: 2px solid var(--danger); box-shadow: var(--shadow);">
+            <h2 style="color: var(--danger); font-size: 18px; font-weight: 700; margin-bottom: 8px;"><i class="fas fa-exclamation-triangle"></i> Danger Zone</h2>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">Once you delete your account, there is no going back.</p>
+            <button onclick="deleteAccount()" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Delete Account
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Logout
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                API.clearToken();
+                localStorage.removeItem('userData');
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Delete Account
+        function deleteAccount() {
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                if (confirm('All your data will be permanently removed. Are you absolutely sure?')) {
+                    showToast('Account deletion request submitted. Please contact support.', 'info');
+                }
+            }
+        }
+
+        // Toast
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
+                <span>${message}</span>
+                <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100px)';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 4000);
+        }
+
+        // Load profile
+        async function loadProfile() {
+            try {
+                const result = await API.getProfile();
+                if (result.success) {
+                    const user = result.data;
+                    document.getElementById('firstName').value = user.firstname || '';
+                    document.getElementById('lastName').value = user.lastname || '';
+                    document.getElementById('phone').value = user.phone || '';
+                    document.getElementById('profileName').textContent = `${user.firstname || ''} ${user.lastname || ''}`.trim() || 'Student';
+                    document.getElementById('profilePhone').textContent = user.phone ? `<i class="fas fa-phone"></i> ${user.phone}` : 'Not set';
+                    document.getElementById('avatarPreview').textContent = (user.firstname || 'S')[0].toUpperCase();
+
+                    // Load PIN
+                    const pins = await API.getMyPins();
+                    if (pins.success) {
+                        const activePin = (pins.data || []).find(p => p.is_active);
+                        document.getElementById('profilePin').textContent = activePin ? `<i class="fas fa-key"></i> PIN: ${activePin.code}` : 'No PIN';
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading profile:', error);
+            }
+        }
+
+        // Update profile
+        document.getElementById('profileForm')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('updateBtn');
+            const original = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner"></span> Saving...';
+            btn.disabled = true;
+
+            try {
+                const result = await API.updateProfile({
+                    firstname: document.getElementById('firstName').value.trim(),
+                    lastname: document.getElementById('lastName').value.trim()
+                });
+                if (result.success) {
+                    showToast('Profile updated successfully!', 'success');
+                    loadProfile();
+                } else {
+                    showToast(result.message || 'Failed to update profile', 'error');
+                }
+            } catch (error) {
+                showToast(error.message || 'Failed to update profile', 'error');
+            } finally {
+                btn.innerHTML = original;
+                btn.disabled = false;
+            }
+        });
+
+        // Change password
+        document.getElementById('passwordForm')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const pass = document.getElementById('newPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+
+            if (pass !== confirm) {
+                showToast('Passwords do not match', 'error');
+                return;
+            }
+
+            if (pass.length < 8) {
+                showToast('Password must be at least 8 characters', 'error');
+                return;
+            }
+
+            try {
+                const result = await API.changePassword({
+                    currentPassword: document.getElementById('currentPassword').value,
+                    newPassword: pass
+                });
+                if (result.success) {
+                    showToast('Password changed successfully!', 'success');
+                    this.reset();
+                } else {
+                    showToast(result.message || 'Failed to change password', 'error');
+                }
+            } catch (error) {
+                showToast(error.message || 'Failed to change password', 'error');
+            }
+        });
+
+        // Mobile menu
+        document.getElementById('menuToggle')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+
+        // Init
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!Auth.isAuthenticated()) {
+                window.location.href = 'login.html';
+                return;
+            }
+            loadProfile();
+        });
+    </script>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

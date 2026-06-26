@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics - A Level | EduCamLab</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">📚 EduCamLab</div>
+            <div class="nav-links">
+                <a href="../../index.html">Home</a>
+                <a href="../../courses.html" class="active">Courses</a>
+                <a href="../../policy/about.html">About</a>
+                <a href="../../policy/faq.html">FAQ</a>
+                <a href="../../contact.html">Contact</a>
+                <a href="../../login.html" class="btn btn-primary">Sign In</a>
+                <a href="../../register.html" class="btn btn-secondary">Get Started</a>
+            </div>
+            <button class="mobile-menu-btn" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <div style="max-width:1200px; margin:40px auto; padding:0 20px;">
+        <div style="display:flex; gap:8px; font-size:14px; color:var(--text-muted); margin-bottom:24px; flex-wrap:wrap;">
+            <a href="../../index.html" style="color:var(--primary);">Home</a>
+            <span>/</span>
+            <a href="../../courses.html" style="color:var(--primary);">Courses</a>
+            <span>/</span>
+            <span style="font-weight:500;">A Level</span>
+            <span>/</span>
+            <span style="color:var(--text-primary); font-weight:600;">Mathematics</span>
+        </div>
+
+        <div style="display:grid; grid-template-columns:2fr 1fr; gap:40px;">
+            <div style="background:var(--bg-card); border-radius:var(--border-radius); padding:32px; border:1px solid var(--border-color); box-shadow:var(--shadow);">
+                <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+                    <span style="font-size:32px;">📐</span>
+                    <span class="badge badge-info">A Level</span>
+                    <span class="badge badge-primary">Code: A0570</span>
+                </div>
+                <h1 style="font-size:28px; font-weight:800;">Mathematics</h1>
+                <p style="color:var(--text-muted);">Advanced Mathematics A Level resources covering pure mathematics, mechanics, and statistics.</p>
+
+                <hr style="border:none; border-top:1px solid var(--border-color); margin:24px 0;">
+
+                <h3 style="font-size:18px; font-weight:700; margin-bottom:16px;">📄 Past Papers</h3>
+                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:24px;">
+                    <a href="paper-1.html" class="btn btn-secondary" style="justify-content:center;">
+                        <i class="fas fa-file-alt"></i> Paper 1
+                    </a>
+                    <a href="paper-2.html" class="btn btn-secondary" style="justify-content:center;">
+                        <i class="fas fa-file-alt"></i> Paper 2
+                    </a>
+                    <a href="paper-3.html" class="btn btn-secondary" style="justify-content:center;">
+                        <i class="fas fa-file-alt"></i> Paper 3
+                    </a>
+                </div>
+
+                <h3 style="font-size:18px; font-weight:700; margin-bottom:12px;">📅 Available Years</h3>
+                <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px;">
+                    <span class="badge" style="background:var(--bg-secondary); cursor:pointer;">2018</span>
+                    <span class="badge" style="background:var(--bg-secondary); cursor:pointer;">2019</span>
+                    <span class="badge" style="background:var(--bg-secondary); cursor:pointer;">2020</span>
+                    <span class="badge" style="background:var(--bg-secondary); cursor:pointer;">2021</span>
+                    <span class="badge" style="background:var(--bg-secondary); cursor:pointer;">2022</span>
+                    <span class="badge" style="background:var(--bg-secondary); cursor:pointer;">2023</span>
+                    <span class="badge" style="background:var(--primary); color:white; cursor:pointer;">2024</span>
+                </div>
+
+                <h3 style="font-size:18px; font-weight:700; margin-bottom:12px;">📖 Revision Pamphlet</h3>
+                <div style="background:var(--bg-secondary); border-radius:8px; padding:16px;">
+                    <p><strong>Mathematics A Level Pamphlet</strong></p>
+                    <p style="color:var(--text-muted); font-size:14px;">Advanced mathematics revision with complex problems and proofs.</p>
+                    <button class="btn btn-primary btn-sm" onclick="showToast('Downloading pamphlet...', 'info')">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                </div>
+            </div>
+
+            <div style="position:sticky; top:100px; align-self:start;">
+                <div style="background:var(--bg-card); border-radius:var(--border-radius); padding:24px; border:1px solid var(--border-color); box-shadow:var(--shadow-lg);">
+                    <h3 style="font-size:16px; font-weight:700; margin-bottom:16px;">📚 Course Details</h3>
+                    <div style="padding:10px 0; border-bottom:1px solid var(--border-color);">
+                        <span style="color:var(--text-muted);">Level</span>
+                        <span style="float:right; font-weight:600;">A Level</span>
+                    </div>
+                    <div style="padding:10px 0; border-bottom:1px solid var(--border-color);">
+                        <span style="color:var(--text-muted);">Code</span>
+                        <span style="float:right; font-weight:600;">A0570</span>
+                    </div>
+                    <div style="padding:10px 0; border-bottom:1px solid var(--border-color);">
+                        <span style="color:var(--text-muted);">Papers</span>
+                        <span style="float:right; font-weight:600;">3</span>
+                    </div>
+                    <div style="padding:10px 0;">
+                        <span style="color:var(--text-muted);">Students</span>
+                        <span style="float:right; font-weight:600;">2,345</span>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" onclick="showToast('Enrolled successfully!', 'success')" style="margin-top:16px;">
+                        <i class="fas fa-user-plus"></i> Enroll Now
+                    </button>
+                    <button class="btn btn-secondary btn-block" onclick="window.location.href='../../courses.html'" style="margin-top:8px;">
+                        <i class="fas fa-arrow-left"></i> Back to Courses
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
+                <span>${message}</span>
+                <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100px)';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 4000);
+        }
+
+        document.getElementById('menuToggle')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+    </script>
+
+    <script src="../../js/config.js"></script>
+    <script src="../../js/api.js"></script>
+</body>
+</html>

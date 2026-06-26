@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - EduCamLab</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">📚 EduCamLab</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="courses.html" class="active">Courses</a>
+                <a href="policy/about.html">About</a>
+                <a href="policy/faq.html">FAQ</a>
+                <a href="contact.html">Contact</a>
+                <a href="login.html" class="btn btn-primary">Sign In</a>
+                <a href="register.html" class="btn btn-secondary">Get Started</a>
+            </div>
+            <button class="mobile-menu-btn" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <div style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+        <h1 style="font-size: 32px; font-weight: 800;">📚 All Courses</h1>
+        <p style="color: var(--text-muted); margin-bottom: 24px;">Browse all exam preparation resources</p>
+
+        <!-- Filters -->
+        <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 20px; border: 1px solid var(--border-color); margin-bottom: 24px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr auto; gap: 12px; align-items: end;">
+                <div>
+                    <label style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Search</label>
+                    <input type="text" id="searchInput" placeholder="Search courses..." oninput="filterCourses()" style="width:100%; padding:10px 14px; border:2px solid var(--border-color); border-radius:8px; font-size:14px; background:var(--bg-primary); color:var(--text-primary);">
+                </div>
+                <div>
+                    <label style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Exam</label>
+                    <select id="examFilter" onchange="filterCourses()" style="width:100%; padding:10px 14px; border:2px solid var(--border-color); border-radius:8px; font-size:14px; background:var(--bg-primary); color:var(--text-primary);">
+                        <option value="">All Exams</option>
+                        <option value="o-level">O Level</option>
+                        <option value="a-level">A Level</option>
+                        <option value="bacc">BACC</option>
+                        <option value="bepc">BEPC</option>
+                        <option value="technical">Technical GCE</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Category</label>
+                    <select id="categoryFilter" onchange="filterCourses()" style="width:100%; padding:10px 14px; border:2px solid var(--border-color); border-radius:8px; font-size:14px; background:var(--bg-primary); color:var(--text-primary);">
+                        <option value="">All Categories</option>
+                        <option value="past-questions">Past Questions</option>
+                        <option value="pamphlets">Pamphlets</option>
+                        <option value="quizzes">Quizzes</option>
+                        <option value="courses">Courses</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Sort</label>
+                    <select id="sortFilter" onchange="filterCourses()" style="width:100%; padding:10px 14px; border:2px solid var(--border-color); border-radius:8px; font-size:14px; background:var(--bg-primary); color:var(--text-primary);">
+                        <option value="popular">Most Popular</option>
+                        <option value="newest">Newest First</option>
+                        <option value="title">Title A-Z</option>
+                    </select>
+                </div>
+                <div>
+                    <button onclick="resetFilters()" class="btn btn-secondary" style="width:100%; justify-content:center;">
+                        <i class="fas fa-undo"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Count -->
+        <p id="resultsCount" style="color: var(--text-muted); margin-bottom: 16px;">Showing 0 courses</p>
+
+        <!-- Course Grid -->
+        <div id="courseGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+            <!-- Course cards will be loaded here -->
+        </div>
+    </div>
+
+    <footer style="margin-top: 40px;">
+        <div class="footer-content" style="max-width: 1200px; margin: 0 auto; padding: 40px 20px; display: grid; grid-template-columns: 2fr 3fr; gap: 40px;">
+            <div>
+                <h3 style="color: white;">📚 EduCamLab</h3>
+                <p style="color: var(--gray-400);">Cameroon's exam preparation platform.</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                <div>
+                    <h4 style="color: white;">Quick Links</h4>
+                    <ul style="list-style: none;">
+                        <li><a href="index.html" style="color: var(--gray-400); text-decoration: none;">Home</a></li>
+                        <li><a href="courses.html" style="color: var(--gray-400); text-decoration: none;">Courses</a></li>
+                        <li><a href="policy/about.html" style="color: var(--gray-400); text-decoration: none;">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: white;">Exams</h4>
+                    <ul style="list-style: none;">
+                        <li><a href="courses.html?exam=o-level" style="color: var(--gray-400); text-decoration: none;">O Level</a></li>
+                        <li><a href="courses.html?exam=a-level" style="color: var(--gray-400); text-decoration: none;">A Level</a></li>
+                        <li><a href="courses.html?exam=bacc" style="color: var(--gray-400); text-decoration: none;">BACC</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: white;">Legal</h4>
+                    <ul style="list-style: none;">
+                        <li><a href="policy/privacy.html" style="color: var(--gray-400); text-decoration: none;">Privacy</a></li>
+                        <li><a href="policy/terms.html" style="color: var(--gray-400); text-decoration: none;">Terms</a></li>
+                        <li><a href="policy/faq.html" style="color: var(--gray-400); text-decoration: none;">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div style="border-top: 1px solid var(--gray-700); max-width: 1200px; margin: 0 auto; padding: 20px; text-align: center; color: var(--gray-400);">
+            &copy; 2026 EduCamLab. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Course data
+        const courses = [
+            // O Level Subjects
+            { id: 'o-accounting', title: 'Accounting', exam: 'o-level', category: 'past-questions', level: 'O Level', icon: '📊', papers: 3, popular: true },
+            { id: 'o-biology', title: 'Biology', exam: 'o-level', category: 'past-questions', level: 'O Level', icon: '🔬', papers: 3, popular: true },
+            { id: 'o-chemistry', title: 'Chemistry', exam: 'o-level', category: 'past-questions', level: 'O Level', icon: '⚗️', papers: 3, popular: true },
+            { id: 'o-english', title: 'English Language', exam: 'o-level', category: 'courses', level: 'O Level', icon: '📝', papers: 2, popular: true },
+            { id: 'o-french', title: 'French', exam: 'o-level', category: 'courses', level: 'O Level', icon: '🇫🇷', papers: 3, popular: false },
+            { id: 'o-geography', title: 'Geography', exam: 'o-level', category: 'courses', level: 'O Level', icon: '🌍', papers: 2, popular: true },
+            { id: 'o-history', title: 'History', exam: 'o-level', category: 'courses', level: 'O Level', icon: '📜', papers: 1, popular: false },
+            { id: 'o-mathematics', title: 'Mathematics', exam: 'o-level', category: 'past-questions', level: 'O Level', icon: '📐', papers: 2, popular: true },
+            { id: 'o-physics', title: 'Physics', exam: 'o-level', category: 'past-questions', level: 'O Level', icon: '⚡', papers: 3, popular: true },
+            { id: 'o-economics', title: 'Economics', exam: 'o-level', category: 'courses', level: 'O Level', icon: '📈', papers: 2, popular: false },
+            { id: 'o-commerce', title: 'Commerce', exam: 'o-level', category: 'courses', level: 'O Level', icon: '💼', papers: 1, popular: false },
+            { id: 'o-computer-science', title: 'Computer Science', exam: 'o-level', category: 'courses', level: 'O Level', icon: '💻', papers: 3, popular: true },
+
+            // A Level Subjects
+            { id: 'a-accounting', title: 'Accounting', exam: 'a-level', category: 'past-questions', level: 'A Level', icon: '📊', papers: 3, popular: true },
+            { id: 'a-biology', title: 'Biology', exam: 'a-level', category: 'past-questions', level: 'A Level', icon: '🧬', papers: 3, popular: true },
+            { id: 'a-chemistry', title: 'Chemistry', exam: 'a-level', category: 'past-questions', level: 'A Level', icon: '⚗️', papers: 3, popular: true },
+            { id: 'a-mathematics', title: 'Mathematics', exam: 'a-level', category: 'past-questions', level: 'A Level', icon: '📐', papers: 3, popular: true },
+            { id: 'a-physics', title: 'Physics', exam: 'a-level', category: 'past-questions', level: 'A Level', icon: '⚡', papers: 3, popular: true },
+            { id: 'a-economics', title: 'Economics', exam: 'a-level', category: 'courses', level: 'A Level', icon: '📈', papers: 2, popular: true },
+            { id: 'a-english', title: 'English Language', exam: 'a-level', category: 'courses', level: 'A Level', icon: '📝', papers: 3, popular: true },
+            { id: 'a-french', title: 'French', exam: 'a-level', category: 'courses', level: 'A Level', icon: '🇫🇷', papers: 3, popular: false },
+            { id: 'a-geography', title: 'Geography', exam: 'a-level', category: 'courses', level: 'A Level', icon: '🌍', papers: 2, popular: false },
+            { id: 'a-history', title: 'History', exam: 'a-level', category: 'courses', level: 'A Level', icon: '📜', papers: 1, popular: false },
+            { id: 'a-computer-science', title: 'Computer Science', exam: 'a-level', category: 'courses', level: 'A Level', icon: '💻', papers: 3, popular: true },
+
+            // BACC
+            { id: 'bacc-a', title: 'Série A', exam: 'bacc', category: 'courses', level: 'BACC', icon: '📕', subjects: 5, popular: true },
+            { id: 'bacc-b', title: 'Série B', exam: 'bacc', category: 'courses', level: 'BACC', icon: '📕', subjects: 5, popular: true },
+            { id: 'bacc-c', title: 'Série C', exam: 'bacc', category: 'courses', level: 'BACC', icon: '📕', subjects: 5, popular: true },
+            { id: 'bacc-d', title: 'Série D', exam: 'bacc', category: 'courses', level: 'BACC', icon: '📕', subjects: 5, popular: false },
+
+            // BEPC
+            { id: 'bepc-french', title: 'French', exam: 'bepc', category: 'courses', level: 'BEPC', icon: '📙', popular: true },
+            { id: 'bepc-english', title: 'English', exam: 'bepc', category: 'courses', level: 'BEPC', icon: '📙', popular: true },
+            { id: 'bepc-maths', title: 'Mathematics', exam: 'bepc', category: 'courses', level: 'BEPC', icon: '📙', popular: true },
+            { id: 'bepc-science', title: 'Science', exam: 'bepc', category: 'courses', level: 'BEPC', icon: '📙', popular: false },
+
+            // Technical GCE
+            { id: 'tech-building', title: 'Building & Construction', exam: 'technical', category: 'courses', level: 'Technical GCE', icon: '🏗️', popular: false },
+            { id: 'tech-electrical', title: 'Electrical Engineering', exam: 'technical', category: 'courses', level: 'Technical GCE', icon: '⚡', popular: false },
+            { id: 'tech-mechanical', title: 'Mechanical Engineering', exam: 'technical', category: 'courses', level: 'Technical GCE', icon: '🔧', popular: false },
+        ];
+
+        let filteredCourses = [...courses];
+        let currentPage = 1;
+        const perPage = 12;
+
+        function renderCourses() {
+            const grid = document.getElementById('courseGrid');
+            const start = (currentPage - 1) * perPage;
+            const end = start + perPage;
+            const pageItems = filteredCourses.slice(start, end);
+
+            document.getElementById('resultsCount').textContent = `Showing ${filteredCourses.length} courses`;
+
+            if (pageItems.length === 0) {
+                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:60px 20px; color:var(--text-muted);">
+                    <i class="fas fa-search" style="font-size:48px; display:block; margin-bottom:16px; opacity:0.3;"></i>
+                    <h3>No courses found</h3>
+                    <p>Try adjusting your search or filters</p>
+                </div>`;
+                return;
+            }
+
+            grid.innerHTML = pageItems.map(course => `
+                <div class="course-card" onclick="window.location.href='${course.exam === 'o-level' ? 'o-level' : 'a-level'}/${course.id.replace(/^[oa]-/, '')}/index.html'" style="background:var(--bg-card); border-radius:var(--border-radius); overflow:hidden; border:1px solid var(--border-color); transition:var(--transition); cursor:pointer; box-shadow:var(--shadow);">
+                    <div style="height:120px; background:linear-gradient(135deg, var(--primary-light), var(--primary)); display:flex; align-items:center; justify-content:center; font-size:48px; color:white;">
+                        ${course.icon}
+                    </div>
+                    <div style="padding:16px;">
+                        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px;">
+                            <span class="badge ${course.exam === 'o-level' ? 'badge-success' : course.exam === 'a-level' ? 'badge-info' : course.exam === 'bacc' ? 'badge-warning' : course.exam === 'bepc' ? 'badge-danger' : 'badge-primary'}">${course.exam.toUpperCase()}</span>
+                            <span class="badge badge-secondary">${course.level}</span>
+                        </div>
+                        <h3 style="font-size:18px; font-weight:700; margin-bottom:4px;">${course.title}</h3>
+                        <p style="font-size:14px; color:var(--text-muted); margin-bottom:12px;">
+                            ${course.papers ? `${course.papers} Papers` : course.subjects ? `${course.subjects} Subjects` : 'Full Course'}
+                        </p>
+                        <button class="btn btn-primary btn-sm" style="width:100%; justify-content:center;" onclick="event.stopPropagation(); window.location.href='${course.exam === 'o-level' ? 'o-level' : 'a-level'}/${course.id.replace(/^[oa]-/, '')}/index.html'">
+                            <i class="fas fa-arrow-right"></i> View Course
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Pagination
+            const totalPages = Math.ceil(filteredCourses.length / perPage);
+            const pagination = document.getElementById('pagination');
+            if (totalPages > 1) {
+                let html = '<div style="display:flex; justify-content:center; gap:8px; margin-top:24px;">';
+                html += `<button class="btn btn-secondary btn-sm" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}><i class="fas fa-chevron-left"></i></button>`;
+                for (let i = 1; i <= totalPages; i++) {
+                    html += `<button class="btn ${i === currentPage ? 'btn-primary' : 'btn-secondary'} btn-sm" onclick="changePage(${i})">${i}</button>`;
+                }
+                html += `<button class="btn btn-secondary btn-sm" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}><i class="fas fa-chevron-right"></i></button>`;
+                html += '</div>';
+                pagination.innerHTML = html;
+            } else {
+                pagination.innerHTML = '';
+            }
+        }
+
+        function changePage(page) {
+            const totalPages = Math.ceil(filteredCourses.length / perPage);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            renderCourses();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function filterCourses() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const exam = document.getElementById('examFilter').value;
+            const category = document.getElementById('categoryFilter').value;
+            const sort = document.getElementById('sortFilter').value;
+
+            filteredCourses = courses.filter(c => {
+                const matchSearch = !search || c.title.toLowerCase().includes(search);
+                const matchExam = !exam || c.exam === exam;
+                const matchCategory = !category || c.category === category;
+                return matchSearch && matchExam && matchCategory;
+            });
+
+            if (sort === 'title') {
+                filteredCourses.sort((a, b) => a.title.localeCompare(b.title));
+            } else if (sort === 'newest') {
+                // For demo, just reverse
+                filteredCourses.reverse();
+            } else {
+                filteredCourses.sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
+            }
+
+            currentPage = 1;
+            renderCourses();
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('examFilter').value = '';
+            document.getElementById('categoryFilter').value = '';
+            document.getElementById('sortFilter').value = 'popular';
+            filterCourses();
+        }
+
+        // Load filters from URL
+        function loadFiltersFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            const exam = params.get('exam');
+            const category = params.get('category');
+            const search = params.get('search');
+
+            if (exam) document.getElementById('examFilter').value = exam;
+            if (category) document.getElementById('categoryFilter').value = category;
+            if (search) document.getElementById('searchInput').value = search;
+
+            filterCourses();
+        }
+
+        // Mobile menu
+        document.getElementById('menuToggle')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+
+        // Init
+        document.addEventListener('DOMContentLoaded', loadFiltersFromURL);
+    </script>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+</body>
+</html>

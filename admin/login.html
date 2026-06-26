@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - EduCamLab</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="auth-page">
+
+    <!-- Version Badge -->
+    <div style="position: fixed; top: 16px; right: 24px; background: rgba(0,0,0,0.8); color: white; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; z-index: 100;">
+        <i class="fas fa-shield-alt"></i> Secure Admin v2.0
+    </div>
+
+    <div style="display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; background: var(--bg-secondary);">
+        <div style="background: var(--bg-card); border-radius: var(--border-radius-lg); padding: 40px; max-width: 480px; width: 100%; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);">
+
+            <!-- Header -->
+            <div style="text-align: center; margin-bottom: 32px;">
+                <div style="font-size: 48px; margin-bottom: 8px;">📚</div>
+                <h1 style="font-weight: 800; color: var(--primary); font-size: 28px; margin: 0;">EduCamLab</h1>
+                <h2 style="font-size: 22px; font-weight: 700; margin: 8px 0 4px; color: var(--text-primary);">Admin Login</h2>
+                <p style="color: var(--text-muted); font-size: 14px; margin: 0;">Enter your credentials to access the admin dashboard</p>
+                <div style="display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 4px 16px; background: #dbeafe; color: #1e40af; border-radius: 20px; font-size: 12px; font-weight: 600;">
+                    <i class="fas fa-shield-alt"></i> Secure Admin Access
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" novalidate>
+
+                <!-- Phone Number -->
+                <div class="form-group">
+                    <label for="phoneNumber">
+                        <i class="fas fa-phone"></i> Phone Number
+                        <span style="color: var(--text-muted); font-weight: 400; font-size: 12px;">(optional)</span>
+                    </label>
+                    <div style="position: relative;">
+                        <i class="fas fa-phone" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                        <input type="tel" id="phoneNumber" placeholder="e.g., 677123456" autocomplete="tel" autofocus style="width: 100%; padding: 10px 12px 10px 36px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); background: var(--bg-primary); color: var(--text-primary); font-size: 14px;">
+                    </div>
+                    <small style="display: block; font-size: 12px; color: var(--text-muted); margin-top: 4px;">Enter phone number without country code (optional)</small>
+                </div>
+
+                <!-- PIN Code -->
+                <div class="form-group">
+                    <label for="pinCode">
+                        <i class="fas fa-key"></i> PIN Code
+                        <span style="color: var(--text-muted); font-weight: 400; font-size: 12px;">(optional)</span>
+                    </label>
+                    <div style="position: relative;">
+                        <i class="fas fa-lock" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                        <input type="text" id="pinCode" placeholder="Enter your 6-character PIN" maxlength="6" style="width: 100%; padding: 10px 12px 10px 36px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); background: var(--bg-primary); color: var(--text-primary); font-size: 18px; text-transform: uppercase; letter-spacing: 4px; font-family: monospace;">
+                    </div>
+                    <small style="display: block; font-size: 12px; color: var(--text-muted); margin-top: 4px;">Enter the 6-character PIN (optional)</small>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i> Password
+                        <span style="color: var(--text-muted); font-weight: 400; font-size: 12px;">(optional)</span>
+                    </label>
+                    <div style="position: relative;">
+                        <i class="fas fa-key" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                        <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password" minlength="8" style="width: 100%; padding: 10px 12px 10px 36px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); background: var(--bg-primary); color: var(--text-primary); font-size: 14px;">
+                        <button type="button" onclick="togglePassword('password', 'passwordIcon')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px 8px;">
+                            <i class="fas fa-eye" id="passwordIcon"></i>
+                        </button>
+                    </div>
+                    <small style="display: block; font-size: 12px; color: var(--text-muted); margin-top: 4px;">Enter your account password (optional)</small>
+                </div>
+
+                <!-- Login Method Indicator -->
+                <div style="margin-bottom: 16px; padding: 8px 12px; background: var(--bg-secondary); border-radius: 8px; text-align: center; font-size: 13px; color: var(--text-muted);">
+                    <i class="fas fa-info-circle"></i>
+                    Login with: 
+                    <span id="loginMethodDisplay" style="font-weight: 600; color: var(--primary);">Phone + PIN + Password</span>
+                </div>
+
+                <!-- Remember Me -->
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+                    <input type="checkbox" id="rememberMe" style="width: auto;">
+                    <label for="rememberMe" style="font-size: 14px; color: var(--text-secondary); cursor: pointer;">Remember me</label>
+                </div>
+
+                <!-- Message Container -->
+                <div id="messageContainer" style="margin-bottom: 16px;"></div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-primary" id="loginBtn" style="width: 100%; justify-content: center; padding: 12px; font-size: 16px;">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+            </form>
+
+            <!-- Footer -->
+            <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center;">
+                <a href="../index.html" style="color: var(--text-muted); text-decoration: none; font-size: 14px;">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+                <div style="display: flex; justify-content: center; gap: 16px; margin-top: 8px;">
+                    <a href="../contact.html" style="color: var(--text-muted); text-decoration: none; font-size: 13px;"><i class="fas fa-headset"></i> Support</a>
+                    <a href="../privacy.html" style="color: var(--text-muted); text-decoration: none; font-size: 13px;"><i class="fas fa-shield-alt"></i> Privacy</a>
+                    <a href="../terms.html" style="color: var(--text-muted); text-decoration: none; font-size: 13px;"><i class="fas fa-file-contract"></i> Terms</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        // ============================================
+        // STATE
+        // ============================================
+        let isSubmitting = false;
+
+        // ============================================
+        // DOM READY
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if already logged in
+            if (API.token) {
+                API.getProfile()
+                    .then(result => {
+                        if (result.success && (result.data.role === 'admin' || result.data.role === 'super_admin')) {
+                            window.location.href = 'index.html';
+                        } else {
+                            API.clearToken();
+                        }
+                    })
+                    .catch(() => {
+                        API.clearToken();
+                    });
+            }
+
+            // Phone number formatting
+            document.getElementById('phoneNumber').addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+                updateLoginMethod();
+            });
+
+            // PIN formatting
+            document.getElementById('pinCode').addEventListener('input', function() {
+                this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+                updateLoginMethod();
+                if (this.value.length === 6) {
+                    this.style.borderColor = '#10b981';
+                    setTimeout(() => {
+                        this.style.borderColor = '';
+                    }, 1500);
+                }
+            });
+
+            // Password field
+            document.getElementById('password').addEventListener('input', function() {
+                updateLoginMethod();
+            });
+
+            // Enter key support for PIN
+            document.getElementById('pinCode').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && this.value.length === 6) {
+                    document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+                }
+            });
+
+            // Enter key support for password
+            document.getElementById('password').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+                }
+            });
+
+            // Form submit
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+
+            // Check for saved credentials
+            const savedPhone = localStorage.getItem('adminSavedPhone');
+            if (savedPhone) {
+                document.getElementById('phoneNumber').value = savedPhone;
+                document.getElementById('rememberMe').checked = true;
+            }
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem('adminTheme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+
+            // Initial login method display
+            updateLoginMethod();
+        });
+
+        // ============================================
+        // UPDATE LOGIN METHOD DISPLAY
+        // ============================================
+        function updateLoginMethod() {
+            const phone = document.getElementById('phoneNumber').value.trim();
+            const pin = document.getElementById('pinCode').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            const display = document.getElementById('loginMethodDisplay');
+            const methods = [];
+
+            if (phone) methods.push('Phone');
+            if (pin) methods.push('PIN');
+            if (password) methods.push('Password');
+
+            if (methods.length === 0) {
+                display.textContent = 'Please enter at least one credential';
+                display.style.color = 'var(--danger)';
+            } else {
+                display.textContent = methods.join(' + ');
+                display.style.color = 'var(--primary)';
+            }
+
+            // Update button state
+            const btn = document.getElementById('loginBtn');
+            if (methods.length === 0) {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+            } else {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+            }
+        }
+
+        // ============================================
+        // TOGGLE PASSWORD VISIBILITY
+        // ============================================
+        function togglePassword(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+            input.focus();
+        }
+
+        // ============================================
+        // HANDLE LOGIN
+        // ============================================
+        async function handleLogin(e) {
+            e.preventDefault();
+
+            if (isSubmitting) return;
+
+            const phone = document.getElementById('phoneNumber').value.trim();
+            const pin = document.getElementById('pinCode').value.trim().toUpperCase();
+            const password = document.getElementById('password').value;
+
+            // Validation - at least one credential
+            if (!phone && !pin && !password) {
+                showMessage('error', 'Please enter at least one credential (Phone, PIN, or Password).');
+                return;
+            }
+
+            // Validate PIN if provided
+            if (pin && pin.length !== 6) {
+                showMessage('error', 'PIN must be exactly 6 characters.');
+                document.getElementById('pinCode').focus();
+                return;
+            }
+
+            // Validate password if provided
+            if (password && password.length < 8) {
+                showMessage('error', 'Password must be at least 8 characters.');
+                document.getElementById('password').focus();
+                return;
+            }
+
+            // Validate phone if provided
+            if (phone && phone.length < 9) {
+                showMessage('error', 'Please enter a valid phone number (minimum 9 digits).');
+                document.getElementById('phoneNumber').focus();
+                return;
+            }
+
+            // Show loading state
+            isSubmitting = true;
+            const btn = document.getElementById('loginBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+            btn.disabled = true;
+
+            // Clear previous messages
+            document.getElementById('messageContainer').innerHTML = '';
+
+            try {
+                let result = null;
+                let errorMessage = null;
+
+                // Try login methods in order of preference
+                // 1. If phone + password provided
+                if (phone && password) {
+                    try {
+                        result = await API.login(phone, password);
+                        if (result.success) {
+                            // Check admin role
+                            const profile = await API.getProfile();
+                            if (profile.data.role === 'admin' || profile.data.role === 'super_admin') {
+                                await handleSuccessfulLogin(profile, phone);
+                                return;
+                            }
+                        }
+                    } catch (e) {
+                        errorMessage = e.message;
+                    }
+                }
+
+                // 2. If phone + pin provided
+                if (phone && pin && !result) {
+                    try {
+                        result = await API.loginWithPin(phone, pin);
+                        if (result.success) {
+                            const profile = await API.getProfile();
+                            if (profile.data.role === 'admin' || profile.data.role === 'super_admin') {
+                                await handleSuccessfulLogin(profile, phone);
+                                return;
+                            }
+                        }
+                    } catch (e) {
+                        errorMessage = e.message || 'Invalid PIN';
+                    }
+                }
+
+                // 3. If pin + password provided (without phone)
+                if (pin && password && !result) {
+                    try {
+                        // Try PIN login with empty phone
+                        result = await API.loginWithPin('', pin);
+                        if (result.success) {
+                            const profile = await API.getProfile();
+                            if (profile.data.role === 'admin' || profile.data.role === 'super_admin') {
+                                await handleSuccessfulLogin(profile, phone);
+                                return;
+                            }
+                        }
+                    } catch (e) {
+                        // Try password login with empty phone
+                        try {
+                            result = await API.login('', password);
+                            if (result.success) {
+                                const profile = await API.getProfile();
+                                if (profile.data.role === 'admin' || profile.data.role === 'super_admin') {
+                                    await handleSuccessfulLogin(profile, phone);
+                                    return;
+                                }
+                            }
+                        } catch (e2) {
+                            errorMessage = e2.message || 'Invalid credentials';
+                        }
+                    }
+                }
+
+                // 4. If only pin provided
+                if (pin && !phone && !password && !result) {
+                    try {
+                        result = await API.loginWithPin('', pin);
+                        if (result.success) {
+                            const profile = await API.getProfile();
+                            if (profile.data.role === 'admin' || profile.data.role === 'super_admin') {
+                                await handleSuccessfulLogin(profile, phone);
+                                return;
+                            }
+                        }
+                    } catch (e) {
+                        errorMessage = e.message || 'Invalid PIN';
+                    }
+                }
+
+                // 5. If only password provided
+                if (password && !phone && !pin && !result) {
+                    try {
+                        result = await API.login('', password);
+                        if (result.success) {
+                            const profile = await API.getProfile();
+                            if (profile.data.role === 'admin' || profile.data.role === 'super_admin') {
+                                await handleSuccessfulLogin(profile, phone);
+                                return;
+                            }
+                        }
+                    } catch (e) {
+                        errorMessage = e.message || 'Invalid password';
+                    }
+                }
+
+                // If we got here, login failed
+                if (result && !result.success) {
+                    showMessage('error', result.message || 'Invalid credentials. Please try again.');
+                } else {
+                    showMessage('error', errorMessage || 'Invalid credentials. Please try again.');
+                }
+
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                isSubmitting = false;
+
+            } catch (error) {
+                console.error('Login error:', error);
+                showMessage('error', error.message || 'Login failed. Please try again.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                isSubmitting = false;
+            }
+        }
+
+        // ============================================
+        // HANDLE SUCCESSFUL LOGIN
+        // ============================================
+        async function handleSuccessfulLogin(profile, phone) {
+            // Save admin name
+            localStorage.setItem('adminName', profile.data.firstname || 'Admin');
+
+            // Save phone if remember me
+            if (document.getElementById('rememberMe').checked) {
+                localStorage.setItem('adminSavedPhone', phone);
+            } else {
+                localStorage.removeItem('adminSavedPhone');
+            }
+
+            // Show success
+            showMessage('success', 'Welcome back, ' + (profile.data.firstname || 'Admin') + '! Redirecting...');
+
+            // Redirect
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 800);
+        }
+
+        // ============================================
+        // SHOW MESSAGE
+        // ============================================
+        function showMessage(type, message) {
+            const container = document.getElementById('messageContainer');
+
+            const colors = {
+                error: 'var(--danger)',
+                success: 'var(--success)',
+                warning: 'var(--warning)',
+                info: 'var(--info)'
+            };
+
+            const icons = {
+                error: 'fa-exclamation-circle',
+                success: 'fa-check-circle',
+                warning: 'fa-exclamation-triangle',
+                info: 'fa-info-circle'
+            };
+
+            const bgColors = {
+                error: '#fee2e2',
+                success: '#d1fae5',
+                warning: '#fef3c7',
+                info: '#dbeafe'
+            };
+
+            const textColors = {
+                error: '#991b1b',
+                success: '#065f46',
+                warning: '#92400e',
+                info: '#1e40af'
+            };
+
+            container.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; background: ${bgColors[type]}; border-left: 4px solid ${colors[type]};">
+                    <i class="fas ${icons[type]}" style="color: ${colors[type]};"></i>
+                    <span style="color: ${textColors[type]}; font-size: 14px;">${message}</span>
+                </div>
+            `;
+
+            // Auto-dismiss success messages after 5 seconds
+            if (type === 'success') {
+                setTimeout(() => {
+                    const msg = container.querySelector('div');
+                    if (msg) {
+                        msg.style.opacity = '0';
+                        msg.style.transition = 'opacity 0.5s';
+                        setTimeout(() => {
+                            container.innerHTML = '';
+                        }, 500);
+                    }
+                }, 5000);
+            }
+        }
+
+        // ============================================
+        // KEYBOARD SHORTCUTS
+        // ============================================
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+Enter to submit
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // ============================================
+        // MAKE FUNCTIONS GLOBAL
+        // ============================================
+        window.togglePassword = togglePassword;
+        window.updateLoginMethod = updateLoginMethod;
+    </script>
+</body>
+</html>

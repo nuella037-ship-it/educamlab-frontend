@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - EduCamLab</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <span class="brand-icon">📚</span>
+                <span class="brand-text">EduCamLab</span>
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="index.html">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="users.html" class="active">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                    <span class="nav-badge" id="userCount">0</span>
+                </a>
+                <a href="courses.html">
+                    <i class="fas fa-book"></i>
+                    <span>Courses</span>
+                </a>
+                <a href="messages.html">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                    <span class="nav-badge badge-danger" id="messageCount">0</span>
+                </a>
+                <a href="payments.html">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                    <span class="nav-badge badge-danger" id="pendingCount">0</span>
+                </a>
+                <a href="activity.html">
+                    <i class="fas fa-history"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="data-import.html">
+                    <i class="fas fa-database"></i>
+                    <span>Data Manager</span>
+                </a>
+                <a href="settings.html">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="bulk-email.html">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Broadcast</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar-small" id="adminAvatar">A</div>
+                    <div class="user-details">
+                        <span class="user-name" id="adminName">Admin</span>
+                        <span class="user-role">Administrator</span>
+                    </div>
+                </div>
+                <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div>
+                        <h1><i class="fas fa-users"></i> User Management</h1>
+                        <span class="subtitle">
+                            <i class="fas fa-clock"></i>
+                            <span id="currentDateTime"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <button onclick="showCreateUserModal()" class="btn-primary">
+                        <i class="fas fa-plus"></i> Add User
+                    </button>
+                    <button onclick="refreshUsers()" class="btn-secondary" title="Refresh">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button onclick="exportUsers()" class="btn-secondary">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </header>
+
+            <!-- Quick Stats -->
+            <section class="quick-stats">
+                <div class="quick-stat" onclick="document.getElementById('statusFilter').value=''; loadUsers();" style="cursor:pointer;">
+                    <div class="quick-stat-icon" style="background: #dbeafe; color: #3b82f6;">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="totalUsers">0</span>
+                        <span class="quick-stat-label">Total Users</span>
+                    </div>
+                </div>
+                <div class="quick-stat" onclick="document.getElementById('statusFilter').value='true'; loadUsers();" style="cursor:pointer;">
+                    <div class="quick-stat-icon" style="background: #d1fae5; color: #10b981;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="verifiedUsers">0</span>
+                        <span class="quick-stat-label">Verified</span>
+                    </div>
+                </div>
+                <div class="quick-stat" onclick="document.getElementById('statusFilter').value='false'; loadUsers();" style="cursor:pointer;">
+                    <div class="quick-stat-icon" style="background: #fef3c7; color: #f59e0b;">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="unverifiedUsers">0</span>
+                        <span class="quick-stat-label">Pending</span>
+                    </div>
+                </div>
+                <div class="quick-stat" onclick="document.getElementById('roleFilter').value='admin'; loadUsers();" style="cursor:pointer;">
+                    <div class="quick-stat-icon" style="background: #fce4ec; color: #ef4444;">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="adminUsers">0</span>
+                        <span class="quick-stat-label">Admins</span>
+                    </div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #fce7f3; color: #db2777;">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="newUsers">0</span>
+                        <span class="quick-stat-label">New (30d)</span>
+                    </div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #e0e7ff; color: #4f46e5;">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="subscribedUsers">0</span>
+                        <span class="quick-stat-label">Subscribed</span>
+                    </div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #d1fae5; color: #10b981;">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="pinUsers">0</span>
+                        <span class="quick-stat-label">Has PIN</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search by name, phone..." oninput="loadUsers()">
+                    </div>
+                </div>
+                <div class="toolbar-right">
+                    <div class="filter-group">
+                        <select id="roleFilter" onchange="loadUsers()" class="filter-select">
+                            <option value="">All Roles</option>
+                            <option value="user">👤 User</option>
+                            <option value="moderator">🛡️ Moderator</option>
+                            <option value="admin">🔒 Admin</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <select id="statusFilter" onchange="loadUsers()" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="true">✅ Verified</option>
+                            <option value="false">⏳ Pending</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <select id="subscriptionFilter" onchange="loadUsers()" class="filter-select">
+                            <option value="">All Subscriptions</option>
+                            <option value="active">🟢 Active</option>
+                            <option value="expired">🔴 Expired</option>
+                            <option value="none">⚪ None</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <select id="pinFilter" onchange="loadUsers()" class="filter-select">
+                            <option value="">All PIN Status</option>
+                            <option value="has_pin">🔑 Has PIN</option>
+                            <option value="no_pin">❌ No PIN</option>
+                        </select>
+                    </div>
+                    <div class="bulk-actions" style="display: flex; gap: 8px;">
+                        <select id="bulkAction" class="filter-select">
+                            <option value="">Bulk Actions</option>
+                            <option value="delete">🗑️ Delete</option>
+                            <option value="verify">✅ Verify</option>
+                            <option value="unverify">⏳ Unverify</option>
+                            <option value="make-admin">🔒 Make Admin</option>
+                            <option value="make-moderator">🛡️ Make Moderator</option>
+                            <option value="make-user">👤 Make User</option>
+                            <option value="generate-pin">🔑 Generate PIN</option>
+                            <option value="revoke-pin">🚫 Revoke PIN</option>
+                        </select>
+                        <button onclick="bulkUserAction()" class="btn-secondary">
+                            <i class="fas fa-check"></i> Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="table-container">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="40">
+                                    <input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+                                </th>
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Phone</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Subscription</th>
+                                <th>PIN</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr>
+                                <td colspan="10" class="text-center">
+                                    <div class="loading-spinner"></div>
+                                    Loading users...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <div class="table-info" id="tableInfo">Showing 0 of 0 users</div>
+                    <div class="pagination" id="pagination"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Create User Modal -->
+    <div id="createUserModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-plus"></i> Create User</h2>
+                <button onclick="closeCreateUserModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="createUserForm" onsubmit="createUser(event)">
+                    <div class="form-group">
+                        <label>First Name <span style="color: var(--danger);">*</span></label>
+                        <input type="text" id="createFirstName" placeholder="John" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name <span style="color: var(--danger);">*</span></label>
+                        <input type="text" id="createLastName" placeholder="Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number <span style="color: var(--danger);">*</span></label>
+                        <input type="tel" id="createPhone" placeholder="677123456" required>
+                        <small class="form-hint">Enter phone number without country code</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Password <span style="color: var(--danger);">*</span></label>
+                        <input type="password" id="createPassword" placeholder="Password123!" required minlength="8">
+                    </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select id="createRole">
+                            <option value="user">👤 User</option>
+                            <option value="moderator">🛡️ Moderator</option>
+                            <option value="admin">🔒 Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" onclick="closeCreateUserModal()" class="btn-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn-primary" id="createUserBtn">
+                            <i class="fas fa-save"></i> Create User
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Detail Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-circle"></i> User Details</h2>
+                <button onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="userDetails">
+                <div class="loading-spinner"></div>
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <!-- Role Update Modal -->
+    <div id="roleModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-tag"></i> Update Role</h2>
+                <button onclick="closeRoleModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div class="user-avatar-large" id="roleUserAvatar" style="width: 60px; height: 60px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; margin: 0 auto;">U</div>
+                    <p style="margin-top: 8px;"><strong id="roleUserName"></strong></p>
+                    <p style="color: var(--text-muted); font-size: 14px;" id="roleUserPhone"></p>
+                </div>
+                <div class="form-group">
+                    <label>Select Role</label>
+                    <select id="newRole" class="filter-select" style="width: 100%;">
+                        <option value="user">👤 User</option>
+                        <option value="moderator">🛡️ Moderator</option>
+                        <option value="admin">🔒 Admin</option>
+                    </select>
+                </div>
+                <button onclick="updateRole()" class="btn-primary" style="width: 100%; justify-content: center;">
+                    <i class="fas fa-save"></i> Update Role
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PIN Management Modal -->
+    <div id="pinModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-key"></i> PIN Management</h2>
+                <button onclick="closePinModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="pinDetails">
+                <div class="loading-spinner"></div>
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header" style="border-bottom: none;">
+                <h2 style="color: #ef4444;"><i class="fas fa-exclamation-triangle"></i> Confirm Delete</h2>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <p style="font-size: 18px; margin-bottom: 8px;">Delete this user?</p>
+                <p id="deleteMessage" style="color: var(--text-muted);">This action cannot be undone. All user data will be permanently removed.</p>
+                <div style="display: flex; gap: 12px; justify-content: center; margin-top: 20px;">
+                    <button onclick="closeDeleteModal()" class="btn-secondary">Cancel</button>
+                    <button onclick="confirmDelete()" class="btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/users.js"></script>
+</body>
+</html>

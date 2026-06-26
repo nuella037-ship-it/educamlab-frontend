@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - EduCamLab</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">📚 EduCamLab</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="policy/about.html">About</a>
+                <a href="policy/faq.html">FAQ</a>
+                <a href="contact.html" class="active">Contact</a>
+                <a href="login.html" class="btn btn-primary">Sign In</a>
+                <a href="register.html" class="btn btn-secondary">Get Started</a>
+            </div>
+            <button class="mobile-menu-btn" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <div style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h1 style="font-size: 32px; font-weight: 800;">📧 Contact Us</h1>
+            <p style="color: var(--text-muted);">Have questions? We'd love to hear from you.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 32px; align-items: start;">
+            <!-- Contact Info -->
+            <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
+                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 16px;">📬 Contact Information</h3>
+                <div style="display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-color);">
+                    <i class="fas fa-phone" style="font-size: 20px; color: var(--primary);"></i>
+                    <div>
+                        <h4 style="font-size: 14px; font-weight: 600;">Phone</h4>
+                        <p style="font-size: 13px; color: var(--text-muted);">+237 671 234 567</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 12px; padding: 12px 0;">
+                    <i class="fas fa-clock" style="font-size: 20px; color: var(--primary);"></i>
+                    <div>
+                        <h4 style="font-size: 14px; font-weight: 600;">Hours</h4>
+                        <p style="font-size: 13px; color: var(--text-muted);">Mon-Fri, 8AM - 6PM</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 32px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label>Full Name <span class="required">*</span></label>
+                        <input type="text" id="contactName" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="contactPhone" placeholder="677123456" required maxlength="9">
+                        <small>Enter your 9-digit phone number</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Subject <span class="required">*</span></label>
+                        <select id="contactSubject" required>
+                            <option value="">Select a subject</option>
+                            <option value="general">General Inquiry</option>
+                            <option value="course">Course Question</option>
+                            <option value="technical">Technical Support</option>
+                            <option value="payment">Payment & Billing</option>
+                            <option value="feedback">Feedback</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Message <span class="required">*</span></label>
+                        <textarea id="contactMessage" rows="4" placeholder="Tell us how we can help..." required></textarea>
+                    </div>
+
+                    <div id="contactMessageContainer"></div>
+
+                    <button type="submit" class="btn btn-primary btn-block" id="contactBtn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- FAQ Quick Links -->
+        <div style="margin-top: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; border-left: 4px solid var(--primary);">
+                <h4 style="font-size: 15px; margin-bottom: 4px;">How do I access my courses?</h4>
+                <p style="font-size: 14px; color: var(--text-muted);">Log in to your dashboard to access all enrolled courses.</p>
+            </div>
+            <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; border-left: 4px solid var(--primary);">
+                <h4 style="font-size: 15px; margin-bottom: 4px;">How do I get my PIN?</h4>
+                <p style="font-size: 14px; color: var(--text-muted);">Contact admin or check your SMS after payment confirmation.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('contactPhone')?.addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').slice(0, 9);
+        });
+
+        document.getElementById('contactForm')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('contactBtn');
+            const container = document.getElementById('contactMessageContainer');
+            container.innerHTML = '';
+
+            const name = document.getElementById('contactName').value.trim();
+            const phone = document.getElementById('contactPhone').value.trim();
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value.trim();
+
+            if (!name || !phone || !subject || !message) {
+                container.innerHTML = `<div class="message error">❌ Please fill in all required fields</div>`;
+                return;
+            }
+
+            if (phone.length !== 9) {
+                container.innerHTML = `<div class="message error">❌ Please enter a valid 9-digit phone number</div>`;
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Sending...';
+
+            try {
+                const result = await API.sendContact({ name, phone, subject, message });
+                if (result.success) {
+                    container.innerHTML = `<div class="message success">✅ Message sent! We'll get back to you within 24-48 hours.</div>`;
+                    this.reset();
+                } else {
+                    throw new Error(result.message || 'Failed to send message');
+                }
+            } catch (error) {
+                container.innerHTML = `<div class="message error">❌ ${error.message}</div>`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            }
+        });
+
+        document.getElementById('menuToggle')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+    </script>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+</body>
+</html>

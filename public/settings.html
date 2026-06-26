@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - EduCamLab</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">📚 EduCamLab</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="profile.html">Profile</a>
+                <a href="settings.html" class="active">Settings</a>
+                <a href="#" onclick="logout()" style="color: var(--danger);">Logout</a>
+            </div>
+            <button class="mobile-menu-btn" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <div style="max-width: 900px; margin: 40px auto; padding: 0 20px;">
+        <h1 style="font-size: 28px; font-weight: 800;"><i class="fas fa-cog" style="color: var(--primary);"></i> Settings</h1>
+        <p style="color: var(--text-muted); margin-bottom: 24px;">Manage your preferences</p>
+
+        <!-- Settings Tabs -->
+        <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 24px; background: var(--bg-secondary); padding: 4px; border-radius: var(--border-radius); border: 1px solid var(--border-color);">
+            <button class="tab-btn active" data-tab="preferences" onclick="switchTab('preferences')" style="padding: 10px 20px; border: none; border-radius: 6px; background: transparent; cursor: pointer; font-weight: 500; font-family: inherit; transition: var(--transition);">
+                <i class="fas fa-sliders-h"></i> Preferences
+            </button>
+            <button class="tab-btn" data-tab="appearance" onclick="switchTab('appearance')" style="padding: 10px 20px; border: none; border-radius: 6px; background: transparent; cursor: pointer; font-weight: 500; font-family: inherit; transition: var(--transition);">
+                <i class="fas fa-palette"></i> Appearance
+            </button>
+            <button class="tab-btn" data-tab="notifications" onclick="switchTab('notifications')" style="padding: 10px 20px; border: none; border-radius: 6px; background: transparent; cursor: pointer; font-weight: 500; font-family: inherit; transition: var(--transition);">
+                <i class="fas fa-bell"></i> Notifications
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-preferences" class="tab-content">
+            <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 16px;">
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Study Mode</h3>
+                <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">Choose your preferred study mode</p>
+                <select id="studyMode" style="width:100%; padding:10px 14px; border:2px solid var(--border-color); border-radius:8px; font-size:14px; background:var(--bg-primary); color:var(--text-primary);">
+                    <option value="focus">Focus Mode</option>
+                    <option value="regular" selected>Regular</option>
+                    <option value="relaxed">Relaxed</option>
+                </select>
+            </div>
+
+            <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 16px;">
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Daily Study Goal</h3>
+                <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">Set your daily study time goal</p>
+                <select id="dailyGoal" style="width:100%; padding:10px 14px; border:2px solid var(--border-color); border-radius:8px; font-size:14px; background:var(--bg-primary); color:var(--text-primary);">
+                    <option value="15">15 minutes</option>
+                    <option value="30" selected>30 minutes</option>
+                    <option value="45">45 minutes</option>
+                    <option value="60">1 hour</option>
+                </select>
+            </div>
+
+            <button onclick="savePreferences()" class="btn btn-primary">
+                <i class="fas fa-save"></i> Save Preferences
+            </button>
+        </div>
+
+        <div id="tab-appearance" class="tab-content" style="display:none;">
+            <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Dark Mode</h3>
+                        <p style="font-size: 14px; color: var(--text-muted);">Switch between light and dark themes</p>
+                    </div>
+                    <label style="position:relative; display:inline-block; width:50px; height:26px;">
+                        <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()" style="opacity:0; width:0; height:0;">
+                        <span style="position:absolute; cursor:pointer; inset:0; background:var(--gray-300); border-radius:26px; transition:var(--transition);"></span>
+                        <span style="position:absolute; content:''; height:20px; width:20px; left:3px; bottom:3px; background:white; border-radius:50%; transition:var(--transition);"></span>
+                    </label>
+                </div>
+                <p id="darkModeStatus" style="font-size: 13px; color: var(--text-muted);">Dark mode is currently <strong>disabled</strong></p>
+            </div>
+
+            <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">Font Size</h3>
+                <div style="display: flex; gap: 12px; align-items: center;">
+                    <button onclick="changeFontSize(-1)" class="btn btn-secondary btn-sm">A-</button>
+                    <span id="fontSizeDisplay" style="font-weight: 500;">Medium</span>
+                    <button onclick="changeFontSize(1)" class="btn btn-secondary btn-sm">A+</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-notifications" class="tab-content" style="display:none;">
+            <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Push Notifications</h3>
+                        <p style="font-size: 14px; color: var(--text-muted);">Receive browser notifications</p>
+                    </div>
+                    <label style="position:relative; display:inline-block; width:50px; height:26px;">
+                        <input type="checkbox" id="pushNotifications" checked style="opacity:0; width:0; height:0;">
+                        <span style="position:absolute; cursor:pointer; inset:0; background:var(--primary); border-radius:26px; transition:var(--transition);"></span>
+                        <span style="position:absolute; content:''; height:20px; width:20px; left:3px; bottom:3px; background:white; border-radius:50%; transition:var(--transition);"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Study Reminders</h3>
+                        <p style="font-size: 14px; color: var(--text-muted);">Get reminded about your study sessions</p>
+                    </div>
+                    <label style="position:relative; display:inline-block; width:50px; height:26px;">
+                        <input type="checkbox" id="studyReminders" style="opacity:0; width:0; height:0;">
+                        <span style="position:absolute; cursor:pointer; inset:0; background:var(--gray-300); border-radius:26px; transition:var(--transition);"></span>
+                        <span style="position:absolute; content:''; height:20px; width:20px; left:3px; bottom:3px; background:white; border-radius:50%; transition:var(--transition);"></span>
+                    </label>
+                </div>
+            </div>
+
+            <button onclick="saveNotifications()" class="btn btn-primary">
+                <i class="fas fa-save"></i> Save Preferences
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let fontSizeLevel = 1;
+        const fontSizes = ['Small', 'Medium', 'Large', 'Extra Large'];
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.tab === tab);
+                b.style.background = b.classList.contains('active') ? 'var(--primary)' : 'transparent';
+                b.style.color = b.classList.contains('active') ? 'white' : 'var(--text-secondary)';
+            });
+            document.querySelectorAll('.tab-content').forEach(c => {
+                c.style.display = c.id === `tab-${tab}` ? 'block' : 'none';
+            });
+        }
+
+        function toggleDarkMode() {
+            const toggle = document.getElementById('darkModeToggle');
+            const status = document.getElementById('darkModeStatus');
+            if (toggle.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                status.innerHTML = 'Dark mode is currently <strong>enabled</strong>';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                status.innerHTML = 'Dark mode is currently <strong>disabled</strong>';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        function changeFontSize(direction) {
+            fontSizeLevel = Math.max(0, Math.min(3, fontSizeLevel + direction));
+            const display = document.getElementById('fontSizeDisplay');
+            display.textContent = fontSizes[fontSizeLevel];
+            const sizes = [14, 16, 18, 20];
+            document.body.style.fontSize = sizes[fontSizeLevel] + 'px';
+            localStorage.setItem('fontSize', fontSizeLevel);
+        }
+
+        function savePreferences() {
+            showToast('Preferences saved!', 'success');
+        }
+
+        function saveNotifications() {
+            showToast('Notification preferences saved!', 'success');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                API.clearToken();
+                localStorage.removeItem('userData');
+                window.location.href = 'index.html';
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
+                <span>${message}</span>
+                <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100px)';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 4000);
+        }
+
+        // Load preferences
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dark mode
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.getElementById('darkModeToggle').checked = true;
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('darkModeStatus').innerHTML = 'Dark mode is currently <strong>enabled</strong>';
+            }
+
+            // Font size
+            const savedFontSize = localStorage.getItem('fontSize');
+            if (savedFontSize) {
+                fontSizeLevel = parseInt(savedFontSize);
+                document.getElementById('fontSizeDisplay').textContent = fontSizes[fontSizeLevel];
+                const sizes = [14, 16, 18, 20];
+                document.body.style.fontSize = sizes[fontSizeLevel] + 'px';
+            }
+
+            // Mobile menu
+            document.getElementById('menuToggle')?.addEventListener('click', function() {
+                document.querySelector('.nav-links').classList.toggle('open');
+            });
+        });
+    </script>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

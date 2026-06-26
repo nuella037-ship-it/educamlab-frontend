@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Detail - EduCamLab</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">📚 EduCamLab</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="policy/about.html">About</a>
+                <a href="policy/faq.html">FAQ</a>
+                <a href="contact.html">Contact</a>
+                <a href="login.html" class="btn btn-primary">Sign In</a>
+                <a href="register.html" class="btn btn-secondary">Get Started</a>
+            </div>
+            <button class="mobile-menu-btn" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <div style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+        <!-- Breadcrumb -->
+        <div style="display:flex; gap:8px; font-size:14px; color:var(--text-muted); margin-bottom:24px; flex-wrap:wrap;">
+            <a href="index.html" style="color:var(--primary);">Home</a>
+            <span>/</span>
+            <a href="courses.html" style="color:var(--primary);">Courses</a>
+            <span>/</span>
+            <span id="breadcrumbExam" style="font-weight:500;">O Level</span>
+            <span>/</span>
+            <span id="breadcrumbSubject" style="color:var(--text-primary); font-weight:600;">Subject Name</span>
+        </div>
+
+        <div id="loadingState" style="text-align:center; padding:60px 20px;">
+            <div class="spinner" style="margin:0 auto; width:40px; height:40px; border:4px solid var(--border-color); border-top-color:var(--primary); border-radius:50%; animation:spin 0.8s linear infinite;"></div>
+            <p style="color:var(--text-muted); margin-top:12px;">Loading course details...</p>
+        </div>
+
+        <div id="errorState" style="display:none; text-align:center; padding:60px 20px;">
+            <i class="fas fa-exclamation-circle" style="font-size:48px; color:var(--danger); display:block; margin-bottom:16px;"></i>
+            <h2>Course Not Found</h2>
+            <p style="color:var(--text-muted);">The course you're looking for doesn't exist.</p>
+            <a href="courses.html" class="btn btn-primary" style="margin-top:16px;">
+                <i class="fas fa-arrow-left"></i> Browse Courses
+            </a>
+        </div>
+
+        <div id="courseContent" style="display:none;">
+            <div style="display:grid; grid-template-columns:2fr 1fr; gap:40px;">
+                <!-- Main Content -->
+                <div style="background:var(--bg-card); border-radius:var(--border-radius); padding:32px; border:1px solid var(--border-color); box-shadow:var(--shadow);">
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap;">
+                        <span id="courseIcon" style="font-size:32px;">📚</span>
+                        <span id="courseBadge" class="badge badge-success">O Level</span>
+                        <span id="courseCode" class="badge badge-info">Code: 0505</span>
+                    </div>
+                    <h1 id="courseTitle" style="font-size:28px; font-weight:800;">Subject Name</h1>
+                    <p id="courseDescription" style="color:var(--text-muted); margin-bottom:16px;">Course description goes here.</p>
+
+                    <div id="courseMeta" style="display:flex; gap:24px; flex-wrap:wrap; padding:16px 0; border-top:1px solid var(--border-color); border-bottom:1px solid var(--border-color); margin-bottom:20px;">
+                        <div><span style="color:var(--text-muted);">Level</span> <strong id="metaLevel">O Level</strong></div>
+                        <div><span style="color:var(--text-muted);">Papers</span> <strong id="metaPapers">3</strong></div>
+                        <div><span style="color:var(--text-muted);">Students</span> <strong id="metaStudents">1,234</strong></div>
+                        <div><span style="color:var(--text-muted);">Rating</span> <strong id="metaRating">⭐ 4.5</strong></div>
+                    </div>
+
+                    <div id="courseDetails" style="margin-bottom:20px;">
+                        <h3 style="font-size:18px; font-weight:700; margin-bottom:12px;">📋 Course Details</h3>
+                        <div id="detailGrid" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <div id="papersSection" style="display:none; margin-bottom:20px;">
+                        <h3 style="font-size:18px; font-weight:700; margin-bottom:12px;">📄 Past Papers</h3>
+                        <div id="papersList" style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <div id="yearsSection" style="display:none; margin-bottom:20px;">
+                        <h3 style="font-size:18px; font-weight:700; margin-bottom:12px;">📅 Available Years</h3>
+                        <div id="yearsTags" style="display:flex; flex-wrap:wrap; gap:8px;">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <div style="margin-top:24px; padding-top:24px; border-top:1px solid var(--border-color);">
+                        <h3 style="font-size:18px; font-weight:700; margin-bottom:12px;">⭐ Leave a Review</h3>
+                        <div style="display:flex; gap:4px; margin-bottom:12px;">
+                            <span class="star" data-value="1" onclick="setRating(1)" style="font-size:28px; cursor:pointer; color:var(--gray-300); transition:var(--transition);">★</span>
+                            <span class="star" data-value="2" onclick="setRating(2)" style="font-size:28px; cursor:pointer; color:var(--gray-300); transition:var(--transition);">★</span>
+                            <span class="star" data-value="3" onclick="setRating(3)" style="font-size:28px; cursor:pointer; color:var(--gray-300); transition:var(--transition);">★</span>
+                            <span class="star" data-value="4" onclick="setRating(4)" style="font-size:28px; cursor:pointer; color:var(--gray-300); transition:var(--transition);">★</span>
+                            <span class="star" data-value="5" onclick="setRating(5)" style="font-size:28px; cursor:pointer; color:var(--gray-300); transition:var(--transition);">★</span>
+                        </div>
+                        <textarea id="reviewText" rows="3" placeholder="Share your experience..." style="width:100%; padding:12px 16px; border:2px solid var(--border-color); border-radius:8px; font-family:inherit; font-size:14px; resize:vertical; min-height:80px; background:var(--bg-primary); color:var(--text-primary);"></textarea>
+                        <button onclick="submitReview()" class="btn btn-primary" style="margin-top:8px;">
+                            <i class="fas fa-paper-plane"></i> Submit Review
+                        </button>
+                        <div id="reviewMessage" style="margin-top:12px;"></div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div style="position:sticky; top:100px; align-self:start;">
+                    <div style="background:var(--bg-card); border-radius:var(--border-radius); padding:24px; border:1px solid var(--border-color); box-shadow:var(--shadow-lg);">
+                        <div style="text-align:center; padding:16px 0;">
+                            <div id="coursePrice" style="font-size:36px; font-weight:900; color:var(--success);">Free</div>
+                            <div style="font-size:14px; color:var(--text-muted);">Full Access</div>
+                        </div>
+
+                        <button id="enrollBtn" class="btn btn-primary btn-block" onclick="enrollCourse()">
+                            <i class="fas fa-user-plus"></i> Enroll Now
+                        </button>
+                        <button class="btn btn-secondary btn-block" onclick="window.location.href='courses.html'" style="margin-top:8px;">
+                            <i class="fas fa-arrow-left"></i> Browse More
+                        </button>
+
+                        <ul style="list-style:none; padding:0; margin:16px 0 0; border-top:1px solid var(--border-color); padding-top:16px;">
+                            <li style="display:flex; align-items:center; gap:10px; padding:6px 0; font-size:14px; color:var(--text-secondary);">
+                                <i class="fas fa-check-circle" style="color:var(--success);"></i> Full course access
+                            </li>
+                            <li style="display:flex; align-items:center; gap:10px; padding:6px 0; font-size:14px; color:var(--text-secondary);">
+                                <i class="fas fa-check-circle" style="color:var(--success);"></i> Past questions
+                            </li>
+                            <li style="display:flex; align-items:center; gap:10px; padding:6px 0; font-size:14px; color:var(--text-secondary);">
+                                <i class="fas fa-check-circle" style="color:var(--success);"></i> Revision pamphlets
+                            </li>
+                            <li style="display:flex; align-items:center; gap:10px; padding:6px 0; font-size:14px; color:var(--text-secondary);">
+                                <i class="fas fa-check-circle" style="color:var(--success);"></i> Interactive quizzes
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Courses -->
+            <div id="relatedSection" style="margin-top:40px; padding-top:32px; border-top:1px solid var(--border-color);">
+                <h3 style="font-size:20px; font-weight:700; margin-bottom:16px;">🎯 Related Courses</h3>
+                <div id="relatedGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:16px;">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentCourse = null;
+        let selectedRating = 0;
+
+        // Course data (same as courses.html)
+        const courseData = [
+            // O Level
+            { id: 'o-accounting', title: 'Accounting', exam: 'o-level', level: 'O Level', code: '0505', icon: '📊', papers: 3, description: 'Complete Accounting O Level resources.', popular: true },
+            { id: 'o-biology', title: 'Biology', exam: 'o-level', level: 'O Level', code: '0510', icon: '🔬', papers: 3, description: 'Complete Biology O Level resources.', popular: true },
+            { id: 'o-chemistry', title: 'Chemistry', exam: 'o-level', level: 'O Level', code: '0515', icon: '⚗️', papers: 3, description: 'Complete Chemistry O Level resources.', popular: true },
+            { id: 'o-mathematics', title: 'Mathematics', exam: 'o-level', level: 'O Level', code: '0570', icon: '📐', papers: 2, description: 'Complete Mathematics O Level resources.', popular: true },
+            { id: 'o-physics', title: 'Physics', exam: 'o-level', level: 'O Level', code: '0580', icon: '⚡', papers: 3, description: 'Complete Physics O Level resources.', popular: true },
+            { id: 'o-english', title: 'English Language', exam: 'o-level', level: 'O Level', code: '0530', icon: '📝', papers: 2, description: 'Complete English O Level resources.', popular: true },
+            { id: 'o-french', title: 'French', exam: 'o-level', level: 'O Level', code: '0545', icon: '🇫🇷', papers: 3, description: 'Complete French O Level resources.', popular: false },
+            { id: 'o-geography', title: 'Geography', exam: 'o-level', level: 'O Level', code: '0550', icon: '🌍', papers: 2, description: 'Complete Geography O Level resources.', popular: true },
+            { id: 'o-history', title: 'History', exam: 'o-level', level: 'O Level', code: '0592', icon: '📜', papers: 1, description: 'Complete History O Level resources.', popular: false },
+            { id: 'o-economics', title: 'Economics', exam: 'o-level', level: 'O Level', code: '0525', icon: '📈', papers: 2, description: 'Complete Economics O Level resources.', popular: false },
+            { id: 'o-commerce', title: 'Commerce', exam: 'o-level', level: 'O Level', code: '0590', icon: '💼', papers: 1, description: 'Complete Commerce O Level resources.', popular: false },
+            { id: 'o-computer-science', title: 'Computer Science', exam: 'o-level', level: 'O Level', code: '0595', icon: '💻', papers: 3, description: 'Complete Computer Science O Level resources.', popular: true },
+
+            // A Level
+            { id: 'a-accounting', title: 'Accounting', exam: 'a-level', level: 'A Level', code: 'A0505', icon: '📊', papers: 3, description: 'Advanced Accounting resources.', popular: true },
+            { id: 'a-biology', title: 'Biology', exam: 'a-level', level: 'A Level', code: 'A0510', icon: '🧬', papers: 3, description: 'Advanced Biology resources.', popular: true },
+            { id: 'a-chemistry', title: 'Chemistry', exam: 'a-level', level: 'A Level', code: 'A0515', icon: '⚗️', papers: 3, description: 'Advanced Chemistry resources.', popular: true },
+            { id: 'a-mathematics', title: 'Mathematics', exam: 'a-level', level: 'A Level', code: 'A0570', icon: '📐', papers: 3, description: 'Advanced Mathematics resources.', popular: true },
+            { id: 'a-physics', title: 'Physics', exam: 'a-level', level: 'A Level', code: 'A0580', icon: '⚡', papers: 3, description: 'Advanced Physics resources.', popular: true },
+            { id: 'a-economics', title: 'Economics', exam: 'a-level', level: 'A Level', code: 'A0525', icon: '📈', papers: 2, description: 'Advanced Economics resources.', popular: true },
+            { id: 'a-english', title: 'English Language', exam: 'a-level', level: 'A Level', code: 'A0530', icon: '📝', papers: 3, description: 'Advanced English resources.', popular: true },
+            { id: 'a-french', title: 'French', exam: 'a-level', level: 'A Level', code: 'A0545', icon: '🇫🇷', papers: 3, description: 'Advanced French resources.', popular: false },
+            { id: 'a-geography', title: 'Geography', exam: 'a-level', level: 'A Level', code: 'A0550', icon: '🌍', papers: 2, description: 'Advanced Geography resources.', popular: false },
+            { id: 'a-history', title: 'History', exam: 'a-level', level: 'A Level', code: 'A0595', icon: '📜', papers: 1, description: 'Advanced History resources.', popular: false },
+            { id: 'a-computer-science', title: 'Computer Science', exam: 'a-level', level: 'A Level', code: 'A0595', icon: '💻', papers: 3, description: 'Advanced Computer Science resources.', popular: true },
+        ];
+
+        function getCourseById(id) {
+            return courseData.find(c => c.id === id);
+        }
+
+        function getRelatedCourses(course, limit = 4) {
+            return courseData.filter(c => c.id !== course.id && c.exam === course.exam).slice(0, limit);
+        }
+
+        function renderCourseDetail(course) {
+            document.getElementById('breadcrumbExam').textContent = course.exam.toUpperCase();
+            document.getElementById('breadcrumbSubject').textContent = course.title;
+            document.getElementById('courseIcon').textContent = course.icon;
+            document.getElementById('courseBadge').textContent = course.level;
+            document.getElementById('courseBadge').className = `badge ${course.exam === 'o-level' ? 'badge-success' : 'badge-info'}`;
+            document.getElementById('courseCode').textContent = `Code: ${course.code}`;
+            document.getElementById('courseTitle').textContent = course.title;
+            document.getElementById('courseDescription').textContent = course.description;
+            document.getElementById('metaLevel').textContent = course.level;
+            document.getElementById('metaPapers').textContent = course.papers;
+
+            // Details
+            const details = [
+                { label: 'Level', value: course.level },
+                { label: 'Code', value: course.code },
+                { label: 'Papers', value: course.papers },
+                { label: 'Exam', value: course.exam.toUpperCase() }
+            ];
+            document.getElementById('detailGrid').innerHTML = details.map(d => `
+                <div style="padding:8px 12px; background:var(--bg-secondary); border-radius:8px; display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:14px; color:var(--text-muted);">${d.label}</span>
+                    <span style="font-weight:600;">${d.value}</span>
+                </div>
+            `).join('');
+
+            // Papers
+            const papersSection = document.getElementById('papersSection');
+            const papersList = document.getElementById('papersList');
+            if (course.papers > 0) {
+                papersSection.style.display = 'block';
+                const paperNames = ['Paper 1', 'Paper 2', 'Paper 3'].slice(0, course.papers);
+                papersList.innerHTML = paperNames.map(p => `
+                    <div onclick="viewPaper('${p}')" style="display:flex; align-items:center; gap:12px; padding:12px 16px; background:var(--bg-secondary); border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:var(--transition);">
+                        <span style="font-size:18px;">📄</span>
+                        <span style="font-weight:500;">${p}</span>
+                        <span style="margin-left:auto; font-size:12px; color:var(--text-muted);">2024</span>
+                    </div>
+                `).join('');
+            } else {
+                papersSection.style.display = 'none';
+            }
+
+            // Years
+            const yearsSection = document.getElementById('yearsSection');
+            const yearsTags = document.getElementById('yearsTags');
+            const years = ['2018', '2019', '2020', '2021', '2022', '2023', '2024'];
+            if (years.length > 0) {
+                yearsSection.style.display = 'block';
+                yearsTags.innerHTML = years.map(y => `
+                    <span onclick="viewYear('${y}')" style="padding:6px 16px; background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:20px; font-size:13px; cursor:pointer; transition:var(--transition);">
+                        ${y}
+                    </span>
+                `).join('');
+            } else {
+                yearsSection.style.display = 'none';
+            }
+
+            // Price
+            document.getElementById('coursePrice').textContent = 'Free';
+
+            // Related
+            const related = getRelatedCourses(course);
+            const relatedGrid = document.getElementById('relatedGrid');
+            if (related.length > 0) {
+                relatedGrid.innerHTML = related.map(c => `
+                    <div onclick="window.location.href='course-detail.html?id=${c.id}'" style="background:var(--bg-card); border-radius:var(--border-radius); padding:16px; border:1px solid var(--border-color); cursor:pointer; transition:var(--transition);">
+                        <div style="font-size:32px;">${c.icon}</div>
+                        <h4 style="font-size:14px; font-weight:600; margin:8px 0 4px;">${c.title}</h4>
+                        <p style="font-size:13px; color:var(--text-muted);">${c.level}</p>
+                    </div>
+                `).join('');
+            } else {
+                relatedGrid.innerHTML = `<p style="color:var(--text-muted);">No related courses found.</p>`;
+            }
+        }
+
+        function viewPaper(paper) {
+            if (!Auth.isAuthenticated()) {
+                showToast('Please login to access past questions', 'info');
+                return;
+            }
+            showToast(`📄 Viewing: ${paper}`, 'success');
+        }
+
+        function viewYear(year) {
+            if (!Auth.isAuthenticated()) {
+                showToast('Please login to access past questions', 'info');
+                return;
+            }
+            showToast(`📅 Viewing past questions from ${year}`, 'success');
+        }
+
+        function enrollCourse() {
+            if (!Auth.isAuthenticated()) {
+                if (confirm('Please login to enroll in this course.')) {
+                    window.location.href = 'login.html';
+                }
+                return;
+            }
+            showToast('🎓 Enrolled successfully! Full access granted.', 'success');
+        }
+
+        function setRating(rating) {
+            selectedRating = rating;
+            document.querySelectorAll('.star').forEach(star => {
+                const value = parseInt(star.dataset.value);
+                star.style.color = value <= rating ? '#f59e0b' : 'var(--gray-300)';
+            });
+        }
+
+        function submitReview() {
+            if (!Auth.isAuthenticated()) {
+                if (confirm('Please login to leave a review.')) {
+                    window.location.href = 'login.html';
+                }
+                return;
+            }
+
+            if (selectedRating === 0) {
+                document.getElementById('reviewMessage').innerHTML = `<div class="message error">❌ Please select a rating</div>`;
+                return;
+            }
+
+            const text = document.getElementById('reviewText').value.trim();
+            if (!text) {
+                document.getElementById('reviewMessage').innerHTML = `<div class="message error">❌ Please write a review</div>`;
+                return;
+            }
+
+            document.getElementById('reviewMessage').innerHTML = `<div class="message success">✅ Review submitted successfully!</div>`;
+            setRating(0);
+            document.getElementById('reviewText').value = '';
+            setTimeout(() => {
+                document.getElementById('reviewMessage').innerHTML = '';
+            }, 3000);
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            if (!container) {
+                const newContainer = document.createElement('div');
+                newContainer.className = 'toast-container';
+                newContainer.id = 'toastContainer';
+                document.body.appendChild(newContainer);
+                return showToast(message, type);
+            }
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
+                <span>${message}</span>
+                <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100px)';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 4000);
+        }
+
+        // Load course
+        function loadCourse() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+
+            if (!id) {
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('errorState').style.display = 'block';
+                return;
+            }
+
+            const course = getCourseById(id);
+            if (!course) {
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('errorState').style.display = 'block';
+                return;
+            }
+
+            currentCourse = course;
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('courseContent').style.display = 'block';
+            renderCourseDetail(course);
+        }
+
+        // Mobile menu
+        document.getElementById('menuToggle')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+
+        // Init
+        document.addEventListener('DOMContentLoaded', loadCourse);
+    </script>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

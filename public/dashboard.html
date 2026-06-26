@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - EduCamLab</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">📚 EduCamLab</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="profile.html">Profile</a>
+                <a href="settings.html">Settings</a>
+                <a href="#" onclick="logout()" style="color: var(--danger);">Logout</a>
+            </div>
+            <button class="mobile-menu-btn" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <!-- Welcome -->
+        <div class="welcome-card">
+            <div>
+                <h1 id="greeting">👋 Good morning, <span id="userName">Student</span></h1>
+                <p>Continue your exam preparation journey</p>
+            </div>
+            <div class="user-avatar" id="userAvatar">S</div>
+        </div>
+
+        <!-- PIN Status -->
+        <div class="pin-card" id="pinCard">
+            <div class="pin-info">
+                <span class="pin-icon">🔑</span>
+                <div>
+                    <span class="pin-label">Your PIN</span>
+                    <span class="pin-value" id="userPin">No PIN assigned</span>
+                </div>
+                <span class="pin-status" id="pinStatus">Inactive</span>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-icon">📚</span>
+                <span class="stat-number" id="enrolledCount">0</span>
+                <span class="stat-label">Enrolled</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">✅</span>
+                <span class="stat-number" id="completedCount">0</span>
+                <span class="stat-label">Completed</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">📊</span>
+                <span class="stat-number" id="progressPercent">0%</span>
+                <span class="stat-label">Progress</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">🏆</span>
+                <span class="stat-number" id="streakCount">0</span>
+                <span class="stat-label">Day Streak</span>
+            </div>
+        </div>
+
+        <!-- Recent Courses -->
+        <div class="section-header">
+            <h2>📖 Your Courses</h2>
+            <a href="courses.html">View All →</a>
+        </div>
+        <div class="course-grid" id="recentCourses">
+            <p style="color: var(--text-muted); text-align:center; padding:40px;">No courses enrolled yet. <a href="courses.html">Browse courses</a></p>
+        </div>
+
+        <!-- Quick Access -->
+        <div class="section-header">
+            <h2>⚡ Quick Access</h2>
+        </div>
+        <div class="quick-grid">
+            <div class="quick-card" onclick="window.location.href='courses.html?exam=o-level'">
+                <span>📘</span>
+                <h4>O Level</h4>
+            </div>
+            <div class="quick-card" onclick="window.location.href='courses.html?exam=a-level'">
+                <span>📗</span>
+                <h4>A Level</h4>
+            </div>
+            <div class="quick-card" onclick="window.location.href='courses.html?exam=bacc'">
+                <span>📕</span>
+                <h4>BACC</h4>
+            </div>
+            <div class="quick-card" onclick="window.location.href='courses.html?exam=bepc'">
+                <span>📙</span>
+                <h4>BEPC</h4>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Logout
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                API.clearToken();
+                localStorage.removeItem('userData');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

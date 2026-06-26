@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - EduCamLab</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">📚 EduCamLab</div>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="../courses.html">Courses</a>
+                <a href="about.html">About</a>
+                <a href="faq.html">FAQ</a>
+                <a href="../contact.html">Contact</a>
+                <a href="../login.html" class="btn btn-primary">Sign In</a>
+                <a href="../register.html" class="btn btn-secondary">Get Started</a>
+            </div>
+            <button class="mobile-menu-btn" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <div style="max-width:800px; margin:40px auto; padding:0 20px 60px;">
+        <div style="background:var(--bg-card); border-radius:var(--border-radius); padding:40px; border:1px solid var(--border-color); box-shadow:var(--shadow);">
+            <h1 style="font-size:32px; font-weight:800; margin-bottom:8px; color:var(--text-primary);">Terms of Service</h1>
+            <p style="color:var(--text-muted); font-size:14px; margin-bottom:24px;">Last Updated: June 2026</p>
+
+            <p>Welcome to EduCamLab! By using our platform, you agree to the following terms and conditions.</p>
+
+            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">1. Acceptance of Terms</h2>
+            <p style="color:var(--text-secondary);">By accessing or using EduCamLab, you agree to be bound by these Terms of Service.</p>
+
+            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">2. User Accounts</h2>
+            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
+                <li>You must provide accurate and complete information when creating an account.</li>
+                <li>You are responsible for maintaining the security of your account credentials.</li>
+                <li>You must be at least 13 years old to use our platform.</li>
+                <li>Your phone number is your primary identifier.</li>
+            </ul>
+
+            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">3. PIN and Access</h2>
+            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
+                <li>Your access PIN is provided by the administrator after payment confirmation.</li>
+                <li>You are responsible for keeping your PIN secure.</li>
+                <li>Do not share your PIN with others.</li>
+                <li>We reserve the right to revoke PINs for security reasons.</li>
+            </ul>
+
+            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">4. Subscription & Payments</h2>
+            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
+                <li>Subscription plans are billed in advance on a daily, weekly, monthly, or annual basis.</li>
+                <li>All payments are processed securely through our payment partners.</li>
+                <li>Refunds are available within 30 days of purchase for unused subscriptions.</li>
+            </ul>
+
+            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">5. Content & Intellectual Property</h2>
+            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
+                <li>All content on EduCamLab is owned by EduCamLab or our content partners.</li>
+                <li>You may access and use content for personal, non-commercial purposes.</li>
+                <li>You may not reproduce, distribute, or modify content without permission.</li>
+            </ul>
+
+            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">6. Termination</h2>
+            <p style="color:var(--text-secondary);">We reserve the right to suspend or terminate accounts that violate these terms.</p>
+
+            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">7. Contact Us</h2>
+            <p style="color:var(--text-secondary);">If you have questions about these terms, please <a href="../contact.html" style="color:var(--primary);">contact us</a>.</p>
+
+            <a href="../index.html" style="display:inline-block; margin-top:24px; color:var(--primary); text-decoration:none; font-weight:500;"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('menuToggle')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+    </script>
+
+    <script src="../js/config.js"></script>
+</body>
+</html>

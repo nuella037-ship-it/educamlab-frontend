@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS Broadcast - EduCamLab</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <span class="brand-icon">📚</span>
+                <span class="brand-text">EduCamLab</span>
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="index.html">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="users.html">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                    <span class="nav-badge" id="userCount">0</span>
+                </a>
+                <a href="courses.html">
+                    <i class="fas fa-book"></i>
+                    <span>Courses</span>
+                    <span class="nav-badge" id="courseCount">0</span>
+                </a>
+                <a href="messages.html">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                    <span class="nav-badge badge-danger" id="messageCount">0</span>
+                </a>
+                <a href="payments.html">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                    <span class="nav-badge badge-danger" id="pendingCount">0</span>
+                </a>
+                <a href="activity.html">
+                    <i class="fas fa-history"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="data-import.html">
+                    <i class="fas fa-database"></i>
+                    <span>Data Manager</span>
+                </a>
+                <a href="settings.html">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="broadcast.html" class="active">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>SMS Broadcast</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar-small" id="adminAvatar">A</div>
+                    <div class="user-details">
+                        <span class="user-name" id="adminName">Admin</span>
+                        <span class="user-role">Administrator</span>
+                    </div>
+                </div>
+                <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div>
+                        <h1><i class="fas fa-bullhorn"></i> SMS Broadcast</h1>
+                        <span class="subtitle">
+                            <i class="fas fa-clock"></i>
+                            <span id="currentDateTime"></span>
+                            <span style="margin-left: 12px; color: var(--text-muted);">
+                                <i class="fas fa-sms"></i> 
+                                Send bulk SMS to users
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <button onclick="refreshBroadcast()" class="btn-secondary" title="Refresh">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button onclick="exportSmsHistory()" class="btn-secondary">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </header>
+
+            <!-- Quick Stats -->
+            <section class="quick-stats" id="broadcastStats">
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #dbeafe; color: #3b82f6;">
+                        <i class="fas fa-sms"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="totalSent">0</span>
+                        <span class="quick-stat-label">Total SMS Sent</span>
+                    </div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #d1fae5; color: #10b981;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="deliveredCount">0</span>
+                        <span class="quick-stat-label">Delivered</span>
+                    </div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #fef3c7; color: #f59e0b;">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="pendingCount">0</span>
+                        <span class="quick-stat-label">Pending</span>
+                    </div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #fce4ec; color: #ef4444;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="failedCount">0</span>
+                        <span class="quick-stat-label">Failed</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Create SMS Broadcast -->
+            <div class="card" style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 24px;">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h3 class="card-title" style="font-size: 18px; font-weight: 600;"><i class="fas fa-plus-circle"></i> Send SMS Broadcast</h3>
+                    <span class="badge badge-info" id="smsCharCount">0 / 160 characters</span>
+                </div>
+                <div class="card-body">
+                    <form id="broadcastForm" onsubmit="sendBroadcast(event)">
+                        <!-- Audience Selection -->
+                        <div class="form-group">
+                            <label>Recipients <span style="color: var(--danger);">*</span></label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                                <label class="audience-option" style="padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all var(--transition); text-align: center;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border-color)'">
+                                    <input type="radio" name="audience" value="all" checked onchange="updateRecipientCount()">
+                                    <div style="font-size: 24px;">👥</div>
+                                    <div style="font-weight: 600;">All Users</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);" id="countAll">0 users</div>
+                                </label>
+                                <label class="audience-option" style="padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all var(--transition); text-align: center;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border-color)'">
+                                    <input type="radio" name="audience" value="verified" onchange="updateRecipientCount()">
+                                    <div style="font-size: 24px;">✅</div>
+                                    <div style="font-weight: 600;">Verified Users</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);" id="countVerified">0 users</div>
+                                </label>
+                                <label class="audience-option" style="padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all var(--transition); text-align: center;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border-color)'">
+                                    <input type="radio" name="audience" value="subscribed" onchange="updateRecipientCount()">
+                                    <div style="font-size: 24px;">💳</div>
+                                    <div style="font-weight: 600;">Subscribed</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);" id="countSubscribed">0 users</div>
+                                </label>
+                                <label class="audience-option" style="padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all var(--transition); text-align: center;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border-color)'">
+                                    <input type="radio" name="audience" value="admins" onchange="updateRecipientCount()">
+                                    <div style="font-size: 24px;">🛡️</div>
+                                    <div style="font-weight: 600;">Admins Only</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);" id="countAdmins">0 users</div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Custom Recipients -->
+                        <div class="form-group">
+                            <label>Or enter custom phone numbers</label>
+                            <textarea id="customPhones" rows="2" placeholder="677123456, 699987654, 655111222" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); background: var(--bg-primary); color: var(--text-primary); font-size: 14px;"></textarea>
+                            <small class="form-hint">Separate numbers with commas. Leave empty to use the selected audience above.</small>
+                        </div>
+
+                        <!-- SMS Templates -->
+                        <div class="form-group">
+                            <label>SMS Templates</label>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                <button type="button" onclick="insertTemplate('welcome')" class="btn-sm btn-secondary">👋 Welcome</button>
+                                <button type="button" onclick="insertTemplate('pin')" class="btn-sm btn-secondary">🔑 PIN</button>
+                                <button type="button" onclick="insertTemplate('payment')" class="btn-sm btn-secondary">💳 Payment Confirmed</button>
+                                <button type="button" onclick="insertTemplate('reminder')" class="btn-sm btn-secondary">⏰ Reminder</button>
+                                <button type="button" onclick="insertTemplate('promo')" class="btn-sm btn-secondary">🎉 Promo</button>
+                                <button type="button" onclick="insertTemplate('exam')" class="btn-sm btn-secondary">📝 Exam Info</button>
+                            </div>
+                        </div>
+
+                        <!-- Message -->
+                        <div class="form-group">
+                            <label>Message <span style="color: var(--danger);">*</span></label>
+                            <textarea id="broadcastMessage" rows="4" required placeholder="Type your SMS message here..." oninput="updateSmsCounter()" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); background: var(--bg-primary); color: var(--text-primary); font-size: 14px; min-height: 120px;"></textarea>
+                            <div style="display: flex; justify-content: space-between; margin-top: 4px;">
+                                <small class="form-hint"><span id="smsCharCountDisplay">0</span> characters • <span id="smsParts">1</span> SMS part(s)</small>
+                                <small class="form-hint" id="smsWarning" style="color: var(--warning); display: none;">⚠️ Message will be split into multiple SMS</small>
+                            </div>
+                        </div>
+
+                        <!-- Preview -->
+                        <div class="form-group">
+                            <label>Preview</label>
+                            <div id="messagePreview" style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; border: 1px solid var(--border-color); min-height: 80px; color: var(--text-secondary); white-space: pre-wrap; font-family: monospace; font-size: 14px;">
+                                <p style="color: var(--text-muted);">Your SMS preview will appear here...</p>
+                            </div>
+                        </div>
+
+                        <!-- Options -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Sender ID</label>
+                                <input type="text" id="smsSenderId" placeholder="EduCamLab" maxlength="11" value="EduCamLab">
+                                <small class="form-hint">Max 11 characters</small>
+                            </div>
+                            <div class="form-group">
+                                <label>Options</label>
+                                <div class="checkbox-group">
+                                    <label><input type="checkbox" id="sendTestSms" checked> Send test SMS to admin first</label>
+                                    <label><input type="checkbox" id="scheduleSms"> Schedule for later</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Schedule -->
+                        <div id="scheduleOptions" style="display: none;" class="form-group">
+                            <label>Schedule Date & Time</label>
+                            <input type="datetime-local" id="scheduleDateTime">
+                        </div>
+
+                        <div class="form-actions" style="display: flex; gap: 12px; margin-top: 20px;">
+                            <button type="submit" class="btn-primary" id="sendBroadcastBtn">
+                                <i class="fas fa-paper-plane"></i> Send SMS
+                            </button>
+                            <button type="button" onclick="clearBroadcastForm()" class="btn-secondary">
+                                <i class="fas fa-undo"></i> Clear
+                            </button>
+                            <button type="button" onclick="testSms()" class="btn-secondary">
+                                <i class="fas fa-phone"></i> Test SMS
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- SMS History -->
+            <div class="card" style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 24px;">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h3 class="card-title" style="font-size: 18px; font-weight: 600;"><i class="fas fa-history"></i> SMS History</h3>
+                    <div style="display: flex; gap: 8px;">
+                        <select id="smsFilter" onchange="loadSmsHistory()" class="filter-select" style="padding: 4px 8px; font-size: 12px; min-width: 120px;">
+                            <option value="all">All</option>
+                            <option value="sent">✅ Sent</option>
+                            <option value="delivered">📨 Delivered</option>
+                            <option value="failed">❌ Failed</option>
+                            <option value="pending">⏳ Pending</option>
+                        </select>
+                        <button onclick="loadSmsHistory()" class="btn-sm btn-secondary">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Recipients</th>
+                                    <th>Message</th>
+                                    <th>Sent</th>
+                                    <th>Delivered</th>
+                                    <th>Failed</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="smsHistoryBody">
+                                <tr>
+                                    <td colspan="8" class="text-center">
+                                        <div class="loading-spinner"></div>
+                                        Loading SMS history...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-footer">
+                        <div class="table-info" id="historyInfo">Showing 0 SMS broadcasts</div>
+                        <div class="pagination" id="historyPagination"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SMS Templates Management -->
+            <div class="card" style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
+                <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="fas fa-file-alt"></i> SMS Templates</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px;">
+                    <div style="padding: 12px; background: var(--bg-secondary); border-radius: 8px; border-left: 3px solid #3b82f6;">
+                        <strong>👋 Welcome</strong>
+                        <p style="font-size: 13px; color: var(--text-muted); margin: 4px 0;">Welcome to EduCamLab! Your account has been created. Use PIN: [PIN] to login.</p>
+                        <button onclick="insertTemplate('welcome')" class="btn-sm btn-secondary">Use</button>
+                    </div>
+                    <div style="padding: 12px; background: var(--bg-secondary); border-radius: 8px; border-left: 3px solid #10b981;">
+                        <strong>🔑 PIN</strong>
+                        <p style="font-size: 13px; color: var(--text-muted); margin: 4px 0;">Your EduCamLab PIN: [PIN]. Use this to login to your account. Valid until [EXPIRY].</p>
+                        <button onclick="insertTemplate('pin')" class="btn-sm btn-secondary">Use</button>
+                    </div>
+                    <div style="padding: 12px; background: var(--bg-secondary); border-radius: 8px; border-left: 3px solid #f59e0b;">
+                        <strong>💳 Payment Confirmed</strong>
+                        <p style="font-size: 13px; color: var(--text-muted); margin: 4px 0;">Payment of [AMOUNT] XAF confirmed for [PLAN] plan. Your PIN: [PIN].</p>
+                        <button onclick="insertTemplate('payment')" class="btn-sm btn-secondary">Use</button>
+                    </div>
+                    <div style="padding: 12px; background: var(--bg-secondary); border-radius: 8px; border-left: 3px solid #8b5cf6;">
+                        <strong>📝 Exam Info</strong>
+                        <p style="font-size: 13px; color: var(--text-muted); margin: 4px 0;">Your O/A Level exam starts [DATE]. Don't forget to bring your ID and PIN.</p>
+                        <button onclick="insertTemplate('exam')" class="btn-sm btn-secondary">Use</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SMS Detail Modal -->
+    <div id="smsModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-info-circle"></i> SMS Details</h2>
+                <button onclick="closeSmsModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="smsDetails">
+                <div class="loading-spinner"></div>
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/broadcast.js"></script>
+</body>
+</html>

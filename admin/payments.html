@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments - EduCamLab Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <span class="brand-icon">📚</span>
+                <span class="brand-text">EduCamLab</span>
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="index.html">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="users.html">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                    <span class="nav-badge" id="userCount">0</span>
+                </a>
+                <a href="courses.html">
+                    <i class="fas fa-book"></i>
+                    <span>Courses</span>
+                </a>
+                <a href="messages.html">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                    <span class="nav-badge badge-danger" id="messageCount">0</span>
+                </a>
+                <a href="payments.html" class="active">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                    <span class="nav-badge badge-danger" id="pendingCount">0</span>
+                </a>
+                <a href="activity.html">
+                    <i class="fas fa-history"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="data-import.html">
+                    <i class="fas fa-database"></i>
+                    <span>Data Manager</span>
+                </a>
+                <a href="settings.html">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="broadcast.html">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>SMS Broadcast</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar-small" id="adminAvatar">A</div>
+                    <div class="user-details">
+                        <span class="user-name" id="adminName">Admin</span>
+                        <span class="user-role">Administrator</span>
+                    </div>
+                </div>
+                <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div>
+                        <h1><i class="fas fa-credit-card"></i> Cash Payments</h1>
+                        <span class="subtitle">
+                            <i class="fas fa-clock"></i>
+                            <span id="currentDateTime"></span>
+                            <span style="margin-left: 12px; color: var(--text-muted);">
+                                <i class="fas fa-money-bill-wave"></i> 
+                                Cash/Offline Payments Only
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <button onclick="refreshPayments()" class="btn-secondary" title="Refresh">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button onclick="exportPayments()" class="btn-secondary">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </header>
+
+            <!-- Quick Stats -->
+            <section class="quick-stats" id="paymentStats">
+                <div class="quick-stat" onclick="document.getElementById('statusFilter').value=''; loadPayments();" style="cursor:pointer;">
+                    <div class="quick-stat-icon" style="background: #dbeafe; color: #3b82f6;">
+                        <i class="fas fa-receipt"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="totalPayments">0</span>
+                        <span class="quick-stat-label">Total Payments</span>
+                    </div>
+                </div>
+                <div class="quick-stat" onclick="document.getElementById('statusFilter').value='completed'; loadPayments();" style="cursor:pointer;">
+                    <div class="quick-stat-icon" style="background: #d1fae5; color: #10b981;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="confirmedPayments">0</span>
+                        <span class="quick-stat-label">Confirmed</span>
+                    </div>
+                </div>
+                <div class="quick-stat" onclick="document.getElementById('statusFilter').value='pending'; loadPayments();" style="cursor:pointer;">
+                    <div class="quick-stat-icon" style="background: #fef3c7; color: #f59e0b;">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="pendingPayments">0</span>
+                        <span class="quick-stat-label">Pending</span>
+                    </div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #fce4ec; color: #ef4444;">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="totalRevenue">0 XAF</span>
+                        <span class="quick-stat-label">Total Revenue</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Info Banner -->
+            <div style="padding: 12px 16px; background: #dbeafe; border-radius: 8px; border-left: 4px solid #3b82f6; margin-bottom: 16px; display: flex; align-items: center; gap: 12px;">
+                <i class="fas fa-info-circle" style="color: #1e40af; font-size: 18px;"></i>
+                <div>
+                    <span style="font-weight: 600; color: #1e40af;">Cash Payment Flow:</span>
+                    <span style="color: #1e40af; font-size: 14px;">
+                        User requests payment → Admin receives cash → Admin generates PIN → User receives PIN
+                    </span>
+                </div>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search by user, phone, transaction..." oninput="loadPayments()">
+                    </div>
+                </div>
+                <div class="toolbar-right">
+                    <div class="filter-group">
+                        <select id="statusFilter" onchange="loadPayments()" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="pending">⏳ Pending</option>
+                            <option value="completed">✅ Confirmed</option>
+                            <option value="cancelled">❌ Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <select id="planFilter" onchange="loadPayments()" class="filter-select">
+                            <option value="">All Plans</option>
+                            <option value="daily">☀️ Daily</option>
+                            <option value="weekly">📅 Weekly</option>
+                            <option value="monthly">📆 Monthly</option>
+                            <option value="annual">📈 Annual</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <select id="dateFilter" onchange="loadPayments()" class="filter-select">
+                            <option value="all">All Time</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payments Table -->
+            <div class="table-container">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Phone</th>
+                                <th>Plan</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentsTableBody">
+                            <tr>
+                                <td colspan="8" class="text-center">
+                                    <div class="loading-spinner"></div>
+                                    Loading payments...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <div class="table-info" id="tableInfo">Showing 0 of 0 payments</div>
+                    <div class="pagination" id="pagination"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Generate PIN Modal (Admin confirms cash received) -->
+    <div id="generatePinModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-key"></i> Generate PIN</h2>
+                <button onclick="closeGeneratePinModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="pinUserInfo">
+                <div class="loading-spinner"></div>
+                Loading...
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeGeneratePinModal()" class="btn-secondary">Cancel</button>
+                <button onclick="confirmGeneratePin()" class="btn-success">
+                    <i class="fas fa-check"></i> Confirm Cash Received & Generate PIN
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Details Modal -->
+    <div id="paymentDetailsModal" class="modal">
+        <div class="modal-content" style="max-width: 550px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-info-circle"></i> Payment Details</h2>
+                <button onclick="closePaymentDetailsModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="paymentDetails">
+                <div class="loading-spinner"></div>
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header" style="border-bottom: none;">
+                <h2 style="color: #ef4444;"><i class="fas fa-exclamation-triangle"></i> Confirm Delete</h2>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <p style="font-size: 18px; margin-bottom: 8px;">Delete this payment?</p>
+                <p id="deleteMessage" style="color: var(--text-muted);">This action cannot be undone.</p>
+                <div style="display: flex; gap: 12px; justify-content: center; margin-top: 20px;">
+                    <button onclick="closeDeleteModal()" class="btn-secondary">Cancel</button>
+                    <button onclick="confirmDelete()" class="btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/payments.js"></script>
+</body>
+</html>

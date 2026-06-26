@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - EduCamLab Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <span class="brand-icon">📚</span>
+                <span class="brand-text">EduCamLab</span>
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="index.html">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="users.html">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                    <span class="nav-badge" id="userCount">0</span>
+                </a>
+                <a href="courses.html">
+                    <i class="fas fa-book"></i>
+                    <span>Courses</span>
+                    <span class="nav-badge" id="courseCount">0</span>
+                </a>
+                <a href="messages.html" class="active">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                    <span class="nav-badge badge-danger" id="messageCount">0</span>
+                </a>
+                <a href="payments.html">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                    <span class="nav-badge badge-danger" id="pendingCount">0</span>
+                </a>
+                <a href="activity.html">
+                    <i class="fas fa-history"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="data-import.html">
+                    <i class="fas fa-database"></i>
+                    <span>Data Manager</span>
+                </a>
+                <a href="settings.html">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="bulk-email.html">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Broadcast</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar-small" id="adminAvatar">A</div>
+                    <div class="user-details">
+                        <span class="user-name" id="adminName">Admin</span>
+                        <span class="user-role">Administrator</span>
+                    </div>
+                </div>
+                <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div>
+                        <h1><i class="fas fa-envelope"></i> Contact Messages</h1>
+                        <span class="subtitle">
+                            <i class="fas fa-clock"></i>
+                            <span id="currentDateTime"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <button onclick="refreshMessages()" class="btn-secondary" title="Refresh">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button onclick="exportMessages()" class="btn-secondary">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </header>
+
+            <!-- Quick Stats -->
+            <section class="quick-stats" id="messageStats">
+                <div class="quick-stat" onclick="document.getElementById('statusFilter').value=''; loadMessages();" style="cursor:pointer;">
+                    <div class="quick-stat-icon" style="background: #dbeafe; color: #3b82f6;">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="totalMessages">0</span>
+                        <span class="quick-stat-label">Total Messages</span>
+                    </div>
+                </div>
+                <div class="quick-stat" onclick="document.getElementById('statusFilter').value='new'; loadMessages();" style="cursor:pointer;">
+                    <div class="quick-stat-icon" style="background: #fce4ec; color: #ef4444;">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="newMessages">0</span>
+                        <span class="quick-stat-label">New</span>
+                    </div>
+                </div>
+                <div class="quick-stat" onclick="document.getElementById('statusFilter').value='read'; loadMessages();" style="cursor:pointer;">
+                    <div class="quick-stat-icon" style="background: #fef3c7; color: #f59e0b;">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="readMessages">0</span>
+                        <span class="quick-stat-label">Read</span>
+                    </div>
+                </div>
+                <div class="quick-stat" onclick="document.getElementById('statusFilter').value='replied'; loadMessages();" style="cursor:pointer;">
+                    <div class="quick-stat-icon" style="background: #d1fae5; color: #10b981;">
+                        <i class="fas fa-reply"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="repliedMessages">0</span>
+                        <span class="quick-stat-label">Replied</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search by name, subject..." oninput="loadMessages()">
+                    </div>
+                </div>
+                <div class="toolbar-right">
+                    <div class="filter-group">
+                        <select id="statusFilter" onchange="loadMessages()" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="new">🟡 New</option>
+                            <option value="read">🔵 Read</option>
+                            <option value="replied">🟢 Replied</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <select id="dateFilter" onchange="loadMessages()" class="filter-select">
+                            <option value="all">All Time</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                    </div>
+                    <div class="bulk-actions" style="display: flex; gap: 8px;">
+                        <select id="bulkAction" class="filter-select">
+                            <option value="">Bulk Actions</option>
+                            <option value="mark-read">📖 Mark as Read</option>
+                            <option value="mark-unread">📕 Mark as Unread</option>
+                            <option value="delete">🗑️ Delete</option>
+                        </select>
+                        <button onclick="bulkMessageAction()" class="btn-secondary">
+                            <i class="fas fa-check"></i> Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages Table -->
+            <div class="table-container">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="40">
+                                    <input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+                                </th>
+                                <th>ID</th>
+                                <th>From</th>
+                                <th>Subject</th>
+                                <th>Status</th>
+                                <th>Received</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="messagesTableBody">
+                            <tr>
+                                <td colspan="7" class="text-center">
+                                    <div class="loading-spinner"></div>
+                                    Loading messages...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <div class="table-info" id="tableInfo">Showing 0 of 0 messages</div>
+                    <div class="pagination" id="pagination"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- View Message Modal -->
+    <div id="viewMessageModal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-envelope-open-text"></i> Message Details</h2>
+                <div>
+                    <button onclick="markAsRead()" class="btn-sm btn-info" id="markReadBtn">
+                        <i class="fas fa-check"></i> Mark Read
+                    </button>
+                    <button onclick="closeViewMessageModal()">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body" id="messageDetails">
+                <div class="loading-spinner"></div>
+                Loading...
+            </div>
+            <div class="modal-footer">
+                <button onclick="openReplyFromView()" class="btn-primary">
+                    <i class="fas fa-reply"></i> Reply
+                </button>
+                <button onclick="deleteFromView()" class="btn-danger">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reply Modal -->
+    <div id="replyModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-reply"></i> Reply to Message</h2>
+                <button onclick="closeReplyModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="replyMessageInfo" style="margin-bottom: 16px; padding: 12px; background: var(--bg-secondary); border-radius: 8px;"></div>
+                
+                <div class="form-group">
+                    <label>Quick Templates</label>
+                    <div class="template-buttons" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button onclick="insertTemplate('thankyou')" class="btn-sm btn-secondary">Thank You</button>
+                        <button onclick="insertTemplate('investigation')" class="btn-sm btn-secondary">Investigating</button>
+                        <button onclick="insertTemplate('resolved')" class="btn-sm btn-secondary">Resolved</button>
+                        <button onclick="insertTemplate('followup')" class="btn-sm btn-secondary">Follow-up</button>
+                        <button onclick="insertTemplate('pin_info')" class="btn-sm btn-secondary">🔑 PIN Info</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input type="text" id="replySubject" placeholder="Re: Original Subject">
+                </div>
+
+                <div class="form-group">
+                    <label>Your Reply <span style="color: var(--danger);">*</span></label>
+                    <textarea id="replyContent" rows="6" placeholder="Type your reply here..." required></textarea>
+                    <small class="form-hint"><span id="replyCharCount">0</span> characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="sendCopy" checked> 
+                        Send a copy to admin
+                    </label>
+                </div>
+
+                <div class="form-actions" style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 16px;">
+                    <button onclick="closeReplyModal()" class="btn-secondary">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button onclick="sendReply()" class="btn-primary" id="sendReplyBtn">
+                        <i class="fas fa-paper-plane"></i> Send Reply
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header" style="border-bottom: none;">
+                <h2 style="color: #ef4444;"><i class="fas fa-exclamation-triangle"></i> Confirm Delete</h2>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <p style="font-size: 18px; margin-bottom: 8px;">Delete this message?</p>
+                <p id="deleteMessage" style="color: var(--text-muted);">This action cannot be undone.</p>
+                <div style="display: flex; gap: 12px; justify-content: center; margin-top: 20px;">
+                    <button onclick="closeDeleteModal()" class="btn-secondary">Cancel</button>
+                    <button onclick="confirmDelete()" class="btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/messages.js"></script>
+</body>
+</html>

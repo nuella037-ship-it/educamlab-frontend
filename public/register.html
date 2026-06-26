@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - EduCamLab</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <div class="auth-container">
+        <div class="auth-box" style="max-width: 480px;">
+            <!-- Header -->
+            <div class="auth-header">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">📚</span>
+                    EduCamLab
+                </a>
+                <h1>Create Account</h1>
+                <p>Start your learning journey today</p>
+                <span class="security-badge" style="background: #dbeafe; color: #1e40af;">
+                    <i class="fas fa-user-plus"></i> Free Registration
+                </span>
+            </div>
+
+            <!-- Registration Form -->
+            <form id="registerForm" novalidate>
+                <!-- First Name -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-user"></i> First Name <span class="required">*</span>
+                    </label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="firstName" placeholder="John" required minlength="2" maxlength="50">
+                    </div>
+                </div>
+
+                <!-- Last Name -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-user"></i> Last Name <span class="required">*</span>
+                    </label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="lastName" placeholder="Doe" required minlength="2" maxlength="50">
+                    </div>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-phone"></i> Phone Number <span class="required">*</span>
+                    </label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-phone input-icon"></i>
+                        <input type="tel" id="phoneNumber" placeholder="677123456" required maxlength="9">
+                    </div>
+                    <small class="form-hint">Enter 9-digit phone number (e.g., 677123456)</small>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-lock"></i> Password <span class="required">*</span>
+                    </label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-key input-icon"></i>
+                        <input type="password" id="password" placeholder="Create a strong password" required minlength="8">
+                        <button type="button" class="password-toggle" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="passwordIcon"></i>
+                        </button>
+                    </div>
+                    <small class="form-hint">Minimum 8 characters with uppercase, lowercase, number, and special character</small>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-lock"></i> Confirm Password <span class="required">*</span>
+                    </label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-check input-icon"></i>
+                        <input type="password" id="confirmPassword" placeholder="Confirm your password" required minlength="8">
+                    </div>
+                    <small class="form-hint" id="passwordMatchHint">Passwords must match</small>
+                </div>
+
+                <!-- Terms -->
+                <div class="form-options" style="margin-bottom: 16px;">
+                    <label>
+                        <input type="checkbox" id="termsCheckbox" required>
+                        I agree to the <a href="policy/terms.html" style="color: var(--primary);">Terms of Service</a> and <a href="policy/privacy.html" style="color: var(--primary);">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <!-- Message Container -->
+                <div class="message-container" id="messageContainer"></div>
+
+                <!-- Register Button -->
+                <button type="submit" class="btn btn-primary btn-block btn-login" id="registerBtn">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </form>
+
+            <!-- Footer -->
+            <div class="auth-footer">
+                <a href="login.html">
+                    <i class="fas fa-sign-in-alt"></i> Already have an account? Sign in
+                </a>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="policy/privacy.html">Privacy</a>
+                    <a href="policy/terms.html">Terms</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Version Badge -->
+    <div class="version-badge">
+        <i class="fas fa-shield-alt"></i> Secure v2.0
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        // ============================================
+        // PARTICLES BACKGROUND
+        // ============================================
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            const particleCount = 40;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = (Math.random() * 3 + 2) + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                particle.style.animationDelay = (Math.random() * 15) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // ============================================
+        // PASSWORD VISIBILITY TOGGLE
+        // ============================================
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            if (!passwordInput) return;
+            const icon = document.getElementById('passwordIcon');
+            if (!icon) return;
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+            passwordInput.focus();
+        }
+
+        // ============================================
+        // SHOW MESSAGE
+        // ============================================
+        function showMessage(container, type, message) {
+            if (!container) return;
+
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle',
+                warning: 'fa-exclamation-triangle'
+            };
+
+            const classes = {
+                success: 'message-success',
+                error: 'message-error',
+                info: 'message-info',
+                warning: 'message-info'
+            };
+
+            container.innerHTML = `
+                <div class="message ${classes[type] || 'message-info'}" role="alert">
+                    <i class="fas ${icons[type] || icons.info}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // ============================================
+        // INPUT FORMATTING & VALIDATION
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Phone number formatting
+            document.getElementById('phoneNumber').addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '').slice(0, 9);
+            });
+
+            // Password match checking
+            document.getElementById('confirmPassword').addEventListener('input', function() {
+                const password = document.getElementById('password').value;
+                const confirm = this.value;
+                const hint = document.getElementById('passwordMatchHint');
+                
+                if (confirm.length > 0) {
+                    if (password === confirm) {
+                        hint.textContent = '✓ Passwords match';
+                        hint.style.color = '#10b981';
+                    } else {
+                        hint.textContent = '✗ Passwords do not match';
+                        hint.style.color = '#ef4444';
+                    }
+                } else {
+                    hint.textContent = 'Passwords must match';
+                    hint.style.color = '';
+                }
+            });
+
+            // Password strength indicator
+            document.getElementById('password').addEventListener('input', function() {
+                const password = this.value;
+                const strength = document.getElementById('passwordStrength');
+                if (!strength) return;
+                
+                let score = 0;
+                if (password.length >= 8) score++;
+                if (/[a-z]/.test(password)) score++;
+                if (/[A-Z]/.test(password)) score++;
+                if (/[0-9]/.test(password)) score++;
+                if (/[^a-zA-Z0-9]/.test(password)) score++;
+                
+                const bars = strength.querySelectorAll('.bar');
+                bars.forEach((bar, index) => {
+                    bar.className = 'bar';
+                    if (index < score) {
+                        bar.classList.add('active');
+                        bar.style.background = score <= 2 ? '#ef4444' : score === 3 ? '#f59e0b' : '#10b981';
+                    } else {
+                        bar.style.background = 'var(--border-color)';
+                    }
+                });
+            });
+        });
+
+        // ============================================
+        // HANDLE REGISTRATION
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const registerForm = document.getElementById('registerForm');
+            if (!registerForm) return;
+
+            registerForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const container = document.getElementById('messageContainer');
+                const btn = document.getElementById('registerBtn');
+                
+                const firstName = document.getElementById('firstName').value.trim();
+                const lastName = document.getElementById('lastName').value.trim();
+                const phone = document.getElementById('phoneNumber').value.trim();
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const termsChecked = document.getElementById('termsCheckbox').checked;
+
+                container.innerHTML = '';
+
+                // Validate
+                if (!firstName || firstName.length < 2) {
+                    showMessage(container, 'error', 'Please enter your first name (minimum 2 characters).');
+                    document.getElementById('firstName').focus();
+                    return;
+                }
+
+                if (!lastName || lastName.length < 2) {
+                    showMessage(container, 'error', 'Please enter your last name (minimum 2 characters).');
+                    document.getElementById('lastName').focus();
+                    return;
+                }
+
+                if (!phone || phone.length < 9) {
+                    showMessage(container, 'error', 'Please enter a valid 9-digit phone number.');
+                    document.getElementById('phoneNumber').focus();
+                    return;
+                }
+
+                if (!password || password.length < 8) {
+                    showMessage(container, 'error', 'Password must be at least 8 characters.');
+                    document.getElementById('password').focus();
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    showMessage(container, 'error', 'Passwords do not match.');
+                    document.getElementById('confirmPassword').focus();
+                    return;
+                }
+
+                if (!termsChecked) {
+                    showMessage(container, 'error', 'Please agree to the Terms of Service and Privacy Policy.');
+                    return;
+                }
+
+                // Show loading
+                btn.disabled = true;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<span class="spinner"></span> Creating account...';
+
+                try {
+                    const result = await API.register({
+                        firstname: firstName,
+                        lastname: lastName,
+                        phone: phone,
+                        password: password
+                    });
+
+                    if (result.success) {
+                        showMessage(container, 'success', 
+                            '✅ Registration successful! You can now login.'
+                        );
+                        
+                        // Redirect to login page
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 2000);
+
+                    } else {
+                        showMessage(container, 'error', result.message || 'Registration failed. Please try again.');
+                        btn.disabled = false;
+                        btn.innerHTML = originalText;
+                    }
+
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    showMessage(container, 'error', error.message || 'Registration failed. Please try again.');
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }
+            });
+        });
+
+        // ============================================
+        // CONSOLE SECURITY NOTICE
+        // ============================================
+        console.log('%c🔐 SECURE REGISTRATION', 'font-size: 20px; font-weight: bold; color: #4f46e5;');
+        console.log('%c🛡️ All data is encrypted and secure.', 'font-size: 14px; color: #10b981;');
+
+        // ============================================
+        // GLOBAL FUNCTIONS
+        // ============================================
+        window.togglePassword = togglePassword;
+        window.showMessage = showMessage;
+    </script>
+</body>
+</html>

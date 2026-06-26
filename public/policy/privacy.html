@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - EduCamLab</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">📚 EduCamLab</div>
+            <div class="nav-links">
+                <a href="../index.html">Home</a>
+                <a href="../courses.html">Courses</a>
+                <a href="about.html">About</a>
+                <a href="faq.html">FAQ</a>
+                <a href="../contact.html">Contact</a>
+                <a href="../login.html" class="btn btn-primary">Sign In</a>
+                <a href="../register.html" class="btn btn-secondary">Get Started</a>
+            </div>
+            <button class="mobile-menu-btn" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <div style="max-width:800px; margin:40px auto; padding:0 20px 60px;">
+        <div style="background:var(--bg-card); border-radius:var(--border-radius); padding:40px; border:1px solid var(--border-color); box-shadow:var(--shadow);">
+            <span style="display:inline-block; background:#d1fae5; color:#065f46; padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; margin-bottom:12px;">🔒 Your Privacy Matters</span>
+            <h1 style="font-size:32px; font-weight:800; margin-bottom:8px; color:var(--text-primary);">Privacy Policy</h1>
+            <p style="color:var(--text-muted); font-size:14px; margin-bottom:24px;">Last Updated: June 2026</p>
+
+            <p>At EduCamLab, we take your privacy seriously. This policy explains how we collect, use, and protect your personal information.</p>
+
+            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">1. Information We Collect</h2>
+            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
+                <li><strong>Account Information:</strong> Name, phone number, and password.</li>
+                <li><strong>Usage Data:</strong> Course progress, quiz results, and activity logs.</li>
+                <li><strong>Device Information:</strong> IP address, browser type, and device type.</li>
+                <li><strong>Payment Information:</strong> Transaction details (we do not store full payment credentials).</li>
+                <li><strong>PIN Information:</strong> Your unique access PIN (encrypted and stored securely).</li>
+            </ul>
+
+            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">2. How We Use Your Information</h2>
+            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
+                <li>To provide and improve our educational services.</li>
+                <li>To track your learning progress and offer personalized recommendations.</li>
+                <li>To send you important updates and notifications via SMS.</li>
+                <li>To process payments and manage subscriptions.</li>
+                <li>To ensure platform security and prevent abuse.</li>
+                <li>To generate and manage your access PIN.</li>
+            </ul>
+
+            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">3. Data Protection</h2>
+            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
+                <li>All data is encrypted using industry-standard SSL/TLS protocols.</li>
+                <li>Passwords are hashed and never stored in plain text.</li>
+                <li>PINs are encrypted and stored securely.</li>
+                <li>We use secure payment gateways for financial transactions.</li>
+            </ul>
+
+            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">4. SMS Communication</h2>
+            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
+                <li>We use SMS to send you important information including PINs and payment confirmations.</li>
+                <li>You may receive SMS notifications related to your account activity.</li>
+                <li>Standard SMS rates may apply.</li>
+            </ul>
+
+            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">5. Your Rights</h2>
+            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
+                <li>You can access, update, or delete your account at any time.</li>
+                <li>You can request a copy of your data.</li>
+                <li>You can opt out of marketing communications.</li>
+            </ul>
+
+            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">6. Contact Us</h2>
+            <p>For privacy concerns or questions, please <a href="../contact.html" style="color:var(--primary);">contact us</a>.</p>
+
+            <a href="../index.html" style="display:inline-block; margin-top:24px; color:var(--primary); text-decoration:none; font-weight:500;"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('menuToggle')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+    </script>
+
+    <script src="../js/config.js"></script>
+</body>
+</html>

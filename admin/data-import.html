@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Import/Export - EduCamLab</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <span class="brand-icon">📚</span>
+                <span class="brand-text">EduCamLab</span>
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="index.html">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="users.html">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                    <span class="nav-badge" id="userCount">0</span>
+                </a>
+                <a href="courses.html">
+                    <i class="fas fa-book"></i>
+                    <span>Courses</span>
+                    <span class="nav-badge" id="courseCount">0</span>
+                </a>
+                <a href="messages.html">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                    <span class="nav-badge badge-danger" id="messageCount">0</span>
+                </a>
+                <a href="payments.html">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                    <span class="nav-badge badge-danger" id="pendingCount">0</span>
+                </a>
+                <a href="activity.html">
+                    <i class="fas fa-history"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="data-import.html">
+                    <i class="fas fa-database"></i>
+                    <span>Data Manager</span>
+                </a>
+                <a href="settings.html">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="bulk-email.html">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Broadcast</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar-small" id="adminAvatar">A</div>
+                    <div class="user-details">
+                        <span class="user-name" id="adminName">Admin</span>
+                        <span class="user-role">Administrator</span>
+                    </div>
+                </div>
+                <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div>
+                        <h1><i class="fas fa-database"></i> Data Manager</h1>
+                        <span class="subtitle">
+                            <i class="fas fa-clock"></i>
+                            <span id="currentDateTime"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <button onclick="refreshDataManager()" class="btn-secondary" title="Refresh">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Quick Stats -->
+            <section class="quick-stats" id="dataStats">
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #dbeafe; color: #3b82f6;">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="dataUsers">0</span>
+                        <span class="quick-stat-label">Users</span>
+                    </div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #d1fae5; color: #10b981;">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="dataCourses">0</span>
+                        <span class="quick-stat-label">Courses</span>
+                    </div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #fef3c7; color: #f59e0b;">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="dataPayments">0</span>
+                        <span class="quick-stat-label">Payments</span>
+                    </div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #fce4ec; color: #ef4444;">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="dataPins">0</span>
+                        <span class="quick-stat-label">Active PINs</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Manager Tabs -->
+            <div class="settings-tabs" style="display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 24px; border-bottom: 2px solid var(--border-color); padding-bottom: 4px;">
+                <button class="tab-btn active" data-tab="export" onclick="switchDataTab('export')" style="padding: 10px 20px; border: none; background: none; cursor: pointer; font-weight: 600; color: var(--text-muted); transition: all var(--transition); border-bottom: 2px solid transparent; margin-bottom: -2px;">
+                    <i class="fas fa-file-export"></i> Export Data
+                </button>
+                <button class="tab-btn" data-tab="import" onclick="switchDataTab('import')" style="padding: 10px 20px; border: none; background: none; cursor: pointer; font-weight: 600; color: var(--text-muted); transition: all var(--transition); border-bottom: 2px solid transparent; margin-bottom: -2px;">
+                    <i class="fas fa-file-import"></i> Import Data
+                </button>
+                <button class="tab-btn" data-tab="backup" onclick="switchDataTab('backup')" style="padding: 10px 20px; border: none; background: none; cursor: pointer; font-weight: 600; color: var(--text-muted); transition: all var(--transition); border-bottom: 2px solid transparent; margin-bottom: -2px;">
+                    <i class="fas fa-archive"></i> Backup
+                </button>
+                <button class="tab-btn" data-tab="sync" onclick="switchDataTab('sync')" style="padding: 10px 20px; border: none; background: none; cursor: pointer; font-weight: 600; color: var(--text-muted); transition: all var(--transition); border-bottom: 2px solid transparent; margin-bottom: -2px;">
+                    <i class="fas fa-sync"></i> Sync
+                </button>
+            </div>
+
+            <!-- Export Tab -->
+            <div id="tab-export" class="tab-pane active">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                    <!-- Export Users -->
+                    <div class="card" style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                            <div style="width: 48px; height: 48px; border-radius: 50%; background: #dbeafe; display: flex; align-items: center; justify-content: center; color: #3b82f6; font-size: 20px;">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div>
+                                <h3 style="margin: 0; font-size: 18px;">Export Users</h3>
+                                <p style="margin: 0; color: var(--text-muted); font-size: 13px;">Export all user data</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Format</label>
+                            <select id="exportUserFormat" class="filter-select" style="width: 100%;">
+                                <option value="csv">CSV</option>
+                                <option value="json">JSON</option>
+                                <option value="excel">Excel (CSV)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Include</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" checked> Basic Info</label>
+                                <label><input type="checkbox" checked> Phone</label>
+                                <label><input type="checkbox" checked> PIN</label>
+                                <label><input type="checkbox" checked> Subscription</label>
+                            </div>
+                        </div>
+                        <button onclick="exportData('users')" class="btn-primary" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-download"></i> Export Users
+                        </button>
+                    </div>
+
+                    <!-- Export Courses -->
+                    <div class="card" style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                            <div style="width: 48px; height: 48px; border-radius: 50%; background: #d1fae5; display: flex; align-items: center; justify-content: center; color: #10b981; font-size: 20px;">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div>
+                                <h3 style="margin: 0; font-size: 18px;">Export Courses</h3>
+                                <p style="margin: 0; color: var(--text-muted); font-size: 13px;">Export all course data</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Format</label>
+                            <select id="exportCourseFormat" class="filter-select" style="width: 100%;">
+                                <option value="csv">CSV</option>
+                                <option value="json">JSON</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Level</label>
+                            <select id="exportCourseLevel" class="filter-select" style="width: 100%;">
+                                <option value="all">All Levels</option>
+                                <option value="o-level">O Level</option>
+                                <option value="a-level">A Level</option>
+                            </select>
+                        </div>
+                        <button onclick="exportData('courses')" class="btn-primary" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-download"></i> Export Courses
+                        </button>
+                    </div>
+
+                    <!-- Export Payments -->
+                    <div class="card" style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                            <div style="width: 48px; height: 48px; border-radius: 50%; background: #fef3c7; display: flex; align-items: center; justify-content: center; color: #f59e0b; font-size: 20px;">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div>
+                                <h3 style="margin: 0; font-size: 18px;">Export Payments</h3>
+                                <p style="margin: 0; color: var(--text-muted); font-size: 13px;">Export all payment data</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Format</label>
+                            <select id="exportPaymentFormat" class="filter-select" style="width: 100%;">
+                                <option value="csv">CSV</option>
+                                <option value="json">JSON</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="exportPaymentStatus" class="filter-select" style="width: 100%;">
+                                <option value="all">All Status</option>
+                                <option value="completed">Completed</option>
+                                <option value="pending">Pending</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <button onclick="exportData('payments')" class="btn-primary" style="width: 100%; justify-content: center;">
+                            <i class="fas fa-download"></i> Export Payments
+                        </button>
+                    </div>
+
+                    <!-- Export All -->
+                    <div class="card" style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                            <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div>
+                                <h3 style="margin: 0; font-size: 18px;">Export Everything</h3>
+                                <p style="margin: 0; font-size: 13px; opacity: 0.8;">Complete system backup</p>
+                            </div>
+                        </div>
+                        <p style="opacity: 0.9; margin-bottom: 16px;">Export all data including users, courses, payments, and settings in one go.</p>
+                        <button onclick="exportData('all')" style="width: 100%; justify-content: center; background: white; color: var(--primary); border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all var(--transition);" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                            <i class="fas fa-download"></i> Export All Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Import Tab -->
+            <div id="tab-import" class="tab-pane" style="display: none;">
+                <div class="card" style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 24px;">
+                    <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="fas fa-file-import"></i> Import Data</h3>
+                    
+                    <div class="form-group">
+                        <label>Data Type <span style="color: var(--danger);">*</span></label>
+                        <select id="importType" class="filter-select" style="width: 100%;">
+                            <option value="users">👤 Users</option>
+                            <option value="courses">📚 Courses</option>
+                            <option value="payments">💳 Payments</option>
+                            <option value="pins">🔑 PINs</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>File <span style="color: var(--danger);">*</span></label>
+                        <div style="border: 2px dashed var(--border-color); border-radius: 12px; padding: 40px; text-align: center; cursor: pointer; transition: all var(--transition);" id="dropZone" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" onclick="document.getElementById('fileInput').click()">
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: var(--text-muted); display: block; margin-bottom: 12px;"></i>
+                            <p style="font-weight: 600;">Drag & drop your file here</p>
+                            <p style="color: var(--text-muted); font-size: 13px;">or click to browse</p>
+                            <p style="color: var(--text-muted); font-size: 12px; margin-top: 8px;">Supported: CSV, JSON, Excel</p>
+                            <input type="file" id="fileInput" style="display: none;" accept=".csv,.json,.xlsx,.xls" onchange="handleFileSelect(event)">
+                        </div>
+                        <div id="fileInfo" style="display: none; margin-top: 8px; padding: 8px 12px; background: var(--bg-secondary); border-radius: 8px;">
+                            <span id="fileName"></span>
+                            <span style="float: right;" id="fileSize"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Options</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" id="importOverwrite"> Overwrite existing data</label>
+                            <label><input type="checkbox" id="importSkipErrors"> Skip errors</label>
+                            <label><input type="checkbox" id="importDryRun" checked> Dry run (preview only)</label>
+                        </div>
+                    </div>
+
+                    <div id="importPreview" style="display: none; margin-top: 16px;">
+                        <h4 style="margin-bottom: 8px;">Preview Data</h4>
+                        <div class="table-responsive">
+                            <table class="table" id="previewTable">
+                                <thead id="previewHead"></thead>
+                                <tbody id="previewBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; margin-top: 16px;">
+                        <button onclick="previewImport()" class="btn-secondary">
+                            <i class="fas fa-eye"></i> Preview
+                        </button>
+                        <button onclick="executeImport()" class="btn-primary">
+                            <i class="fas fa-upload"></i> Import Data
+                        </button>
+                        <button onclick="clearImport()" class="btn-secondary">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Import History -->
+                <div class="card" style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
+                    <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="fas fa-history"></i> Import History</h3>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Records</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="importHistoryBody">
+                                <tr><td colspan="5" class="text-center" style="color: var(--text-muted);">No import history</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backup Tab -->
+            <div id="tab-backup" class="tab-pane" style="display: none;">
+                <div class="card" style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 24px;">
+                    <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="fas fa-archive"></i> Backup Management</h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;">
+                        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; text-align: center;">
+                            <span style="display: block; font-size: 24px; font-weight: 700;" id="backupCount">0</span>
+                            <span style="color: var(--text-muted); font-size: 13px;">Backups Available</span>
+                        </div>
+                        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; text-align: center;">
+                            <span style="display: block; font-size: 24px; font-weight: 700;" id="backupTotalSize">0 MB</span>
+                            <span style="color: var(--text-muted); font-size: 13px;">Total Size</span>
+                        </div>
+                        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; text-align: center;">
+                            <span style="display: block; font-size: 24px; font-weight: 700;" id="backupLast">Never</span>
+                            <span style="color: var(--text-muted); font-size: 13px;">Last Backup</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <button onclick="createBackup()" class="btn-primary">
+                            <i class="fas fa-plus"></i> Create Backup
+                        </button>
+                        <button onclick="scheduleBackup()" class="btn-secondary">
+                            <i class="fas fa-clock"></i> Schedule Backup
+                        </button>
+                        <button onclick="restoreBackup()" class="btn-secondary">
+                            <i class="fas fa-undo"></i> Restore
+                        </button>
+                        <button onclick="cleanupBackups()" class="btn-danger">
+                            <i class="fas fa-trash"></i> Cleanup Old
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Backup List -->
+                <div class="card" style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
+                    <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="fas fa-list"></i> Backup Files</h3>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Filename</th>
+                                    <th>Size</th>
+                                    <th>Type</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="backupListBody">
+                                <tr><td colspan="5" class="text-center" style="color: var(--text-muted);">No backups available</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sync Tab -->
+            <div id="tab-sync" class="tab-pane" style="display: none;">
+                <div class="card" style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 24px;">
+                    <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="fas fa-sync"></i> Data Sync</h3>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+                        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Frontend Data</span>
+                                <span class="badge badge-success">● Synced</span>
+                            </div>
+                            <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">28 courses loaded</p>
+                        </div>
+                        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>API Data</span>
+                                <span class="badge badge-info" id="apiStatus">● Checking</span>
+                            </div>
+                            <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;" id="apiDataInfo">Loading...</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sync Options</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" checked> Users</label>
+                            <label><input type="checkbox" checked> Courses</label>
+                            <label><input type="checkbox" checked> Payments</label>
+                            <label><input type="checkbox" checked> PINs</label>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <button onclick="syncData('all')" class="btn-primary">
+                            <i class="fas fa-sync"></i> Sync All Data
+                        </button>
+                        <button onclick="syncData('frontend')" class="btn-secondary">
+                            <i class="fas fa-arrow-down"></i> Sync from Frontend
+                        </button>
+                        <button onclick="syncData('api')" class="btn-secondary">
+                            <i class="fas fa-arrow-up"></i> Sync to API
+                        </button>
+                        <button onclick="autoSyncSettings()" class="btn-secondary">
+                            <i class="fas fa-clock"></i> Auto-Sync Settings
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sync Log -->
+                <div class="card" style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
+                    <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="fas fa-list"></i> Sync History</h3>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Type</th>
+                                    <th>Records</th>
+                                    <th>Status</th>
+                                    <th>Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody id="syncHistoryBody">
+                                <tr><td colspan="5" class="text-center" style="color: var(--text-muted);">No sync history</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/data-manager.js"></script>
+</body>
+</html>

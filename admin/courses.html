@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Management - EduCamLab</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <span class="brand-icon">📚</span>
+                <span class="brand-text">EduCamLab</span>
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="index.html">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="users.html">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                    <span class="nav-badge" id="userCount">0</span>
+                </a>
+                <a href="courses.html" class="active">
+                    <i class="fas fa-book"></i>
+                    <span>Courses</span>
+                    <span class="nav-badge" id="courseCount">0</span>
+                </a>
+                <a href="messages.html">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                    <span class="nav-badge badge-danger" id="messageCount">0</span>
+                </a>
+                <a href="payments.html">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                    <span class="nav-badge badge-danger" id="pendingCount">0</span>
+                </a>
+                <a href="activity.html">
+                    <i class="fas fa-history"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="data-import.html">
+                    <i class="fas fa-database"></i>
+                    <span>Data Manager</span>
+                </a>
+                <a href="settings.html">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="bulk-email.html">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Broadcast</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar-small" id="adminAvatar">A</div>
+                    <div class="user-details">
+                        <span class="user-name" id="adminName">Admin</span>
+                        <span class="user-role">Administrator</span>
+                    </div>
+                </div>
+                <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div>
+                        <h1><i class="fas fa-book"></i> Course Management</h1>
+                        <span class="subtitle">
+                            <i class="fas fa-clock"></i>
+                            <span id="currentDateTime"></span>
+                            <span style="margin-left: 12px; color: var(--text-muted);">
+                                <i class="fas fa-database"></i> 
+                                <span id="courseDataInfo">28 courses loaded from frontend</span>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <button onclick="showCreateCourseModal()" class="btn-primary">
+                        <i class="fas fa-plus"></i> Add Course
+                    </button>
+                    <button onclick="refreshCourses()" class="btn-secondary" title="Refresh">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button onclick="exportCourses()" class="btn-secondary">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </header>
+
+            <!-- Quick Stats -->
+            <section class="quick-stats" id="courseStats">
+                <div class="quick-stat" onclick="document.getElementById('publishedFilter').value=''; loadCourses();" style="cursor:pointer;">
+                    <div class="quick-stat-icon" style="background: #dbeafe; color: #3b82f6;">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="totalCourses">0</span>
+                        <span class="quick-stat-label">Total Courses</span>
+                    </div>
+                </div>
+                <div class="quick-stat" onclick="document.getElementById('publishedFilter').value='true'; loadCourses();" style="cursor:pointer;">
+                    <div class="quick-stat-icon" style="background: #d1fae5; color: #10b981;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="publishedCourses">0</span>
+                        <span class="quick-stat-label">Published</span>
+                    </div>
+                </div>
+                <div class="quick-stat" onclick="document.getElementById('publishedFilter').value='false'; loadCourses();" style="cursor:pointer;">
+                    <div class="quick-stat-icon" style="background: #fef3c7; color: #f59e0b;">
+                        <i class="fas fa-pencil-alt"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="draftCourses">0</span>
+                        <span class="quick-stat-label">Drafts</span>
+                    </div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #fce4ec; color: #ef4444;">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="featuredCourses">0</span>
+                        <span class="quick-stat-label">Featured</span>
+                    </div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-icon" style="background: #fce7f3; color: #db2777;">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="quick-stat-content">
+                        <span class="quick-stat-value" id="totalEnrollments">0</span>
+                        <span class="quick-stat-label">Enrollments</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search courses by title, code..." oninput="loadCourses()">
+                    </div>
+                </div>
+                <div class="toolbar-right">
+                    <div class="filter-group">
+                        <select id="categoryFilter" onchange="loadCourses()" class="filter-select">
+                            <option value="">All Categories</option>
+                            <option value="technology">💻 Technology</option>
+                            <option value="science">🔬 Science</option>
+                            <option value="business">💼 Business</option>
+                            <option value="design">🎨 Design</option>
+                            <option value="arts">🎭 Arts</option>
+                            <option value="language">🌍 Language</option>
+                            <option value="health">🏥 Health</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <select id="levelFilter" onchange="loadCourses()" class="filter-select">
+                            <option value="">All Levels</option>
+                            <option value="O Level">🟢 O Level</option>
+                            <option value="A Level">🔴 A Level</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <select id="publishedFilter" onchange="loadCourses()" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="true">✅ Published</option>
+                            <option value="false">📝 Draft</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <select id="sortFilter" onchange="loadCourses()" class="filter-select">
+                            <option value="newest">🕐 Newest First</option>
+                            <option value="popular">⭐ Most Popular</option>
+                            <option value="students">👥 Most Students</option>
+                            <option value="title">📝 Alphabetical</option>
+                        </select>
+                    </div>
+                    <div class="bulk-actions" style="display: flex; gap: 8px;">
+                        <select id="bulkAction" class="filter-select">
+                            <option value="">Bulk Actions</option>
+                            <option value="publish">✅ Publish</option>
+                            <option value="unpublish">📝 Unpublish</option>
+                            <option value="feature">⭐ Feature</option>
+                            <option value="unfeature">⭐ Unfeature</option>
+                            <option value="delete">🗑️ Delete</option>
+                        </select>
+                        <button onclick="bulkCourseAction()" class="btn-secondary">
+                            <i class="fas fa-check"></i> Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Courses Table -->
+            <div class="table-container">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="40">
+                                    <input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+                                </th>
+                                <th>Code</th>
+                                <th>Title</th>
+                                <th>Level</th>
+                                <th>Category</th>
+                                <th>Instructor</th>
+                                <th>Students</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="coursesTableBody">
+                            <tr>
+                                <td colspan="9" class="text-center">
+                                    <div class="loading-spinner"></div>
+                                    Loading courses...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <div class="table-info" id="tableInfo">Showing 0 of 0 courses</div>
+                    <div class="pagination" id="pagination"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Create/Edit Course Modal -->
+    <div id="courseModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2 id="courseModalTitle"><i class="fas fa-plus-circle"></i> Create New Course</h2>
+                <button onclick="closeCourseModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="courseForm" onsubmit="saveCourse(event)">
+                    <input type="hidden" id="courseId">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Title <span style="color: var(--danger);">*</span></label>
+                            <input type="text" id="courseTitle" required placeholder="e.g., Complete Mathematics Course" oninput="generateSlug()">
+                        </div>
+                        <div class="form-group">
+                            <label>Slug <span style="color: var(--danger);">*</span></label>
+                            <input type="text" id="courseSlug" required placeholder="e.g., complete-mathematics-course">
+                            <small class="form-hint">URL-friendly version of the title</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description <span style="color: var(--danger);">*</span></label>
+                        <textarea id="courseDescription" required placeholder="Detailed course description..." rows="4"></textarea>
+                        <small class="form-hint"><span id="charCount">0</span> characters (minimum 50)</small>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Category <span style="color: var(--danger);">*</span></label>
+                            <select id="courseCategory" required>
+                                <option value="">Select category</option>
+                                <option value="technology">💻 Technology</option>
+                                <option value="science">🔬 Science</option>
+                                <option value="business">💼 Business</option>
+                                <option value="design">🎨 Design</option>
+                                <option value="arts">🎭 Arts</option>
+                                <option value="language">🌍 Language</option>
+                                <option value="health">🏥 Health</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Level <span style="color: var(--danger);">*</span></label>
+                            <select id="courseLevel" required>
+                                <option value="">Select level</option>
+                                <option value="beginner">🟢 O Level</option>
+                                <option value="advanced">🔴 A Level</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Duration (weeks)</label>
+                            <input type="number" id="courseDuration" value="8" min="1" max="52">
+                        </div>
+                        <div class="form-group">
+                            <label>Instructor</label>
+                            <input type="text" id="courseInstructor" placeholder="e.g., Dr. John Doe">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Price (XAF)</label>
+                            <input type="number" id="coursePrice" value="0" min="0" step="100">
+                            <small class="form-hint">Set to 0 for free courses</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Options</label>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="courseFeatured"> ⭐ Featured Course
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="coursePublished" checked> ✅ Published
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" onclick="closeCourseModal()" class="btn-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn-primary" id="saveCourseBtn">
+                            <i class="fas fa-save"></i> Save Course
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Course Modal -->
+    <div id="viewCourseModal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-info-circle"></i> Course Details</h2>
+                <button onclick="closeViewCourseModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="courseDetails">
+                <div class="loading-spinner"></div>
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header" style="border-bottom: none;">
+                <h2 style="color: #ef4444;"><i class="fas fa-exclamation-triangle"></i> Confirm Delete</h2>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <p style="font-size: 18px; margin-bottom: 8px;">Are you sure?</p>
+                <p id="deleteMessage" style="color: var(--text-muted);">This action cannot be undone.</p>
+                <div style="display: flex; gap: 12px; justify-content: center; margin-top: 20px;">
+                    <button onclick="closeDeleteModal()" class="btn-secondary">Cancel</button>
+                    <button onclick="confirmDelete()" class="btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/courses.js"></script>
+</body>
+</html>

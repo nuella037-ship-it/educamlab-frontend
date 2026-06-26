@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Account - EduCamLab</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <div class="auth-container">
+        <div class="auth-box" style="max-width: 440px;">
+            <!-- Header -->
+            <div class="auth-header">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">📚</span>
+                    EduCamLab
+                </a>
+                <h1>Verify Your Account</h1>
+                <p>Enter the verification PIN sent to your phone</p>
+                <span class="security-badge" style="background: #fef3c7; color: #92400e;">
+                    <i class="fas fa-phone"></i> Check Your Phone
+                </span>
+            </div>
+
+            <!-- Verification Form -->
+            <form id="verifyForm" novalidate>
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-phone"></i> Phone Number <span class="required">*</span>
+                    </label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-phone input-icon"></i>
+                        <input type="tel" id="phoneNumber" placeholder="677123456" required maxlength="9">
+                    </div>
+                    <small class="form-hint">Enter your 9-digit phone number</small>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-key"></i> Verification PIN <span class="required">*</span>
+                    </label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-shield-alt input-icon"></i>
+                        <input type="text" id="pinCode" placeholder="Enter 6-character PIN" maxlength="6" required style="text-align:center;font-size:24px;letter-spacing:8px;font-family:monospace;text-transform:uppercase;">
+                    </div>
+                    <small class="form-hint">Enter the 6-character PIN sent to your phone</small>
+                </div>
+
+                <div style="text-align: center; margin-bottom: 16px;">
+                    <span style="color: var(--text-muted); font-size: 14px;">Didn't receive the PIN? </span>
+                    <button type="button" id="resendBtn" style="background: none; border: none; color: var(--primary); cursor: pointer; font-weight: 600; font-size: 14px;">
+                        Resend PIN
+                    </button>
+                </div>
+
+                <!-- Message Container -->
+                <div class="message-container" id="messageContainer"></div>
+
+                <!-- Verify Button -->
+                <button type="submit" class="btn btn-primary btn-block btn-login" id="verifyBtn">
+                    <i class="fas fa-check-circle"></i> Verify Account
+                </button>
+            </form>
+
+            <!-- Footer -->
+            <div class="auth-footer">
+                <a href="login.html">
+                    <i class="fas fa-sign-in-alt"></i> Already verified? Sign in
+                </a>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="policy/privacy.html">Privacy</a>
+                    <a href="policy/terms.html">Terms</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Version Badge -->
+    <div class="version-badge">
+        <i class="fas fa-shield-alt"></i> Secure v2.0
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        // ============================================
+        // PARTICLES BACKGROUND
+        // ============================================
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            const particleCount = 40;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = (Math.random() * 3 + 2) + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                particle.style.animationDelay = (Math.random() * 15) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // ============================================
+        // SHOW MESSAGE
+        // ============================================
+        function showMessage(container, type, message) {
+            if (!container) return;
+
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle',
+                warning: 'fa-exclamation-triangle'
+            };
+
+            const classes = {
+                success: 'message-success',
+                error: 'message-error',
+                info: 'message-info',
+                warning: 'message-info'
+            };
+
+            container.innerHTML = `
+                <div class="message ${classes[type] || 'message-info'}" role="alert">
+                    <i class="fas ${icons[type] || icons.info}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // ============================================
+        // INPUT FORMATTING
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Phone number formatting
+            const phoneInput = document.getElementById('phoneNumber');
+            phoneInput.addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '').slice(0, 9);
+            });
+
+            // PIN formatting
+            const pinInput = document.getElementById('pinCode');
+            pinInput.addEventListener('input', function() {
+                this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
+                if (this.value.length === 6) {
+                    this.style.borderColor = '#10b981';
+                    setTimeout(() => {
+                        this.style.borderColor = '';
+                    }, 1500);
+                }
+            });
+
+            // Enter key to submit
+            pinInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && this.value.length === 6) {
+                    document.getElementById('verifyForm').dispatchEvent(new Event('submit'));
+                }
+            });
+        });
+
+        // ============================================
+        // VERIFY PIN
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const verifyForm = document.getElementById('verifyForm');
+            if (!verifyForm) return;
+
+            verifyForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const container = document.getElementById('messageContainer');
+                const btn = document.getElementById('verifyBtn');
+                const phoneInput = document.getElementById('phoneNumber');
+                const pinInput = document.getElementById('pinCode');
+                const phone = phoneInput.value.trim();
+                const pin = pinInput.value.trim();
+
+                container.innerHTML = '';
+
+                if (!phone || phone.length !== 9) {
+                    showMessage(container, 'error', 'Please enter a valid 9-digit phone number.');
+                    phoneInput.focus();
+                    return;
+                }
+
+                if (!pin || pin.length !== 6) {
+                    showMessage(container, 'error', 'Please enter a valid 6-character PIN.');
+                    pinInput.focus();
+                    return;
+                }
+
+                btn.disabled = true;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<span class="spinner"></span> Verifying...';
+
+                try {
+                    const result = await API.verifyPIN(phone, pin);
+
+                    if (result.success) {
+                        showMessage(container, 'success', '✅ Account verified successfully! Redirecting to login...');
+                        
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 2000);
+                    } else {
+                        showMessage(container, 'error', result.message || 'Invalid PIN. Please try again.');
+                        btn.disabled = false;
+                        btn.innerHTML = originalText;
+                        pinInput.value = '';
+                        pinInput.focus();
+                    }
+
+                } catch (error) {
+                    console.error('Verification error:', error);
+                    showMessage(container, 'error', error.message || 'Verification failed. Please try again.');
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }
+            });
+        });
+
+        // ============================================
+        // RESEND PIN
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const resendBtn = document.getElementById('resendBtn');
+            resendBtn.addEventListener('click', async function() {
+                const container = document.getElementById('messageContainer');
+                const phoneInput = document.getElementById('phoneNumber');
+                const phone = phoneInput.value.trim();
+
+                if (!phone || phone.length !== 9) {
+                    showMessage(container, 'error', 'Please enter a valid 9-digit phone number.');
+                    phoneInput.focus();
+                    return;
+                }
+
+                this.disabled = true;
+                this.textContent = 'Sending...';
+
+                try {
+                    const result = await API.resendPIN(phone);
+
+                    if (result.success) {
+                        showMessage(container, 'success', '✅ PIN resent successfully. Check your phone.');
+                    } else {
+                        showMessage(container, 'error', result.message || 'Failed to resend PIN. Please try again.');
+                    }
+                } catch (error) {
+                    showMessage(container, 'error', error.message || 'Failed to resend PIN.');
+                }
+
+                this.disabled = false;
+                this.textContent = 'Resend PIN';
+            });
+        });
+
+        // ============================================
+        // CONSOLE SECURITY NOTICE
+        // ============================================
+        console.log('%c🔐 ACCOUNT VERIFICATION', 'font-size: 20px; font-weight: bold; color: #4f46e5;');
+        console.log('%c📱 Check your phone for the verification PIN.', 'font-size: 14px; color: #6b7280;');
+
+        // ============================================
+        // GLOBAL FUNCTIONS
+        // ============================================
+        window.showMessage = showMessage;
+    </script>
+</body>
+</html>
