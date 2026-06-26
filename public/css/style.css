@@ -405,10 +405,9 @@ nav {
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 440px;
+    max-width: 500px;
     animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
     margin: 0 auto;
-    min-height: 100vh; 
 }
 
 @keyframes slideUp {
