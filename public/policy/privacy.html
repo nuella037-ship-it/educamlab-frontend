@@ -10,6 +10,9 @@
 </head>
 <body>
 
+    <!-- ============================================ -->
+    <!-- HEADER - Using style.css nav pattern -->
+    <!-- ============================================ -->
     <header>
         <nav>
             <div class="logo">📚 EduCamLab</div>
@@ -28,66 +31,396 @@
         </nav>
     </header>
 
-    <div style="max-width:800px; margin:40px auto; padding:0 20px 60px;">
-        <div style="background:var(--bg-card); border-radius:var(--border-radius); padding:40px; border:1px solid var(--border-color); box-shadow:var(--shadow);">
-            <span style="display:inline-block; background:#d1fae5; color:#065f46; padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; margin-bottom:12px;">🔒 Your Privacy Matters</span>
-            <h1 style="font-size:32px; font-weight:800; margin-bottom:8px; color:var(--text-primary);">Privacy Policy</h1>
-            <p style="color:var(--text-muted); font-size:14px; margin-bottom:24px;">Last Updated: June 2026</p>
+    <!-- ============================================ -->
+    <!-- PRIVACY POLICY CONTENT -->
+    <!-- ============================================ -->
+    <div style="max-width: 800px; margin: 40px auto; padding: 0 20px 60px;">
 
-            <p>At EduCamLab, we take your privacy seriously. This policy explains how we collect, use, and protect your personal information.</p>
+        <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 40px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
 
-            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">1. Information We Collect</h2>
-            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
-                <li><strong>Account Information:</strong> Name, phone number, and password.</li>
-                <li><strong>Usage Data:</strong> Course progress, quiz results, and activity logs.</li>
-                <li><strong>Device Information:</strong> IP address, browser type, and device type.</li>
-                <li><strong>Payment Information:</strong> Transaction details (we do not store full payment credentials).</li>
-                <li><strong>PIN Information:</strong> Your unique access PIN (encrypted and stored securely).</li>
-            </ul>
+            <!-- Badge -->
+            <span style="display: inline-block; background: #d1fae5; color: #065f46; padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 12px;">
+                <i class="fas fa-shield-alt"></i> Your Privacy Matters
+            </span>
 
-            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">2. How We Use Your Information</h2>
-            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
-                <li>To provide and improve our educational services.</li>
-                <li>To track your learning progress and offer personalized recommendations.</li>
-                <li>To send you important updates and notifications via SMS.</li>
-                <li>To process payments and manage subscriptions.</li>
-                <li>To ensure platform security and prevent abuse.</li>
-                <li>To generate and manage your access PIN.</li>
-            </ul>
+            <!-- Header -->
+            <h1 style="font-size: 32px; font-weight: 800; margin-bottom: 4px; color: var(--text-primary);">
+                <i class="fas fa-lock" style="color: var(--primary);"></i> Privacy Policy
+            </h1>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;">
+                Last Updated: <strong>June 2026</strong>
+            </p>
 
-            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">3. Data Protection</h2>
-            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
-                <li>All data is encrypted using industry-standard SSL/TLS protocols.</li>
-                <li>Passwords are hashed and never stored in plain text.</li>
-                <li>PINs are encrypted and stored securely.</li>
-                <li>We use secure payment gateways for financial transactions.</li>
-            </ul>
+            <p style="color: var(--text-secondary); font-size: 16px; line-height: 1.7; margin-bottom: 24px;">
+                At <strong>EduCamLab</strong>, we take your privacy seriously. This policy explains how we collect, use, 
+                and protect your personal information. By using our platform, you consent to the practices described in this policy.
+            </p>
 
-            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">4. SMS Communication</h2>
-            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
-                <li>We use SMS to send you important information including PINs and payment confirmations.</li>
-                <li>You may receive SMS notifications related to your account activity.</li>
-                <li>Standard SMS rates may apply.</li>
-            </ul>
+            <!-- ============================================ -->
+            <!-- SECTION 1 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">1</span>
+                    Information We Collect
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-user" style="color: var(--primary); margin-top: 4px;"></i>
+                        <span><strong>Account Information:</strong> Full name, phone number, and password (hashed for security).</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-chart-line" style="color: var(--primary); margin-top: 4px;"></i>
+                        <span><strong>Usage Data:</strong> Course progress, quiz results, activity logs, and learning preferences.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-desktop" style="color: var(--primary); margin-top: 4px;"></i>
+                        <span><strong>Device Information:</strong> IP address, browser type, device type, and operating system.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-credit-card" style="color: var(--primary); margin-top: 4px;"></i>
+                        <span><strong>Payment Information:</strong> Transaction details (we do <strong>not</strong> store full payment credentials).</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-key" style="color: var(--primary); margin-top: 4px;"></i>
+                        <span><strong>PIN Information:</strong> Your unique access PIN (encrypted and stored securely).</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-phone" style="color: var(--primary); margin-top: 4px;"></i>
+                        <span><strong>SMS Data:</strong> Phone number used for sending verification codes and notifications.</span>
+                    </li>
+                </ul>
+            </div>
 
-            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">5. Your Rights</h2>
-            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
-                <li>You can access, update, or delete your account at any time.</li>
-                <li>You can request a copy of your data.</li>
-                <li>You can opt out of marketing communications.</li>
-            </ul>
+            <!-- ============================================ -->
+            <!-- SECTION 2 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">2</span>
+                    How We Use Your Information
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-top: 4px;"></i>
+                        <span>To provide and improve our educational services and course content.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-top: 4px;"></i>
+                        <span>To track your learning progress and offer personalized recommendations.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-top: 4px;"></i>
+                        <span>To send you important updates, verification codes, and notifications via SMS.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-top: 4px;"></i>
+                        <span>To process payments and manage your subscription plans.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-top: 4px;"></i>
+                        <span>To ensure platform security, prevent abuse, and enforce our Terms of Service.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-top: 4px;"></i>
+                        <span>To generate and manage your unique access PIN for secure login.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-top: 4px;"></i>
+                        <span>To analyze platform usage and improve user experience.</span>
+                    </li>
+                </ul>
+            </div>
 
-            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">6. Contact Us</h2>
-            <p>For privacy concerns or questions, please <a href="../contact.html" style="color:var(--primary);">contact us</a>.</p>
+            <!-- ============================================ -->
+            <!-- SECTION 3 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">3</span>
+                    Data Protection &amp; Security
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-shield-alt" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>All data is encrypted using <strong>industry-standard SSL/TLS protocols</strong>.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-shield-alt" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>Passwords are <strong>hashed</strong> and never stored in plain text.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-shield-alt" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>PINs are <strong>encrypted</strong> and stored securely in our database.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-shield-alt" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>We use <strong>secure payment gateways</strong> (Orange Money, MTN Mobile Money) for all financial transactions.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-shield-alt" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>Regular security audits are performed to ensure data integrity.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-shield-alt" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>Access to personal data is restricted to authorized personnel only.</span>
+                    </li>
+                </ul>
+            </div>
 
-            <a href="../index.html" style="display:inline-block; margin-top:24px; color:var(--primary); text-decoration:none; font-weight:500;"><i class="fas fa-arrow-left"></i> Back to Home</a>
+            <!-- ============================================ -->
+            <!-- SECTION 4 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">4</span>
+                    SMS Communication
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-sms" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>We use SMS to send you important account information and verification codes.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-sms" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>You will receive SMS notifications for PIN delivery and payment confirmations.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-sms" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>You may receive SMS updates related to your account activity and course progress.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-sms" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span><strong>Standard SMS rates</strong> may apply depending on your mobile carrier.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-sms" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>You can opt out of non-essential SMS communications at any time.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SECTION 5 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">5</span>
+                    Your Rights
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-user-edit" style="color: var(--primary); margin-top: 4px;"></i>
+                        <span>You can <strong>access, update, or delete</strong> your account information at any time.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-file-export" style="color: var(--primary); margin-top: 4px;"></i>
+                        <span>You can <strong>request a copy</strong> of all personal data we hold about you.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-user-slash" style="color: var(--primary); margin-top: 4px;"></i>
+                        <span>You can <strong>delete your account</strong> permanently by contacting support.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-bell-slash" style="color: var(--primary); margin-top: 4px;"></i>
+                        <span>You can <strong>opt out</strong> of marketing and non-essential communications.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-times-circle" style="color: var(--primary); margin-top: 4px;"></i>
+                        <span>You can <strong>withdraw consent</strong> for data processing at any time.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SECTION 6 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">6</span>
+                    Data Retention
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-clock" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>We retain your data for as long as your account is active.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-clock" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>After account deletion, we retain minimal data for legal and security purposes.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-clock" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>Payment records are retained for up to <strong>5 years</strong> for financial compliance.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-clock" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>Usage logs are retained for <strong>30 days</strong> for performance analysis.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SECTION 7 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">7</span>
+                    Third-Party Services
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-handshake" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>We use <strong>Orange Money</strong> and <strong>MTN Mobile Money</strong> for payment processing.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-handshake" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>We use <strong>SMS gateways</strong> for sending verification codes and notifications.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-handshake" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>We use <strong>analytics tools</strong> to improve platform performance (anonymized data only).</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-handshake" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>We do <strong>not</strong> sell or share your personal data with third parties for marketing purposes.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SECTION 8 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">8</span>
+                    Cookies &amp; Tracking
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-cookie-bite" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>We use <strong>essential cookies</strong> for authentication and session management.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-cookie-bite" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>We use <strong>analytics cookies</strong> to understand how users interact with our platform.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-cookie-bite" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>You can disable cookies in your browser settings at any time.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SECTION 9 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">9</span>
+                    Children's Privacy
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-child" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>EduCamLab is intended for students aged <strong>13 and above</strong>.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-child" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>Users under 13 must have <strong>parental consent</strong> to use our platform.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-child" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>We do <strong>not</strong> knowingly collect data from children under 13 without consent.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-child" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>If we discover data from a user under 13 without consent, we will delete it immediately.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SECTION 10 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">10</span>
+                    Changes to This Policy
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-edit" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>We may update this Privacy Policy from time to time.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-edit" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>Changes will be posted on this page with an updated "Last Updated" date.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-edit" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>Continued use of the platform constitutes acceptance of the updated policy.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-edit" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>For significant changes, we will notify you via SMS or email.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- CONTACT SECTION -->
+            <!-- ============================================ -->
+            <div style="background: var(--bg-secondary); border-radius: var(--border-radius-sm); padding: 20px; margin-top: 24px; border-left: 4px solid var(--primary);">
+                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary);">
+                    <i class="fas fa-envelope" style="color: var(--primary);"></i> Contact Us
+                </h3>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;">
+                    If you have any questions about this Privacy Policy or how we handle your data, please contact us:
+                </p>
+                <p style="color: var(--text-secondary); font-size: 14px;">
+                    📧 <a href="mailto:support@educamlab.com" style="color: var(--primary); text-decoration: none;">support@educamlab.com</a><br>
+                    📞 <a href="tel:+237654122717" style="color: var(--primary); text-decoration: none;">+237 654 122 717</a>
+                </p>
+                <p style="color: var(--text-muted); font-size: 13px; margin-top: 8px;">
+                    <i class="fas fa-clock"></i> Response time: 24-48 hours
+                </p>
+            </div>
+
+            <!-- Back to Home -->
+            <div style="margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                <a href="../index.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--primary); text-decoration: none; font-weight: 500; transition: var(--transition);" onmouseover="this.style.gap='12px'" onmouseout="this.style.gap='8px'">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+
         </div>
     </div>
 
+    <!-- ============================================ -->
+    <!-- SCRIPTS -->
+    <!-- ============================================ -->
     <script>
+        // =============================================
+        // MOBILE MENU TOGGLE
+        // =============================================
         document.getElementById('menuToggle')?.addEventListener('click', function() {
             document.querySelector('.nav-links').classList.toggle('open');
         });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('open');
+            });
+        });
+
+        // =============================================
+        // CONSOLE
+        // =============================================
+        console.log('%c🔒 Privacy Policy', 'font-size: 16px; font-weight: bold; color: #4f46e5;');
+        console.log('%c📅 Last Updated: June 2026', 'font-size: 12px; color: #6b7280;');
+        console.log('%c🛡️ Your privacy is important to us.', 'font-size: 12px; color: #10b981;');
     </script>
 
     <script src="../js/config.js"></script>
