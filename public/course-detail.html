@@ -68,7 +68,57 @@
         </div>
 
         <!-- ============================================ -->
-        <!-- COURSE CONTENT -->
+        <!-- LOGIN REQUIRED / SAMPLE CONTENT -->
+        <!-- ============================================ -->
+        <div id="loginRequired" style="display: none;">
+            <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 40px; border: 1px solid var(--border-color); box-shadow: var(--shadow); text-align: center;">
+                <div style="font-size: 64px; margin-bottom: 16px;">🔒</div>
+                <h2 style="color: var(--text-primary);">Login Required</h2>
+                <p style="color: var(--text-secondary); margin: 8px 0 20px; max-width: 400px; margin-left: auto; margin-right: auto;">
+                    Please login or create an account to access this course content.
+                </p>
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                    <a href="login.html" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="register.html" class="btn btn-secondary">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </a>
+                </div>
+                
+                <!-- Sample Preview -->
+                <div style="margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--border-color); text-align: left;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 12px;">📖 Course Preview</h4>
+                    <div style="background: var(--bg-secondary); padding: 16px; border-radius: 8px; border-left: 3px solid var(--primary);">
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;">
+                            <strong>📄 Sample Past Question (2023)</strong>
+                        </p>
+                        <p style="color: var(--text-muted); font-size: 13px; line-height: 1.6;">
+                            1. What is the capital city of Cameroon?<br>
+                            2. Define photosynthesis and explain its importance.<br>
+                            3. Calculate the area of a circle with radius 7cm.
+                        </p>
+                        <p style="color: var(--text-muted); font-size: 12px; margin-top: 8px; font-style: italic;">
+                            ⭐ Full access to all past questions, marking schemes, and revision materials available after login.
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;">
+                        <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 12px; font-size: 12px; color: var(--text-muted); border: 1px solid var(--border-color);">
+                            📄 5+ Past Papers
+                        </span>
+                        <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 12px; font-size: 12px; color: var(--text-muted); border: 1px solid var(--border-color);">
+                            📚 Revision Notes
+                        </span>
+                        <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 12px; font-size: 12px; color: var(--text-muted); border: 1px solid var(--border-color);">
+                            🧪 Practice Quizzes
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- COURSE CONTENT (Full - Logged In Only) -->
         <!-- ============================================ -->
         <div id="courseContent" style="display: none;">
 
@@ -282,6 +332,13 @@
         }
 
         // =============================================
+        // CHECK AUTHENTICATION
+        // =============================================
+        function isAuthenticated() {
+            return localStorage.getItem('token') !== null;
+        }
+
+        // =============================================
         // RENDER COURSE DETAIL
         // =============================================
         function renderCourseDetail(course) {
@@ -377,8 +434,7 @@
         // INTERACTIONS
         // =============================================
         function viewPaper(paper) {
-            // Check if Auth exists
-            if (typeof Auth !== 'undefined' && !Auth.isAuthenticated()) {
+            if (!isAuthenticated()) {
                 if (confirm('Please login to access past questions.')) {
                     window.location.href = 'login.html';
                 }
@@ -388,7 +444,7 @@
         }
 
         function viewYear(year) {
-            if (typeof Auth !== 'undefined' && !Auth.isAuthenticated()) {
+            if (!isAuthenticated()) {
                 if (confirm('Please login to access past questions.')) {
                     window.location.href = 'login.html';
                 }
@@ -398,7 +454,7 @@
         }
 
         function enrollCourse() {
-            if (typeof Auth !== 'undefined' && !Auth.isAuthenticated()) {
+            if (!isAuthenticated()) {
                 if (confirm('Please login to enroll in this course.')) {
                     window.location.href = 'login.html';
                 }
@@ -419,7 +475,7 @@
         }
 
         function submitReview() {
-            if (typeof Auth !== 'undefined' && !Auth.isAuthenticated()) {
+            if (!isAuthenticated()) {
                 if (confirm('Please login to leave a review.')) {
                     window.location.href = 'login.html';
                 }
@@ -525,6 +581,19 @@
                 return;
             }
 
+            // Check if user is authenticated
+            if (!isAuthenticated()) {
+                // Show login required with sample preview
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('loginRequired').style.display = 'block';
+                
+                // Update breadcrumb with course name
+                document.getElementById('breadcrumbExam').textContent = course.exam.toUpperCase();
+                document.getElementById('breadcrumbSubject').textContent = course.title;
+                return;
+            }
+
+            // User is authenticated - show full content
             currentCourse = course;
             document.getElementById('loadingState').style.display = 'none';
             document.getElementById('courseContent').style.display = 'block';
@@ -551,11 +620,11 @@
     </script>
 
     <!-- Load API scripts (if they exist) -->
-        <script src="js/config.js"></script>
-        <script src="js/utils.js"></script>
-        <script src="js/api.js"></script>
-        <script src="js/auth.js"></script>
-        <script src="js/app.js"></script>
-        <script src="js/script.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
