@@ -10,6 +10,9 @@
 </head>
 <body>
 
+    <!-- ============================================ -->
+    <!-- HEADER - Using style.css nav pattern -->
+    <!-- ============================================ -->
     <header>
         <nav>
             <div class="logo">📚 EduCamLab</div>
@@ -27,189 +30,408 @@
         </nav>
     </header>
 
-    <div style="max-width: 900px; margin: 40px auto; padding: 0 20px;">
-        <h1 style="font-size: 28px; font-weight: 800;"><i class="fas fa-cog" style="color: var(--primary);"></i> Settings</h1>
-        <p style="color: var(--text-muted); margin-bottom: 24px;">Manage your preferences</p>
+    <!-- ============================================ -->
+    <!-- SETTINGS - Using .settings-wrapper -->
+    <!-- ============================================ -->
+    <div class="settings-wrapper">
 
-        <!-- Settings Tabs -->
-        <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 24px; background: var(--bg-secondary); padding: 4px; border-radius: var(--border-radius); border: 1px solid var(--border-color);">
-            <button class="tab-btn active" data-tab="preferences" onclick="switchTab('preferences')" style="padding: 10px 20px; border: none; border-radius: 6px; background: transparent; cursor: pointer; font-weight: 500; font-family: inherit; transition: var(--transition);">
-                <i class="fas fa-sliders-h"></i> Preferences
-            </button>
-            <button class="tab-btn" data-tab="appearance" onclick="switchTab('appearance')" style="padding: 10px 20px; border: none; border-radius: 6px; background: transparent; cursor: pointer; font-weight: 500; font-family: inherit; transition: var(--transition);">
-                <i class="fas fa-palette"></i> Appearance
-            </button>
-            <button class="tab-btn" data-tab="notifications" onclick="switchTab('notifications')" style="padding: 10px 20px; border: none; border-radius: 6px; background: transparent; cursor: pointer; font-weight: 500; font-family: inherit; transition: var(--transition);">
-                <i class="fas fa-bell"></i> Notifications
-            </button>
+        <!-- ============================================ -->
+        <!-- SETTINGS HEADER - Using .settings-header -->
+        <!-- ============================================ -->
+        <div class="settings-header">
+            <h1><i class="fas fa-cog" style="color: var(--primary);"></i> Settings</h1>
+            <p>Manage your preferences and customize your experience</p>
         </div>
 
-        <!-- Tab Content -->
-        <div id="tab-preferences" class="tab-content">
-            <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 16px;">
-                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Study Mode</h3>
-                <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">Choose your preferred study mode</p>
-                <select id="studyMode" style="width:100%; padding:10px 14px; border:2px solid var(--border-color); border-radius:8px; font-size:14px; background:var(--bg-primary); color:var(--text-primary);">
-                    <option value="focus">Focus Mode</option>
-                    <option value="regular" selected>Regular</option>
-                    <option value="relaxed">Relaxed</option>
-                </select>
+        <!-- ============================================ -->
+        <!-- TOAST NOTIFICATIONS -->
+        <!-- ============================================ -->
+        <div id="toastContainer" style="position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; max-width: 400px; width: 100%;"></div>
+
+        <!-- ============================================ -->
+        <!-- SETTINGS LAYOUT - Using .settings-layout -->
+        <!-- ============================================ -->
+        <div class="settings-layout">
+
+            <!-- ============================================ -->
+            <!-- SIDEBAR - Using .settings-sidebar -->
+            <!-- ============================================ -->
+            <div class="settings-sidebar">
+                <button class="sidebar-item active" data-tab="preferences" onclick="switchTab('preferences')">
+                    <i class="fas fa-sliders-h"></i> Preferences
+                </button>
+                <button class="sidebar-item" data-tab="appearance" onclick="switchTab('appearance')">
+                    <i class="fas fa-palette"></i> Appearance
+                </button>
+                <button class="sidebar-item" data-tab="notifications" onclick="switchTab('notifications')">
+                    <i class="fas fa-bell"></i> Notifications
+                    <span class="badge">3</span>
+                </button>
+                <button class="sidebar-item" data-tab="security" onclick="switchTab('security')">
+                    <i class="fas fa-shield-alt"></i> Security
+                </button>
             </div>
 
-            <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 16px;">
-                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Daily Study Goal</h3>
-                <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">Set your daily study time goal</p>
-                <select id="dailyGoal" style="width:100%; padding:10px 14px; border:2px solid var(--border-color); border-radius:8px; font-size:14px; background:var(--bg-primary); color:var(--text-primary);">
-                    <option value="15">15 minutes</option>
-                    <option value="30" selected>30 minutes</option>
-                    <option value="45">45 minutes</option>
-                    <option value="60">1 hour</option>
-                </select>
-            </div>
+            <!-- ============================================ -->
+            <!-- CONTENT - Using .settings-content -->
+            <!-- ============================================ -->
+            <div class="settings-content">
 
-            <button onclick="savePreferences()" class="btn btn-primary">
-                <i class="fas fa-save"></i> Save Preferences
-            </button>
-        </div>
+                <!-- ============================================ -->
+                <!-- TAB: PREFERENCES -->
+                <!-- ============================================ -->
+                <div id="tab-preferences" class="tab-pane active">
+                    <h2>Preferences</h2>
+                    <p class="tab-description">Customize your learning experience</p>
 
-        <div id="tab-appearance" class="tab-content" style="display:none;">
-            <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 16px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Dark Mode</h3>
-                        <p style="font-size: 14px; color: var(--text-muted);">Switch between light and dark themes</p>
+                    <!-- Study Mode -->
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>📖 Study Mode</h3>
+                        </div>
+                        <p class="setting-description">Choose your preferred study mode</p>
+                        <div class="form-group">
+                            <select id="studyMode">
+                                <option value="focus">Focus Mode</option>
+                                <option value="regular" selected>Regular</option>
+                                <option value="relaxed">Relaxed</option>
+                            </select>
+                        </div>
                     </div>
-                    <label style="position:relative; display:inline-block; width:50px; height:26px;">
-                        <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()" style="opacity:0; width:0; height:0;">
-                        <span style="position:absolute; cursor:pointer; inset:0; background:var(--gray-300); border-radius:26px; transition:var(--transition);"></span>
-                        <span style="position:absolute; content:''; height:20px; width:20px; left:3px; bottom:3px; background:white; border-radius:50%; transition:var(--transition);"></span>
-                    </label>
-                </div>
-                <p id="darkModeStatus" style="font-size: 13px; color: var(--text-muted);">Dark mode is currently <strong>disabled</strong></p>
-            </div>
 
-            <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
-                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">Font Size</h3>
-                <div style="display: flex; gap: 12px; align-items: center;">
-                    <button onclick="changeFontSize(-1)" class="btn btn-secondary btn-sm">A-</button>
-                    <span id="fontSizeDisplay" style="font-weight: 500;">Medium</span>
-                    <button onclick="changeFontSize(1)" class="btn btn-secondary btn-sm">A+</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-notifications" class="tab-content" style="display:none;">
-            <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 16px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Push Notifications</h3>
-                        <p style="font-size: 14px; color: var(--text-muted);">Receive browser notifications</p>
+                    <!-- Daily Study Goal -->
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>🎯 Daily Study Goal</h3>
+                        </div>
+                        <p class="setting-description">Set your daily study time goal</p>
+                        <div class="form-group">
+                            <select id="dailyGoal">
+                                <option value="15">15 minutes</option>
+                                <option value="30" selected>30 minutes</option>
+                                <option value="45">45 minutes</option>
+                                <option value="60">1 hour</option>
+                                <option value="90">1.5 hours</option>
+                                <option value="120">2 hours</option>
+                            </select>
+                        </div>
                     </div>
-                    <label style="position:relative; display:inline-block; width:50px; height:26px;">
-                        <input type="checkbox" id="pushNotifications" checked style="opacity:0; width:0; height:0;">
-                        <span style="position:absolute; cursor:pointer; inset:0; background:var(--primary); border-radius:26px; transition:var(--transition);"></span>
-                        <span style="position:absolute; content:''; height:20px; width:20px; left:3px; bottom:3px; background:white; border-radius:50%; transition:var(--transition);"></span>
-                    </label>
-                </div>
-            </div>
 
-            <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 16px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Study Reminders</h3>
-                        <p style="font-size: 14px; color: var(--text-muted);">Get reminded about your study sessions</p>
+                    <div class="form-actions">
+                        <button onclick="savePreferences()" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Preferences
+                        </button>
                     </div>
-                    <label style="position:relative; display:inline-block; width:50px; height:26px;">
-                        <input type="checkbox" id="studyReminders" style="opacity:0; width:0; height:0;">
-                        <span style="position:absolute; cursor:pointer; inset:0; background:var(--gray-300); border-radius:26px; transition:var(--transition);"></span>
-                        <span style="position:absolute; content:''; height:20px; width:20px; left:3px; bottom:3px; background:white; border-radius:50%; transition:var(--transition);"></span>
-                    </label>
                 </div>
-            </div>
 
-            <button onclick="saveNotifications()" class="btn btn-primary">
-                <i class="fas fa-save"></i> Save Preferences
-            </button>
+                <!-- ============================================ -->
+                <!-- TAB: APPEARANCE -->
+                <!-- ============================================ -->
+                <div id="tab-appearance" class="tab-pane" style="display: none;">
+                    <h2>Appearance</h2>
+                    <p class="tab-description">Customize the look and feel of your dashboard</p>
+
+                    <!-- Dark Mode -->
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>🌙 Dark Mode</h3>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <p class="setting-description" id="darkModeStatus">Dark mode is currently <strong>disabled</strong></p>
+                    </div>
+
+                    <!-- Font Size -->
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>🔤 Font Size</h3>
+                        </div>
+                        <p class="setting-description">Adjust the text size for better readability</p>
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <button onclick="changeFontSize(-1)" class="btn btn-secondary btn-sm">A-</button>
+                            <span id="fontSizeDisplay" style="font-weight: 500; min-width: 80px; text-align: center;">Medium</span>
+                            <button onclick="changeFontSize(1)" class="btn btn-secondary btn-sm">A+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================ -->
+                <!-- TAB: NOTIFICATIONS -->
+                <!-- ============================================ -->
+                <div id="tab-notifications" class="tab-pane" style="display: none;">
+                    <h2>Notifications</h2>
+                    <p class="tab-description">Manage your notification preferences</p>
+
+                    <!-- Push Notifications -->
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>🔔 Push Notifications</h3>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="pushNotifications" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <p class="setting-description">Receive browser notifications for updates and reminders</p>
+                    </div>
+
+                    <!-- Study Reminders -->
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>⏰ Study Reminders</h3>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="studyReminders">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <p class="setting-description">Get reminded about your daily study sessions</p>
+                    </div>
+
+                    <!-- Email Updates -->
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>📧 Email Updates</h3>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="emailUpdates" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <p class="setting-description">Receive weekly progress reports and course updates via email</p>
+                    </div>
+
+                    <div class="form-actions">
+                        <button onclick="saveNotifications()" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Preferences
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ============================================ -->
+                <!-- TAB: SECURITY -->
+                <!-- ============================================ -->
+                <div id="tab-security" class="tab-pane" style="display: none;">
+                    <h2>Security</h2>
+                    <p class="tab-description">Manage your account security settings</p>
+
+                    <!-- Session Management -->
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>🔐 Active Sessions</h3>
+                        </div>
+                        <p class="setting-description">Manage your active sessions across devices</p>
+                        <div style="padding: 12px; background: var(--bg-secondary); border-radius: var(--border-radius-sm); margin-top: 8px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-color);">
+                                <div>
+                                    <strong>Current Session</strong>
+                                    <div style="font-size: 13px; color: var(--text-muted);">Chrome on Windows</div>
+                                </div>
+                                <span class="badge badge-success">Active</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
+                                <div>
+                                    <strong>Mobile Session</strong>
+                                    <div style="font-size: 13px; color: var(--text-muted);">Chrome on Android</div>
+                                </div>
+                                <span class="badge badge-warning">Expiring soon</span>
+                            </div>
+                        </div>
+                        <button onclick="logoutAllSessions()" class="btn btn-danger" style="margin-top: 12px;">
+                            <i class="fas fa-sign-out-alt"></i> Logout All Sessions
+                        </button>
+                    </div>
+
+                    <!-- Two-Factor Authentication -->
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>🔑 Two-Factor Authentication</h3>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="twoFactorAuth">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <p class="setting-description">Add an extra layer of security to your account</p>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 
+    <!-- ============================================ -->
+    <!-- SCRIPTS -->
+    <!-- ============================================ -->
     <script>
         let fontSizeLevel = 1;
         const fontSizes = ['Small', 'Medium', 'Large', 'Extra Large'];
 
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach(b => {
-                b.classList.toggle('active', b.dataset.tab === tab);
-                b.style.background = b.classList.contains('active') ? 'var(--primary)' : 'transparent';
-                b.style.color = b.classList.contains('active') ? 'white' : 'var(--text-secondary)';
-            });
-            document.querySelectorAll('.tab-content').forEach(c => {
-                c.style.display = c.id === `tab-${tab}` ? 'block' : 'none';
-            });
-        }
-
-        function toggleDarkMode() {
-            const toggle = document.getElementById('darkModeToggle');
-            const status = document.getElementById('darkModeStatus');
-            if (toggle.checked) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                status.innerHTML = 'Dark mode is currently <strong>enabled</strong>';
-                localStorage.setItem('theme', 'dark');
-            } else {
-                document.documentElement.removeAttribute('data-theme');
-                status.innerHTML = 'Dark mode is currently <strong>disabled</strong>';
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        function changeFontSize(direction) {
-            fontSizeLevel = Math.max(0, Math.min(3, fontSizeLevel + direction));
-            const display = document.getElementById('fontSizeDisplay');
-            display.textContent = fontSizes[fontSizeLevel];
-            const sizes = [14, 16, 18, 20];
-            document.body.style.fontSize = sizes[fontSizeLevel] + 'px';
-            localStorage.setItem('fontSize', fontSizeLevel);
-        }
-
-        function savePreferences() {
-            showToast('Preferences saved!', 'success');
-        }
-
-        function saveNotifications() {
-            showToast('Notification preferences saved!', 'success');
-        }
-
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                API.clearToken();
-                localStorage.removeItem('userData');
-                window.location.href = 'index.html';
-            }
-        }
-
+        // =============================================
+        // TOAST NOTIFICATIONS
+        // =============================================
         function showToast(message, type = 'info') {
             const container = document.getElementById('toastContainer');
             if (!container) return;
+
             const toast = document.createElement('div');
-            toast.className = `toast toast-${type}`;
-            toast.innerHTML = `
-                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
-                <span>${message}</span>
-                <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+            const iconColor = type === 'success' ? 'var(--success)' : type === 'error' ? 'var(--danger)' : 'var(--info)';
+            const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+            
+            toast.style.cssText = `
+                background: var(--bg-card);
+                border: 1px solid var(--border-color);
+                border-radius: var(--border-radius);
+                padding: 16px 20px;
+                box-shadow: var(--shadow-lg);
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                animation: slideUp 0.3s ease;
+                transform-origin: bottom right;
             `;
+
+            toast.innerHTML = `
+                <i class="fas ${icon}" style="color: ${iconColor}; font-size: 20px;"></i>
+                <span style="flex: 1; font-size: 14px; color: var(--text-primary);">${message}</span>
+                <button onclick="this.parentElement.remove()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 18px;">&times;</button>
+            `;
+
             container.appendChild(toast);
+
             setTimeout(() => {
                 if (toast.parentElement) {
                     toast.style.opacity = '0';
-                    toast.style.transform = 'translateX(100px)';
+                    toast.style.transform = 'translateX(20px)';
                     setTimeout(() => toast.remove(), 300);
                 }
             }, 4000);
         }
 
-        // Load preferences
+        // =============================================
+        // SWITCH TAB
+        // =============================================
+        function switchTab(tab) {
+            // Update sidebar buttons
+            document.querySelectorAll('.sidebar-item').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tab);
+            });
+
+            // Update content panes
+            document.querySelectorAll('.tab-pane').forEach(pane => {
+                pane.style.display = pane.id === `tab-${tab}` ? 'block' : 'none';
+            });
+        }
+
+        // =============================================
+        // TOGGLE DARK MODE
+        // =============================================
+        function toggleDarkMode() {
+            const toggle = document.getElementById('darkModeToggle');
+            const status = document.getElementById('darkModeStatus');
+            
+            if (toggle.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                status.innerHTML = 'Dark mode is currently <strong>enabled</strong>';
+                localStorage.setItem('theme', 'dark');
+                showToast('Dark mode enabled 🌙', 'success');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                status.innerHTML = 'Dark mode is currently <strong>disabled</strong>';
+                localStorage.setItem('theme', 'light');
+                showToast('Light mode enabled ☀️', 'success');
+            }
+        }
+
+        // =============================================
+        // CHANGE FONT SIZE
+        // =============================================
+        function changeFontSize(direction) {
+            fontSizeLevel = Math.max(0, Math.min(3, fontSizeLevel + direction));
+            const display = document.getElementById('fontSizeDisplay');
+            display.textContent = fontSizes[fontSizeLevel];
+            
+            const sizes = [14, 16, 18, 20];
+            document.body.style.fontSize = sizes[fontSizeLevel] + 'px';
+            localStorage.setItem('fontSize', fontSizeLevel);
+        }
+
+        // =============================================
+        // SAVE PREFERENCES
+        // =============================================
+        function savePreferences() {
+            const studyMode = document.getElementById('studyMode').value;
+            const dailyGoal = document.getElementById('dailyGoal').value;
+            
+            // Save to localStorage
+            localStorage.setItem('studyMode', studyMode);
+            localStorage.setItem('dailyGoal', dailyGoal);
+            
+            showToast('Preferences saved successfully! ✅', 'success');
+        }
+
+        // =============================================
+        // SAVE NOTIFICATIONS
+        // =============================================
+        function saveNotifications() {
+            const pushNotifications = document.getElementById('pushNotifications').checked;
+            const studyReminders = document.getElementById('studyReminders').checked;
+            const emailUpdates = document.getElementById('emailUpdates').checked;
+            
+            // Save to localStorage
+            localStorage.setItem('pushNotifications', pushNotifications);
+            localStorage.setItem('studyReminders', studyReminders);
+            localStorage.setItem('emailUpdates', emailUpdates);
+            
+            showToast('Notification preferences saved! ✅', 'success');
+        }
+
+        // =============================================
+        // LOGOUT ALL SESSIONS
+        // =============================================
+        function logoutAllSessions() {
+            if (confirm('Are you sure you want to logout all active sessions?')) {
+                showToast('All sessions have been logged out 🔐', 'info');
+                // In a real app, you would call an API to invalidate all sessions
+            }
+        }
+
+        // =============================================
+        // LOGOUT
+        // =============================================
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                if (typeof API !== 'undefined' && API.clearToken) {
+                    API.clearToken();
+                }
+                localStorage.removeItem('userData');
+                localStorage.removeItem('token');
+                window.location.href = 'index.html';
+            }
+        }
+
+        // =============================================
+        // MOBILE MENU
+        // =============================================
+        document.getElementById('menuToggle')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('open');
+            });
+        });
+
+        // =============================================
+        // INIT
+        // =============================================
         document.addEventListener('DOMContentLoaded', function() {
-            // Dark mode
+            // Check authentication
+            if (typeof Auth !== 'undefined' && !Auth.isAuthenticated()) {
+                window.location.href = 'login.html?redirect=settings.html';
+                return;
+            }
+
+            // Load Dark Mode preference
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
                 document.getElementById('darkModeToggle').checked = true;
@@ -217,7 +439,7 @@
                 document.getElementById('darkModeStatus').innerHTML = 'Dark mode is currently <strong>enabled</strong>';
             }
 
-            // Font size
+            // Load Font Size preference
             const savedFontSize = localStorage.getItem('fontSize');
             if (savedFontSize) {
                 fontSizeLevel = parseInt(savedFontSize);
@@ -226,14 +448,35 @@
                 document.body.style.fontSize = sizes[fontSizeLevel] + 'px';
             }
 
-            // Mobile menu
-            document.getElementById('menuToggle')?.addEventListener('click', function() {
-                document.querySelector('.nav-links').classList.toggle('open');
-            });
+            // Load Study Mode preference
+            const savedStudyMode = localStorage.getItem('studyMode');
+            if (savedStudyMode) {
+                document.getElementById('studyMode').value = savedStudyMode;
+            }
+
+            // Load Daily Goal preference
+            const savedDailyGoal = localStorage.getItem('dailyGoal');
+            if (savedDailyGoal) {
+                document.getElementById('dailyGoal').value = savedDailyGoal;
+            }
+
+            // Load Notification preferences
+            const pushNotifications = localStorage.getItem('pushNotifications');
+            if (pushNotifications !== null) {
+                document.getElementById('pushNotifications').checked = pushNotifications === 'true';
+            }
+            
+            const studyReminders = localStorage.getItem('studyReminders');
+            if (studyReminders !== null) {
+                document.getElementById('studyReminders').checked = studyReminders === 'true';
+            }
+            
+            const emailUpdates = localStorage.getItem('emailUpdates');
+            if (emailUpdates !== null) {
+                document.getElementById('emailUpdates').checked = emailUpdates === 'true';
+            }
         });
     </script>
-
-    <div class="toast-container" id="toastContainer"></div>
 
     <script src="js/config.js"></script>
     <script src="js/api.js"></script>
