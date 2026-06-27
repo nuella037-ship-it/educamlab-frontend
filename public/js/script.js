@@ -33,7 +33,7 @@ const PageController = {
     },
 
     // ============================================
-    // MOBILE MENU HANDLER (FIXED)
+    // MOBILE MENU HANDLER
     // ============================================
 
     _initMobileMenu() {
@@ -42,11 +42,9 @@ const PageController = {
         
         if (!menuBtn || !navLinks) return;
 
-        // Toggle menu on button click
         menuBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             navLinks.classList.toggle('open');
-            // Toggle icon
             const icon = this.querySelector('i');
             if (icon) {
                 icon.classList.toggle('fa-bars');
@@ -54,7 +52,6 @@ const PageController = {
             }
         });
 
-        // Close menu when clicking outside
         document.addEventListener('click', function(e) {
             if (navLinks.classList.contains('open') && 
                 !navLinks.contains(e.target) && 
@@ -68,7 +65,6 @@ const PageController = {
             }
         });
 
-        // Close menu when a link is clicked
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function() {
                 navLinks.classList.remove('open');
@@ -80,7 +76,6 @@ const PageController = {
             });
         });
 
-        // Close menu on Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && navLinks.classList.contains('open')) {
                 navLinks.classList.remove('open');
@@ -101,7 +96,6 @@ const PageController = {
         const toggle = document.getElementById('darkModeToggle');
         if (!toggle) return;
 
-        // Set initial state
         const isDark = localStorage.getItem('theme') === 'dark';
         toggle.checked = isDark;
         if (isDark) {
@@ -119,7 +113,6 @@ const PageController = {
                 if (window.App) window.App.showToast('☀️ Light mode enabled', 'success');
             }
             
-            // Update status text if exists
             const status = document.getElementById('darkModeStatus');
             if (status) {
                 status.innerHTML = this.checked ? 
@@ -133,7 +126,6 @@ const PageController = {
     // PAGE HANDLERS
     // ============================================
 
-    // -------- INDEX PAGE --------
     index() {
         this._initSmoothScroll();
         this._initScrollAnimations();
@@ -141,69 +133,57 @@ const PageController = {
         this._consoleBranding();
     },
 
-    // -------- COURSES PAGE --------
     courses() {
         this._initCourses();
     },
 
-    // -------- COURSE DETAIL PAGE --------
     'course-detail'() {
         this._initCourseDetail();
     },
 
-    // -------- DASHBOARD PAGE --------
     dashboard() {
         if (!Auth.requireAuth()) return;
         this._initDashboard();
     },
 
-    // -------- PROFILE PAGE --------
     profile() {
         if (!Auth.requireAuth()) return;
         this._initProfile();
     },
 
-    // -------- SETTINGS PAGE --------
     settings() {
         if (!Auth.requireAuth()) return;
         this._initSettings();
     },
 
-    // -------- LOGIN PAGE --------
     login() {
         this._initLogin();
     },
 
-    // -------- REGISTER PAGE --------
     register() {
         this._initRegister();
     },
 
-    // -------- VERIFY PAGE --------
     verify() {
         this._initVerify();
     },
 
-    // -------- FORGOT PASSWORD PAGE --------
     'forgot-password'() {
         this._initForgotPassword();
     },
 
-    // -------- RESET PASSWORD PAGE --------
     'reset-password'() {
         this._initResetPassword();
     },
 
-    // -------- CONTACT PAGE --------
     contact() {
         this._initContact();
     },
 
     // ============================================
-    // PAGE-SPECIFIC HELPERS
+    // INDEX HELPERS
     // ============================================
 
-    // -------- INDEX HELPERS --------
     _initSmoothScroll() {
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -272,13 +252,12 @@ const PageController = {
         console.log('%c🚀 Join 10,000+ students excelling in their exams!', 'font-size: 14px; color: #10b981;');
     },
 
-    // -------- COURSES HELPERS --------
+    // ============================================
+    // COURSES HELPERS (API FETCHED)
+    // ============================================
+
     _initCourses() {
-        this._buildCourses();
-        this._loadFiltersFromURL();
-        this._applyFilters();
-        this._updateStats();
-        this._initCourseSearch();
+        this._fetchCoursesFromAPI();
     },
 
     _initCourseSearch() {
@@ -290,115 +269,72 @@ const PageController = {
         }
     },
 
-    _buildCourses() {
-        const data = window.EDUCATON_DATA;
-        if (!data) {
-            console.warn('EDUCATON_DATA not found');
-            this.courses = [];
-            return;
-        }
-
-        const courses = [];
-
-        // O Level
-        Object.entries(data.oLevels?.subjects || {}).forEach(([key, subject]) => {
-            courses.push({
-                id: `o-${key}`,
-                title: `${subject.name} - O Level`,
-                description: `${subject.papers?.length || 0} papers with past questions`,
-                exam: 'o-level',
-                category: 'past-questions',
-                level: 'O Level',
-                code: subject.code,
-                papers: subject.papers?.length || 0,
-                years: subject.years || [],
-                icon: '📘',
-                popular: true
-            });
-        });
-
-        // A Level
-        Object.entries(data.aLevels?.subjects || {}).forEach(([key, subject]) => {
-            courses.push({
-                id: `a-${key}`,
-                title: `${subject.name} - A Level`,
-                description: `${subject.papers?.length || 0} papers with past questions`,
-                exam: 'a-level',
-                category: 'past-questions',
-                level: 'A Level',
-                code: subject.code,
-                papers: subject.papers?.length || 0,
-                years: subject.years || [],
-                icon: '📗',
-                popular: true
-            });
-        });
-
-        // BACC
-        Object.entries(data.bacc?.series || {}).forEach(([key, serie]) => {
-            courses.push({
-                id: `bacc-${key}`,
-                title: `BACC - ${serie.name}`,
-                description: `${serie.subjects?.length || 0} subjects with resources`,
-                exam: 'bacc',
-                category: 'courses',
-                level: 'BACC',
-                subjects: serie.subjects || [],
-                icon: '📕',
-                popular: ['Série B', 'Série C'].includes(serie.name)
-            });
-        });
-
-        // BEPC
-        (data.bepc?.subjects || []).forEach(subject => {
-            courses.push({
-                id: `bepc-${subject.name.toLowerCase().replace(/\s+/g, '-')}`,
-                title: `BEPC - ${subject.name}`,
-                description: `Complete BEPC resources for ${subject.name}`,
-                exam: 'bepc',
-                category: 'courses',
-                level: 'BEPC',
-                icon: '📙',
-                popular: ['French', 'English', 'Mathematics'].includes(subject.name)
-            });
-        });
-
-        // Technical GCE
-        Object.entries(data.technicalGCE?.streams || {}).forEach(([key, stream]) => {
-            courses.push({
-                id: `tech-${key}`,
-                title: `Technical GCE - ${stream.name}`,
-                description: `${stream.subjects?.length || 0} subjects with technical resources`,
-                exam: 'technical',
-                category: 'courses',
-                level: 'Technical GCE',
-                subjects: stream.subjects || [],
-                icon: '⚙️',
-                popular: true
-            });
-        });
-
-        // Quizzes
-        Object.entries(data.quizzes || {}).forEach(([key, quiz]) => {
-            if (quiz.subjects) {
-                quiz.subjects.forEach(subject => {
-                    courses.push({
-                        id: `quiz-${key}-${subject.name.toLowerCase().replace(/\s+/g, '-')}`,
-                        title: `${subject.name} Quiz (${quiz.title})`,
-                        description: `${subject.questions || 0} questions • ${subject.duration || 'N/A'}`,
-                        exam: key === 'bacc' ? 'bacc' : key === 'bepc' ? 'bepc' : 'technical',
-                        category: 'quizzes',
-                        level: quiz.title || 'Quiz',
-                        questions: subject.questions || 0,
-                        duration: subject.duration || 'N/A',
-                        icon: '🧪',
-                        popular: true
-                    });
-                });
+    async _fetchCoursesFromAPI() {
+        const loadingEl = document.getElementById('loadingState');
+        const grid = document.getElementById('courseGrid');
+        
+        try {
+            if (loadingEl) loadingEl.style.display = 'block';
+            if (grid) grid.innerHTML = '';
+            
+            // Fetch courses from API
+            const result = await API.getCourses();
+            
+            if (result.success && result.data) {
+                // Transform API data to match course card structure
+                this.courses = result.data.map(course => ({
+                    id: course.id || course._id,
+                    title: course.title || course.name || 'Course',
+                    description: course.description || 'No description available',
+                    exam: course.exam || 'general',
+                    category: course.category || 'courses',
+                    level: course.level || 'All Levels',
+                    code: course.code || 'N/A',
+                    papers: course.papers || 0,
+                    years: course.years || [],
+                    icon: course.icon || '📚',
+                    popular: course.popular || false,
+                    price: course.price || 'Free'
+                }));
+                
+                // Load filters from URL
+                this._loadFiltersFromURL();
+                
+                // Apply filters and render
+                this._applyFilters();
+                this._updateStats();
+                this._initCourseSearch();
+                
+            } else {
+                // No courses found or empty response
+                this.courses = [];
+                this._applyFilters();
+                this._updateStats();
             }
-        });
-
-        this.courses = courses;
+            
+        } catch (error) {
+            console.error('Error fetching courses:', error);
+            this.courses = [];
+            this._applyFilters();
+            this._updateStats();
+            
+            // Show error message
+            if (grid) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column:1/-1;text-align:center;padding:60px 20px;">
+                        <i class="fas fa-exclamation-circle" style="font-size:48px;display:block;margin-bottom:16px;color:var(--danger);"></i>
+                        <h3 style="color:var(--text-primary);">Failed to load courses</h3>
+                        <p style="color:var(--text-muted);">${error.message || 'Please try again later.'}</p>
+                        <button onclick="window.location.reload()" class="btn btn-primary" style="margin-top:16px;">
+                            <i class="fas fa-redo"></i> Retry
+                        </button>
+                    </div>
+                `;
+            }
+            
+        } finally {
+            if (loadingEl) loadingEl.style.display = 'none';
+        }
     },
 
     _loadFiltersFromURL() {
@@ -536,7 +472,7 @@ const PageController = {
     },
 
     // ============================================
-    // COURSE DETAIL HELPERS (UPDATED WITH AUTH CHECK)
+    // COURSE DETAIL HELPERS
     // ============================================
 
     _initCourseDetail() {
@@ -556,7 +492,6 @@ const PageController = {
         if (course) {
             this.currentCourse = course;
             
-            // CHECK AUTHENTICATION
             if (!this._isAuthenticated()) {
                 this._showLoginRequired(course);
                 return;
@@ -581,7 +516,6 @@ const PageController = {
         if (loading) loading.style.display = 'none';
         if (content) content.style.display = 'none';
         
-        // Update breadcrumb with course name
         if (course) {
             document.getElementById('breadcrumbExam').textContent = course.exam?.toUpperCase() || '';
             document.getElementById('breadcrumbSubject').textContent = course.title || '';
@@ -589,7 +523,6 @@ const PageController = {
         
         if (loginRequired) {
             loginRequired.style.display = 'block';
-            // Update the sample preview with course-specific info if available
             if (course) {
                 const previewTitle = loginRequired.querySelector('h4');
                 if (previewTitle) previewTitle.textContent = `📖 ${course.title} - Preview`;
@@ -603,7 +536,6 @@ const PageController = {
             if (result.success) {
                 this.currentCourse = result.data;
                 
-                // CHECK AUTHENTICATION
                 if (!this._isAuthenticated()) {
                     this._showLoginRequired(result.data);
                     return;
@@ -712,7 +644,10 @@ const PageController = {
         }
     },
 
-    // -------- DASHBOARD HELPERS --------
+    // ============================================
+    // DASHBOARD HELPERS
+    // ============================================
+
     async _initDashboard() {
         await this._loadUserData();
         await this._loadPinStatus();
@@ -827,7 +762,10 @@ const PageController = {
         }
     },
 
-    // -------- PROFILE HELPERS --------
+    // ============================================
+    // PROFILE HELPERS
+    // ============================================
+
     async _initProfile() {
         await this._loadProfile();
         this._initProfileForms();
@@ -905,7 +843,10 @@ const PageController = {
         }
     },
 
-    // -------- SETTINGS HELPERS --------
+    // ============================================
+    // SETTINGS HELPERS
+    // ============================================
+
     _initSettings() {
         this._loadPreferences();
         this._initSettingsForms();
@@ -913,7 +854,6 @@ const PageController = {
     },
 
     _loadPreferences() {
-        // Dark mode
         if (localStorage.getItem('theme') === 'dark') {
             const toggle = document.getElementById('darkModeToggle');
             const status = document.getElementById('darkModeStatus');
@@ -922,7 +862,6 @@ const PageController = {
             document.documentElement.setAttribute('data-theme', 'dark');
         }
 
-        // Font size
         const savedSize = localStorage.getItem('fontSize');
         if (savedSize) {
             window.fontSizeLevel = parseInt(savedSize);
@@ -931,21 +870,18 @@ const PageController = {
             document.body.style.fontSize = [14, 16, 18, 20][window.fontSizeLevel] + 'px';
         }
 
-        // Study mode
         const studyMode = localStorage.getItem('studyMode');
         if (studyMode) {
             const el = document.getElementById('studyMode');
             if (el) el.value = studyMode;
         }
 
-        // Daily goal
         const dailyGoal = localStorage.getItem('dailyGoal');
         if (dailyGoal) {
             const el = document.getElementById('dailyGoal');
             if (el) el.value = dailyGoal;
         }
 
-        // Notifications
         const push = localStorage.getItem('pushNotifications');
         if (push !== null) {
             const el = document.getElementById('pushNotifications');
@@ -986,7 +922,10 @@ const PageController = {
         }
     },
 
-    // -------- LOGIN HELPERS --------
+    // ============================================
+    // LOGIN HELPERS
+    // ============================================
+
     _initLogin() {
         if (Auth.isAuthenticated()) {
             window.location.href = 'dashboard.html';
@@ -1063,7 +1002,10 @@ const PageController = {
         });
     },
 
-    // -------- REGISTER HELPERS --------
+    // ============================================
+    // REGISTER HELPERS
+    // ============================================
+
     _initRegister() {
         if (Auth.isAuthenticated()) {
             window.location.href = 'dashboard.html';
@@ -1190,7 +1132,10 @@ const PageController = {
         }
     },
 
-    // -------- VERIFY HELPERS --------
+    // ============================================
+    // VERIFY HELPERS
+    // ============================================
+
     _initVerify() {
         this._createParticles();
         this._loadPhoneFromStorage();
@@ -1291,14 +1236,16 @@ const PageController = {
                 return;
             }
             if (window.App) window.App.showToast('New verification code sent!', 'success');
-            // Reset OTP input
             const otpInput = document.getElementById('otpCode');
             if (otpInput) otpInput.value = '';
             otpInput?.focus();
         });
     },
 
-    // -------- FORGOT PASSWORD HELPERS --------
+    // ============================================
+    // FORGOT PASSWORD HELPERS
+    // ============================================
+
     _initForgotPassword() {
         if (Auth.isAuthenticated()) {
             window.location.href = 'dashboard.html';
@@ -1354,7 +1301,10 @@ const PageController = {
         });
     },
 
-    // -------- RESET PASSWORD HELPERS --------
+    // ============================================
+    // RESET PASSWORD HELPERS
+    // ============================================
+
     _initResetPassword() {
         if (Auth.isAuthenticated()) {
             window.location.href = 'dashboard.html';
@@ -1431,7 +1381,10 @@ const PageController = {
         }
     },
 
-    // -------- CONTACT HELPERS --------
+    // ============================================
+    // CONTACT HELPERS
+    // ============================================
+
     _initContact() {
         this._initContactForm();
         this._initContactValidation();
@@ -1508,7 +1461,10 @@ const PageController = {
         }
     },
 
-    // -------- COMMON HELPERS --------
+    // ============================================
+    // COMMON HELPERS
+    // ============================================
+
     _createParticles() {
         const container = document.getElementById('particles');
         if (!container) return;
@@ -1525,7 +1481,10 @@ const PageController = {
         }
     },
 
-    // -------- GLOBAL FUNCTIONS (Exposed) --------
+    // ============================================
+    // GLOBAL FUNCTIONS (Exposed)
+    // ============================================
+
     resetFilters() {
         const search = document.getElementById('searchInput');
         const exam = document.getElementById('examFilter');
@@ -1622,12 +1581,10 @@ const PageController = {
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize App first if available
     if (window.App && !App.state?.initialized) {
         document.addEventListener('app:ready', function() {
             PageController.init();
         });
-        // Fallback: initialize after a short delay
         setTimeout(function() {
             if (!PageController._initialized) {
                 PageController.init();
