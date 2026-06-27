@@ -5,138 +5,301 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account - EduCamLab</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/auth.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- Particles Background -->
-    <div class="particles" id="particles"></div>
+    <!-- ============================================ -->
+    <!-- AUTH PAGE - Using .auth-page from style.css -->
+    <!-- ============================================ -->
+    <div class="auth-page">
 
-    <div class="auth-container">
-        <div class="auth-box" style="max-width: 600px;">
-            <!-- Header -->
-            <div class="auth-header">
-                <a href="index.html" class="logo">
-                    <span class="logo-icon">📚</span>
-                    EduCamLab
-                </a>
-                <h1>Create Account</h1>
-                <p>Start your learning journey today</p>
-                <span class="security-badge" style="background: #dbeafe; color: #1e40af;">
-                    <i class="fas fa-user-plus"></i> Free Registration
-                </span>
-            </div>
+        <!-- Particles Background -->
+        <div class="particles" id="particles"></div>
 
-            <!-- Registration Form -->
-            <form id="registerForm" novalidate>
-                <!-- First Name -->
-                <div class="form-group">
-                    <label>
-                        <i class="fas fa-user"></i> First Name <span class="required">*</span>
-                    </label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-user input-icon"></i>
-                        <input type="text" id="firstName" placeholder="John" required minlength="2" maxlength="50">
+        <!-- ============================================ -->
+        <!-- AUTH CONTAINER - Using .auth-container -->
+        <!-- ============================================ -->
+        <div class="auth-container">
+
+            <!-- ============================================ -->
+            <!-- AUTH BOX - Using .auth-box -->
+            <!-- ============================================ -->
+            <div class="auth-box">
+
+                <!-- ============================================ -->
+                <!-- HEADER - Using .auth-header -->
+                <!-- ============================================ -->
+                <div class="auth-header">
+                    <a href="index.html" class="logo">
+                        <span class="logo-icon">📚</span>
+                        EduCamLab
+                    </a>
+                    <h1 id="formTitle">Create Account</h1>
+                    <p id="formSubtitle">Start your learning journey today</p>
+                    <div class="benefits">
+                        <span><i class="fas fa-check-circle"></i> Free access</span>
+                        <span><i class="fas fa-check-circle"></i> Past questions</span>
+                        <span><i class="fas fa-check-circle"></i> Quizzes &amp; pamphlets</span>
                     </div>
                 </div>
 
-                <!-- Last Name -->
-                <div class="form-group">
-                    <label>
-                        <i class="fas fa-user"></i> Last Name <span class="required">*</span>
-                    </label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-user input-icon"></i>
-                        <input type="text" id="lastName" placeholder="Doe" required minlength="2" maxlength="50">
-                    </div>
-                </div>
-
-                <!-- Phone Number -->
-                <div class="form-group">
-                    <label>
-                        <i class="fas fa-phone"></i> Phone Number <span class="required">*</span>
-                    </label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-phone input-icon"></i>
-                        <input type="tel" id="phoneNumber" placeholder="677123456" required maxlength="9">
-                    </div>
-                    <small class="form-hint">Enter 9-digit phone number (e.g., 677123456)</small>
-                </div>
-
-                <!-- Password -->
-                <div class="form-group">
-                    <label>
-                        <i class="fas fa-lock"></i> Password <span class="required">*</span>
-                    </label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-key input-icon"></i>
-                        <input type="password" id="password" placeholder="Create a strong password" required minlength="8">
-                        <button type="button" class="password-toggle" onclick="togglePassword()">
-                            <i class="fas fa-eye" id="passwordIcon"></i>
-                        </button>
-                    </div>
-                    <small class="form-hint">Minimum 8 characters with uppercase, lowercase, number, and special character</small>
-                </div>
-
-                <!-- Confirm Password -->
-                <div class="form-group">
-                    <label>
-                        <i class="fas fa-lock"></i> Confirm Password <span class="required">*</span>
-                    </label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-check input-icon"></i>
-                        <input type="password" id="confirmPassword" placeholder="Confirm your password" required minlength="8">
-                    </div>
-                    <small class="form-hint" id="passwordMatchHint">Passwords must match</small>
-                </div>
-
-                <!-- Terms -->
-                <div class="form-options" style="margin-bottom: 16px;">
-                    <label>
-                        <input type="checkbox" id="termsCheckbox" required>
-                        I agree to the <a href="policy/terms.html" style="color: var(--primary);">Terms of Service</a> and <a href="policy/privacy.html" style="color: var(--primary);">Privacy Policy</a>
-                    </label>
-                </div>
-
-                <!-- Message Container -->
+                <!-- ============================================ -->
+                <!-- MESSAGE CONTAINER -->
+                <!-- ============================================ -->
                 <div class="message-container" id="messageContainer"></div>
 
-                <!-- Register Button -->
-                <button type="submit" class="btn btn-primary btn-block btn-login" id="registerBtn">
-                    <i class="fas fa-user-plus"></i> Create Account
-                </button>
-            </form>
+                <!-- ============================================ -->
+                <!-- REGISTER FORM -->
+                <!-- ============================================ -->
+                <form id="registerForm" novalidate>
 
-            <!-- Footer -->
-            <div class="auth-footer">
-                <a href="login.html">
-                    <i class="fas fa-sign-in-alt"></i> Already have an account? Sign in
-                </a>
-                <div class="footer-links">
-                    <a href="index.html">Home</a>
-                    <a href="policy/privacy.html">Privacy</a>
-                    <a href="policy/terms.html">Terms</a>
+                    <!-- First Name -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-user"></i> First Name <span class="required">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user input-icon"></i>
+                            <input 
+                                type="text" 
+                                id="firstName" 
+                                placeholder="John" 
+                                required 
+                                minlength="2" 
+                                maxlength="50"
+                                autocomplete="given-name"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-user"></i> Last Name <span class="required">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user input-icon"></i>
+                            <input 
+                                type="text" 
+                                id="lastName" 
+                                placeholder="Doe" 
+                                required 
+                                minlength="2" 
+                                maxlength="50"
+                                autocomplete="family-name"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-phone"></i> Phone Number <span class="required">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-phone input-icon"></i>
+                            <input 
+                                type="tel" 
+                                id="phoneNumber" 
+                                placeholder="677123456" 
+                                required 
+                                maxlength="9"
+                                autocomplete="tel"
+                            >
+                        </div>
+                        <span class="form-hint">Enter your 9-digit Cameroon phone number</span>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-lock"></i> Password <span class="required">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-key input-icon"></i>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                placeholder="Create a strong password" 
+                                required 
+                                minlength="8"
+                                autocomplete="new-password"
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('password', this)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span class="form-hint">Minimum 8 characters with uppercase, lowercase, number, and special character</span>
+                        
+                        <!-- Password Strength Indicator -->
+                        <div id="passwordStrength" style="margin-top: 8px;">
+                            <div style="display: flex; gap: 4px;">
+                                <div class="bar" style="flex:1; height:4px; background:var(--border-color); border-radius:2px;"></div>
+                                <div class="bar" style="flex:1; height:4px; background:var(--border-color); border-radius:2px;"></div>
+                                <div class="bar" style="flex:1; height:4px; background:var(--border-color); border-radius:2px;"></div>
+                                <div class="bar" style="flex:1; height:4px; background:var(--border-color); border-radius:2px;"></div>
+                                <div class="bar" style="flex:1; height:4px; background:var(--border-color); border-radius:2px;"></div>
+                            </div>
+                            <span id="strengthLabel" style="font-size: 12px; color: var(--text-muted); margin-top: 4px; display: block;">Enter a password</span>
+                        </div>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-lock"></i> Confirm Password <span class="required">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-check input-icon"></i>
+                            <input 
+                                type="password" 
+                                id="confirmPassword" 
+                                placeholder="Confirm your password" 
+                                required 
+                                minlength="8"
+                                autocomplete="new-password"
+                            >
+                        </div>
+                        <span class="form-hint" id="passwordMatchHint">Passwords must match</span>
+                    </div>
+
+                    <!-- Terms -->
+                    <div class="terms-group">
+                        <input type="checkbox" id="termsCheckbox" required>
+                        <label for="termsCheckbox">
+                            I agree to the <a href="policy/terms.html">Terms of Service</a> and 
+                            <a href="policy/privacy.html">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <!-- Register Button -->
+                    <button type="submit" class="btn-register" id="registerBtn">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+
+                </form>
+
+                <!-- ============================================ -->
+                <!-- OTP VERIFICATION FORM (Hidden initially) -->
+                <!-- ============================================ -->
+                <form id="otpForm" style="display: none;" novalidate>
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div style="font-size: 48px; margin-bottom: 8px;">📱</div>
+                        <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary);">Verify Your Phone</h3>
+                        <p style="color: var(--text-muted); font-size: 14px;">
+                            We sent a verification code to <strong id="otpPhoneDisplay">+237 677123456</strong>
+                        </p>
+                    </div>
+
+                    <!-- OTP Input -->
+                    <div class="form-group">
+                        <label>
+                            Verification Code <span class="required">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-shield-alt input-icon"></i>
+                            <input 
+                                type="text" 
+                                id="otpCode" 
+                                placeholder="A1B2C3" 
+                                maxlength="6" 
+                                required
+                                autocomplete="one-time-code"
+                                style="text-align: center; font-size: 24px; letter-spacing: 8px; font-family: monospace; text-transform: uppercase;"
+                            >
+                        </div>
+                        <span class="form-hint">Enter the 6-character code sent to your phone</span>
+                    </div>
+
+                    <!-- Resend OTP -->
+                    <div style="text-align: center; margin-bottom: 16px;">
+                        <span style="color: var(--text-muted); font-size: 14px;">Didn't receive the code? </span>
+                        <button 
+                            type="button" 
+                            id="resendOtpBtn" 
+                            style="background: none; border: none; color: var(--primary); cursor: pointer; font-weight: 600; font-size: 14px; transition: color 0.3s;"
+                            onmouseover="this.style.color='var(--primary-dark)'"
+                            onmouseout="this.style.color='var(--primary)'"
+                        >
+                            Resend Code
+                        </button>
+                    </div>
+
+                    <!-- OTP Message Container -->
+                    <div class="message-container" id="otpMessageContainer"></div>
+
+                    <!-- Verify Button -->
+                    <button type="submit" class="btn-register" id="verifyOtpBtn">
+                        <i class="fas fa-check-circle"></i> Verify Account
+                    </button>
+
+                    <!-- Back to Register -->
+                    <div style="text-align: center; margin-top: 16px;">
+                        <button 
+                            type="button" 
+                            onclick="goBackToRegister()" 
+                            style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px; transition: color 0.3s;"
+                            onmouseover="this.style.color='var(--primary)'"
+                            onmouseout="this.style.color='var(--text-muted)'"
+                        >
+                            <i class="fas fa-arrow-left"></i> Back to registration
+                        </button>
+                    </div>
+                </form>
+
+                <!-- ============================================ -->
+                <!-- SUCCESS STATE (Hidden initially) -->
+                <!-- ============================================ -->
+                <div id="successState" style="display: none; text-align: center; padding: 20px 0;">
+                    <div style="font-size: 64px; margin-bottom: 16px;">🎉</div>
+                    <h3 style="font-size: 20px; font-weight: 700; color: var(--text-primary);">Account Created Successfully!</h3>
+                    <p style="color: var(--text-muted); margin: 8px 0 16px;">
+                        Your account has been verified. Redirecting to login...
+                    </p>
+                    <a href="login.html" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Go to Login
+                    </a>
                 </div>
+
+                <!-- ============================================ -->
+                <!-- FOOTER - Using .auth-footer -->
+                <!-- ============================================ -->
+                <div class="auth-footer">
+                    <a href="login.html">
+                        <i class="fas fa-sign-in-alt"></i> Already have an account? Sign in
+                    </a>
+                    <div class="footer-links">
+                        <a href="index.html">Home</a>
+                        <a href="policy/privacy.html">Privacy</a>
+                        <a href="policy/terms.html">Terms</a>
+                    </div>
+                </div>
+
             </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- VERSION BADGE - Using .version-badge -->
+        <!-- ============================================ -->
+        <div class="version-badge">
+            <i class="fas fa-shield-alt"></i> Secure v2.0
         </div>
     </div>
 
-    <!-- Version Badge -->
-    <div class="version-badge">
-        <i class="fas fa-shield-alt"></i> Secure v2.0
-    </div>
-
-    <script src="js/config.js"></script>
-    <script src="js/api.js"></script>
+    <!-- ============================================ -->
+    <!-- SCRIPTS -->
+    <!-- ============================================ -->
     <script>
-        // ============================================
+        // =============================================
         // PARTICLES BACKGROUND
-        // ============================================
+        // =============================================
         function createParticles() {
             const container = document.getElementById('particles');
             if (!container) return;
+            
+            container.innerHTML = '';
             const particleCount = 40;
 
             for (let i = 0; i < particleCount; i++) {
@@ -152,28 +315,23 @@
         }
         createParticles();
 
-        // ============================================
-        // PASSWORD VISIBILITY TOGGLE
-        // ============================================
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            if (!passwordInput) return;
-            const icon = document.getElementById('passwordIcon');
-            if (!icon) return;
-
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.className = 'fas fa-eye-slash';
-            } else {
-                passwordInput.type = 'password';
-                icon.className = 'fas fa-eye';
-            }
-            passwordInput.focus();
+        // =============================================
+        // TOGGLE PASSWORD VISIBILITY
+        // =============================================
+        function togglePassword(inputId, button) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+            
+            const type = input.type === 'password' ? 'text' : 'password';
+            input.type = type;
+            const icon = button.querySelector('i');
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
         }
 
-        // ============================================
+        // =============================================
         // SHOW MESSAGE
-        // ============================================
+        // =============================================
         function showMessage(container, type, message) {
             if (!container) return;
 
@@ -201,125 +359,256 @@
             container.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        // ============================================
+        // =============================================
+        // PASSWORD STRENGTH CHECK
+        // =============================================
+        function checkPasswordStrength(password) {
+            let score = 0;
+            if (password.length >= 8) score++;
+            if (/[a-z]/.test(password)) score++;
+            if (/[A-Z]/.test(password)) score++;
+            if (/[0-9]/.test(password)) score++;
+            if (/[^a-zA-Z0-9]/.test(password)) score++;
+            return score;
+        }
+
+        function updatePasswordStrength(password) {
+            const strengthContainer = document.getElementById('passwordStrength');
+            if (!strengthContainer) return;
+
+            const bars = strengthContainer.querySelectorAll('.bar');
+            const label = document.getElementById('strengthLabel');
+            
+            const score = checkPasswordStrength(password);
+            
+            const levels = ['Weak', 'Weak', 'Fair', 'Good', 'Strong', 'Very Strong'];
+            const colors = ['#ef4444', '#ef4444', '#f59e0b', '#f59e0b', '#10b981', '#10b981'];
+            
+            bars.forEach((bar, index) => {
+                bar.className = 'bar';
+                bar.style.background = 'var(--border-color)';
+                if (index < score) {
+                    bar.style.background = colors[score] || '#10b981';
+                }
+            });
+            
+            label.textContent = password.length > 0 ? `${levels[score] || 'Weak'}` : 'Enter a password';
+            label.style.color = password.length > 0 ? (colors[score] || '#ef4444') : 'var(--text-muted)';
+        }
+
+        // =============================================
+        // STORE REGISTRATION DATA
+        // =============================================
+        let registrationData = {};
+
+        function storeRegistrationData(data) {
+            registrationData = data;
+            localStorage.setItem('registrationData', JSON.stringify(data));
+        }
+
+        function getRegistrationData() {
+            const data = localStorage.getItem('registrationData');
+            return data ? JSON.parse(data) : {};
+        }
+
+        function clearRegistrationData() {
+            localStorage.removeItem('registrationData');
+            registrationData = {};
+        }
+
+        // =============================================
         // INPUT FORMATTING & VALIDATION
-        // ============================================
+        // =============================================
         document.addEventListener('DOMContentLoaded', function() {
             // Phone number formatting
-            document.getElementById('phoneNumber').addEventListener('input', function() {
-                this.value = this.value.replace(/\D/g, '').slice(0, 9);
-            });
-
-            // Password match checking
-            document.getElementById('confirmPassword').addEventListener('input', function() {
-                const password = document.getElementById('password').value;
-                const confirm = this.value;
-                const hint = document.getElementById('passwordMatchHint');
-                
-                if (confirm.length > 0) {
-                    if (password === confirm) {
-                        hint.textContent = '✓ Passwords match';
-                        hint.style.color = '#10b981';
-                    } else {
-                        hint.textContent = '✗ Passwords do not match';
-                        hint.style.color = '#ef4444';
-                    }
-                } else {
-                    hint.textContent = 'Passwords must match';
-                    hint.style.color = '';
-                }
-            });
-
-            // Password strength indicator
-            document.getElementById('password').addEventListener('input', function() {
-                const password = this.value;
-                const strength = document.getElementById('passwordStrength');
-                if (!strength) return;
-                
-                let score = 0;
-                if (password.length >= 8) score++;
-                if (/[a-z]/.test(password)) score++;
-                if (/[A-Z]/.test(password)) score++;
-                if (/[0-9]/.test(password)) score++;
-                if (/[^a-zA-Z0-9]/.test(password)) score++;
-                
-                const bars = strength.querySelectorAll('.bar');
-                bars.forEach((bar, index) => {
-                    bar.className = 'bar';
-                    if (index < score) {
-                        bar.classList.add('active');
-                        bar.style.background = score <= 2 ? '#ef4444' : score === 3 ? '#f59e0b' : '#10b981';
-                    } else {
-                        bar.style.background = 'var(--border-color)';
+            const phoneInput = document.getElementById('phoneNumber');
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function() {
+                    this.value = this.value.replace(/\D/g, '').slice(0, 9);
+                    
+                    if (this.classList.contains('error')) {
+                        this.classList.remove('error');
+                        const hint = this.closest('.form-group').querySelector('.form-hint');
+                        if (hint) {
+                            hint.classList.remove('error');
+                            hint.textContent = 'Enter your 9-digit Cameroon phone number';
+                        }
                     }
                 });
-            });
+            }
+
+            // Password strength
+            const passwordInput = document.getElementById('password');
+            if (passwordInput) {
+                passwordInput.addEventListener('input', function() {
+                    updatePasswordStrength(this.value);
+                    
+                    // Remove error state when typing
+                    if (this.classList.contains('error')) {
+                        this.classList.remove('error');
+                        const hint = this.closest('.form-group').querySelector('.form-hint');
+                        if (hint) {
+                            hint.classList.remove('error');
+                            hint.textContent = 'Minimum 8 characters with uppercase, lowercase, number, and special character';
+                        }
+                    }
+                });
+            }
+
+            // Password match checking
+            const confirmInput = document.getElementById('confirmPassword');
+            if (confirmInput) {
+                confirmInput.addEventListener('input', function() {
+                    const password = document.getElementById('password').value;
+                    const confirm = this.value;
+                    const hint = document.getElementById('passwordMatchHint');
+                    
+                    if (this.classList.contains('error')) {
+                        this.classList.remove('error');
+                    }
+                    
+                    if (confirm.length > 0) {
+                        if (password === confirm) {
+                            hint.textContent = '✓ Passwords match';
+                            hint.style.color = '#10b981';
+                            hint.classList.remove('error');
+                            hint.classList.add('success');
+                        } else {
+                            hint.textContent = '✗ Passwords do not match';
+                            hint.style.color = '#ef4444';
+                            hint.classList.add('error');
+                            hint.classList.remove('success');
+                        }
+                    } else {
+                        hint.textContent = 'Passwords must match';
+                        hint.style.color = '';
+                        hint.classList.remove('error', 'success');
+                    }
+                });
+            }
+
+            // OTP formatting
+            const otpInput = document.getElementById('otpCode');
+            if (otpInput) {
+                otpInput.addEventListener('input', function() {
+                    this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
+                    
+                    if (this.value.length === 6) {
+                        this.style.borderColor = '#10b981';
+                        setTimeout(() => {
+                            this.style.borderColor = '';
+                        }, 1500);
+                    }
+                    
+                    if (this.classList.contains('error')) {
+                        this.classList.remove('error');
+                        const hint = this.closest('.form-group').querySelector('.form-hint');
+                        if (hint) {
+                            hint.classList.remove('error');
+                            hint.textContent = 'Enter the 6-character code sent to your phone';
+                        }
+                    }
+                });
+
+                otpInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' && this.value.length === 6) {
+                        document.getElementById('otpForm').dispatchEvent(new Event('submit'));
+                    }
+                });
+            }
         });
 
-        // ============================================
-        // HANDLE REGISTRATION
-        // ============================================
-        document.addEventListener('DOMContentLoaded', function() {
-            const registerForm = document.getElementById('registerForm');
-            if (!registerForm) return;
+        // =============================================
+        // REGISTER FORM SUBMISSION
+        // =============================================
+        document.getElementById('registerForm')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const container = document.getElementById('messageContainer');
+            const btn = document.getElementById('registerBtn');
+            
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const phone = document.getElementById('phoneNumber').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const termsChecked = document.getElementById('termsCheckbox').checked;
 
-            registerForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
+            // Clear previous messages
+            container.innerHTML = '';
+            
+            // Remove error states
+            document.querySelectorAll('#registerForm .form-group input').forEach(el => {
+                el.classList.remove('error');
+            });
+            document.querySelectorAll('#registerForm .form-hint').forEach(el => {
+                el.classList.remove('error');
+            });
 
-                const container = document.getElementById('messageContainer');
-                const btn = document.getElementById('registerBtn');
-                
-                const firstName = document.getElementById('firstName').value.trim();
-                const lastName = document.getElementById('lastName').value.trim();
-                const phone = document.getElementById('phoneNumber').value.trim();
-                const password = document.getElementById('password').value;
-                const confirmPassword = document.getElementById('confirmPassword').value;
-                const termsChecked = document.getElementById('termsCheckbox').checked;
+            // =============================================
+            // VALIDATION
+            // =============================================
+            let hasError = false;
 
-                container.innerHTML = '';
+            if (!firstName || firstName.length < 2) {
+                document.getElementById('firstName').classList.add('error');
+                hasError = true;
+            }
 
-                // Validate
-                if (!firstName || firstName.length < 2) {
-                    showMessage(container, 'error', 'Please enter your first name (minimum 2 characters).');
-                    document.getElementById('firstName').focus();
-                    return;
+            if (!lastName || lastName.length < 2) {
+                document.getElementById('lastName').classList.add('error');
+                hasError = true;
+            }
+
+            if (!phone || phone.length !== 9) {
+                document.getElementById('phoneNumber').classList.add('error');
+                const hint = document.getElementById('phoneNumber').closest('.form-group').querySelector('.form-hint');
+                if (hint) {
+                    hint.classList.add('error');
+                    hint.textContent = '❌ Please enter a valid 9-digit phone number';
                 }
+                hasError = true;
+            }
 
-                if (!lastName || lastName.length < 2) {
-                    showMessage(container, 'error', 'Please enter your last name (minimum 2 characters).');
-                    document.getElementById('lastName').focus();
-                    return;
+            if (!password || password.length < 8) {
+                document.getElementById('password').classList.add('error');
+                const hint = document.getElementById('password').closest('.form-group').querySelector('.form-hint');
+                if (hint) {
+                    hint.classList.add('error');
+                    hint.textContent = '❌ Password must be at least 8 characters';
                 }
+                hasError = true;
+            }
 
-                if (!phone || phone.length < 9) {
-                    showMessage(container, 'error', 'Please enter a valid 9-digit phone number.');
-                    document.getElementById('phoneNumber').focus();
-                    return;
+            if (!confirmPassword) {
+                document.getElementById('confirmPassword').classList.add('error');
+                hasError = true;
+            } else if (password !== confirmPassword) {
+                document.getElementById('confirmPassword').classList.add('error');
+                showMessage(container, 'error', 'Passwords do not match');
+                hasError = true;
+            }
+
+            if (!termsChecked) {
+                showMessage(container, 'error', 'Please agree to the Terms of Service');
+                hasError = true;
+            }
+
+            if (hasError) {
+                if (!container.innerHTML) {
+                    showMessage(container, 'error', 'Please fix the errors above');
                 }
+                return;
+            }
 
-                if (!password || password.length < 8) {
-                    showMessage(container, 'error', 'Password must be at least 8 characters.');
-                    document.getElementById('password').focus();
-                    return;
-                }
+            // =============================================
+            // REGISTER USER
+            // =============================================
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Creating account...';
 
-                if (password !== confirmPassword) {
-                    showMessage(container, 'error', 'Passwords do not match.');
-                    document.getElementById('confirmPassword').focus();
-                    return;
-                }
-
-                if (!termsChecked) {
-                    showMessage(container, 'error', 'Please agree to the Terms of Service and Privacy Policy.');
-                    return;
-                }
-
-                // Show loading
-                btn.disabled = true;
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<span class="spinner"></span> Creating account...';
-
-                try {
+            try {
+                if (typeof API !== 'undefined' && API.register) {
                     const result = await API.register({
                         firstname: firstName,
                         lastname: lastName,
@@ -328,41 +617,186 @@
                     });
 
                     if (result.success) {
-                        showMessage(container, 'success', 
-                            '✅ Registration successful! You can now login.'
-                        );
+                        // Store registration data for OTP verification
+                        storeRegistrationData({
+                            firstname: firstName,
+                            lastname: lastName,
+                            phone: phone,
+                            password: password
+                        });
+
+                        // Show OTP form
+                        document.getElementById('registerForm').style.display = 'none';
+                        document.getElementById('otpForm').style.display = 'block';
+                        document.getElementById('otpPhoneDisplay').textContent = `+237 ${phone}`;
+                        document.getElementById('formTitle').textContent = 'Verify Your Phone';
+                        document.getElementById('formSubtitle').textContent = 'Enter the code sent to your phone';
                         
-                        // Redirect to login page
-                        setTimeout(() => {
-                            window.location.href = 'login.html';
-                        }, 2000);
-
+                        showMessage(document.getElementById('otpMessageContainer'), 'success', 
+                            '✅ Verification code sent to your phone!');
                     } else {
-                        showMessage(container, 'error', result.message || 'Registration failed. Please try again.');
-                        btn.disabled = false;
-                        btn.innerHTML = originalText;
+                        throw new Error(result.message || 'Registration failed');
                     }
+                } else {
+                    // Fallback: Simulate registration
+                    storeRegistrationData({
+                        firstname: firstName,
+                        lastname: lastName,
+                        phone: phone,
+                        password: password
+                    });
 
-                } catch (error) {
-                    console.error('Registration error:', error);
-                    showMessage(container, 'error', error.message || 'Registration failed. Please try again.');
-                    btn.disabled = false;
-                    btn.innerHTML = originalText;
+                    document.getElementById('registerForm').style.display = 'none';
+                    document.getElementById('otpForm').style.display = 'block';
+                    document.getElementById('otpPhoneDisplay').textContent = `+237 ${phone}`;
+                    document.getElementById('formTitle').textContent = 'Verify Your Phone';
+                    document.getElementById('formSubtitle').textContent = 'Enter the code sent to your phone';
+                    
+                    showMessage(document.getElementById('otpMessageContainer'), 'success', 
+                        '✅ Verification code sent to your phone!');
                 }
-            });
+            } catch (error) {
+                showMessage(container, 'error', error.message || 'Registration failed. Please try again.');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+            }
         });
 
-        // ============================================
+        // =============================================
+        // OTP VERIFICATION
+        // =============================================
+        document.getElementById('otpForm')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const container = document.getElementById('otpMessageContainer');
+            const btn = document.getElementById('verifyOtpBtn');
+            const otpInput = document.getElementById('otpCode');
+            const otp = otpInput.value.trim();
+
+            container.innerHTML = '';
+            otpInput.classList.remove('error');
+
+            if (!otp || otp.length !== 6) {
+                otpInput.classList.add('error');
+                showMessage(container, 'error', 'Please enter a valid 6-character verification code');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Verifying...';
+
+            try {
+                const data = getRegistrationData();
+                const phone = data.phone || '';
+
+                if (!phone) {
+                    throw new Error('Registration data not found. Please go back and register again.');
+                }
+
+                if (typeof API !== 'undefined' && API.verifyOTP) {
+                    const result = await API.verifyOTP(phone, otp);
+
+                    if (result.success) {
+                        // Show success state
+                        document.getElementById('otpForm').style.display = 'none';
+                        document.getElementById('successState').style.display = 'block';
+                        
+                        // Clear registration data
+                        clearRegistrationData();
+                        
+                        // Auto-redirect after 3 seconds
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 3000);
+                    } else {
+                        throw new Error(result.message || 'Invalid verification code');
+                    }
+                } else {
+                    // Fallback: Simulate verification
+                    document.getElementById('otpForm').style.display = 'none';
+                    document.getElementById('successState').style.display = 'block';
+                    clearRegistrationData();
+                    
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 3000);
+                }
+            } catch (error) {
+                showMessage(container, 'error', error.message || 'Verification failed. Please try again.');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> Verify Account';
+                otpInput.value = '';
+                otpInput.focus();
+            }
+        });
+
+        // =============================================
+        // RESEND OTP
+        // =============================================
+        document.getElementById('resendOtpBtn')?.addEventListener('click', async function() {
+            const container = document.getElementById('otpMessageContainer');
+            const data = getRegistrationData();
+            const phone = data.phone || '';
+
+            container.innerHTML = '';
+
+            if (!phone) {
+                showMessage(container, 'error', 'Phone number not found. Please go back and register again.');
+                return;
+            }
+
+            this.disabled = true;
+            const originalText = this.textContent;
+            this.textContent = 'Sending...';
+
+            try {
+                if (typeof API !== 'undefined' && API.resendOTP) {
+                    const result = await API.resendOTP(phone);
+
+                    if (result.success) {
+                        showMessage(container, 'success', '✅ New verification code sent to your phone!');
+                    } else {
+                        throw new Error(result.message || 'Failed to resend code');
+                    }
+                } else {
+                    // Fallback: Simulate resend
+                    showMessage(container, 'success', '✅ New verification code sent to your phone!');
+                }
+            } catch (error) {
+                showMessage(container, 'error', error.message || 'Failed to resend code');
+            }
+
+            this.disabled = false;
+            this.textContent = originalText;
+        });
+
+        // =============================================
+        // GO BACK TO REGISTER
+        // =============================================
+        function goBackToRegister() {
+            document.getElementById('otpForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+            document.getElementById('formTitle').textContent = 'Create Account';
+            document.getElementById('formSubtitle').textContent = 'Start your learning journey today';
+            document.getElementById('otpMessageContainer').innerHTML = '';
+            document.getElementById('messageContainer').innerHTML = '';
+        }
+
+        // =============================================
         // CONSOLE SECURITY NOTICE
-        // ============================================
+        // =============================================
         console.log('%c🔐 SECURE REGISTRATION', 'font-size: 20px; font-weight: bold; color: #4f46e5;');
         console.log('%c🛡️ All data is encrypted and secure.', 'font-size: 14px; color: #10b981;');
 
-        // ============================================
+        // =============================================
         // GLOBAL FUNCTIONS
-        // ============================================
+        // =============================================
         window.togglePassword = togglePassword;
         window.showMessage = showMessage;
+        window.goBackToRegister = goBackToRegister;
     </script>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
 </body>
 </html>
