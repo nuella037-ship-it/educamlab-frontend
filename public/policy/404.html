@@ -11,36 +11,118 @@
 </head>
 <body>
 
-    <div style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:40px 20px; background:var(--bg-secondary);">
-        <div style="background:var(--bg-card); border-radius:var(--border-radius); padding:60px 40px; max-width:500px; width:100%; text-align:center; border:1px solid var(--border-color); box-shadow:var(--shadow-lg);">
-            <span style="font-size:64px; display:block; margin-bottom:12px;">🔍</span>
-            <div style="font-size:120px; font-weight:900; color:var(--primary); line-height:1; margin-bottom:8px; letter-spacing:4px;">404</div>
-            <h1 style="font-size:28px; font-weight:800; color:var(--text-primary); margin-bottom:8px;">Page Not Found</h1>
-            <p style="color:var(--text-secondary); margin-bottom:24px; font-size:16px;">Oops! The page you're looking for doesn't exist or has been moved.</p>
+    <!-- ============================================ -->
+    <!-- 404 PAGE - Full height centered -->
+    <!-- ============================================ -->
+    <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; background: var(--bg-secondary);">
 
-            <div style="margin:20px 0; position:relative;">
-                <i class="fas fa-search" style="position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--text-muted);"></i>
-                <input type="text" id="errorSearch" placeholder="Search for courses..." onkeydown="if(event.key==='Enter'){window.location.href='../courses.html?search='+encodeURIComponent(this.value)}" style="width:100%; padding:12px 16px 12px 44px; border:2px solid var(--border-color); border-radius:var(--border-radius-sm); font-size:14px; font-family:inherit; background:var(--bg-primary); color:var(--text-primary);">
+        <!-- ============================================ -->
+        <!-- 404 CARD - Using style.css card pattern -->
+        <!-- ============================================ -->
+        <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 60px 40px; max-width: 500px; width: 100%; text-align: center; border: 1px solid var(--border-color); box-shadow: var(--shadow-lg);">
+
+            <!-- Emoji -->
+            <div style="font-size: 64px; display: block; margin-bottom: 12px;">🔍</div>
+
+            <!-- 404 Number -->
+            <div style="font-size: 120px; font-weight: 900; color: var(--primary); line-height: 1; margin-bottom: 8px; letter-spacing: 4px; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                404
             </div>
 
-            <a href="../index.html" class="btn btn-primary" style="margin:4px; padding:12px 28px;">
+            <!-- Title -->
+            <h1 style="font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">Page Not Found</h1>
+
+            <!-- Description -->
+            <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 16px; line-height: 1.6;">
+                Oops! The page you're looking for doesn't exist or has been moved.
+            </p>
+
+            <!-- Search Bar -->
+            <div style="margin: 20px 0; position: relative;">
+                <i class="fas fa-search" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                <input 
+                    type="text" 
+                    id="errorSearch" 
+                    placeholder="Search for courses..." 
+                    onkeydown="if(event.key==='Enter'){window.location.href='../courses.html?search='+encodeURIComponent(this.value)}" 
+                    style="width: 100%; padding: 12px 16px 12px 44px; border: 2px solid var(--border-color); border-radius: var(--border-radius-sm); font-size: 14px; font-family: inherit; background: var(--bg-primary); color: var(--text-primary); transition: var(--transition);"
+                    onfocus="this.style.borderColor='var(--primary)'; this.style.boxShadow='0 0 0 4px rgba(79,70,229,0.1)'"
+                    onblur="this.style.borderColor=''; this.style.boxShadow=''"
+                >
+            </div>
+
+            <!-- Primary Action -->
+            <a href="../index.html" class="btn btn-primary" style="margin: 4px; padding: 12px 28px;">
                 <i class="fas fa-home"></i> Back to Home
             </a>
 
-            <hr style="border:none; border-top:1px solid var(--border-color); margin:24px 0;">
+            <!-- Divider -->
+            <hr style="border: none; border-top: 1px solid var(--border-color); margin: 24px 0;">
 
-            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:12px;">
-                <a href="../courses.html" style="color:var(--text-muted); text-decoration:none; font-size:14px; padding:6px 12px; border-radius:6px; transition:all 0.3s;"><i class="fas fa-book"></i> Courses</a>
-                <a href="../login.html" style="color:var(--text-muted); text-decoration:none; font-size:14px; padding:6px 12px; border-radius:6px; transition:all 0.3s;"><i class="fas fa-sign-in-alt"></i> Login</a>
-                <a href="../register.html" style="color:var(--text-muted); text-decoration:none; font-size:14px; padding:6px 12px; border-radius:6px; transition:all 0.3s;"><i class="fas fa-user-plus"></i> Register</a>
-                <a href="../contact.html" style="color:var(--text-muted); text-decoration:none; font-size:14px; padding:6px 12px; border-radius:6px; transition:all 0.3s;"><i class="fas fa-envelope"></i> Contact</a>
+            <!-- Quick Links -->
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 12px;">
+                <a href="../courses.html" style="color: var(--text-muted); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 6px; transition: var(--transition);" onmouseover="this.style.color='var(--primary)'; this.style.background='var(--bg-secondary)'" onmouseout="this.style.color=''; this.style.background=''">
+                    <i class="fas fa-book"></i> Courses
+                </a>
+                <a href="../login.html" style="color: var(--text-muted); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 6px; transition: var(--transition);" onmouseover="this.style.color='var(--primary)'; this.style.background='var(--bg-secondary)'" onmouseout="this.style.color=''; this.style.background=''">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+                <a href="../register.html" style="color: var(--text-muted); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 6px; transition: var(--transition);" onmouseover="this.style.color='var(--primary)'; this.style.background='var(--bg-secondary)'" onmouseout="this.style.color=''; this.style.background=''">
+                    <i class="fas fa-user-plus"></i> Register
+                </a>
+                <a href="../contact.html" style="color: var(--text-muted); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 6px; transition: var(--transition);" onmouseover="this.style.color='var(--primary)'; this.style.background='var(--bg-secondary)'" onmouseout="this.style.color=''; this.style.background=''">
+                    <i class="fas fa-envelope"></i> Contact
+                </a>
             </div>
 
-            <div style="margin-top:16px; font-size:13px; color:var(--text-muted);">
+            <!-- Help Text -->
+            <div style="margin-top: 16px; font-size: 13px; color: var(--text-muted);">
                 <i class="fas fa-lightbulb"></i> Try checking the URL or use the navigation above.
+            </div>
+
+            <!-- Dark Mode Toggle Hint (Optional) -->
+            <div style="margin-top: 20px; font-size: 12px; color: var(--text-muted); opacity: 0.6;">
+                <i class="fas fa-moon"></i> Dark mode ready
             </div>
         </div>
     </div>
+
+    <!-- ============================================ -->
+    <!-- SCRIPTS -->
+    <!-- ============================================ -->
+    <script>
+        // =============================================
+        // AUTO-FOCUS SEARCH INPUT
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('errorSearch');
+            if (searchInput) {
+                setTimeout(() => {
+                    searchInput.focus();
+                }, 300);
+            }
+        });
+
+        // =============================================
+        // CONSOLE FUN
+        // =============================================
+        console.log('%c🚀 404 - Page Not Found', 'font-size: 20px; font-weight: bold; color: #4f46e5;');
+        console.log('%c🔍 Looking for something? Try searching above!', 'font-size: 14px; color: #6b7280;');
+
+        // =============================================
+        // KEYBOARD SHORTCUT: ESC to go home
+        // =============================================
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                window.location.href = '../index.html';
+            }
+        });
+
+        // =============================================
+        // SHOW HELPFUL TIP
+        // =============================================
+        console.log('%c⌨️ Press ESC to go home', 'font-size: 12px; color: #9ca3af;');
+    </script>
 
 </body>
 </html>
