@@ -1,1 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduCamLab - Exam Preparation Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
 
+    <!-- ============================================ -->
+    <!-- HEADER - Using style.css nav pattern -->
+    <!-- ============================================ -->
+    <header>
+        <nav>
+            <div class="logo">📚 EduCamLab</div>
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="policy/about.html">About</a>
+                <a href="policy/faq.html">FAQ</a>
+                <a href="contact.html">Contact</a>
+                <a href="login.html" class="btn btn-primary">Sign In</a>
+                <a href="register.html" class="btn btn-secondary">Get Started</a>
+            </div>
+            <button class="mobile-menu-btn" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- HERO - Using .hero and .hero-image-card from style.css -->
+    <!-- ============================================ -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">🚀 Cameroon's #1 Exam Prep</span>
+            <h1>Excel in <span class="highlight">Cameroon Exams</span></h1>
+            <p>Access past questions, revision pamphlets, and quizzes for GCE, BACC, BEPC &amp; Technical GCE.</p>
+            <div class="hero-actions">
+                <a href="register.html" class="btn btn-primary btn-lg">Start Learning Free</a>
+                <a href="courses.html" class="btn btn-outline btn-lg">Explore Courses</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Past Questions</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Subjects</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">10K+</span>
+                    <span class="stat-label">Students</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image-card">
+            <div class="emoji-big">🎓</div>
+            <h2>Your Success Starts Here</h2>
+            <p>O Level • A Level • BACC • BEPC • Technical GCE</p>
+            <div class="badge-group">
+                <span>✅ 500+ Past Questions</span>
+                <span>📚 50+ Subjects</span>
+                <span>⭐ 10K+ Students</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- EXAM GRID - Using .exam-grid from style.css -->
+    <!-- ============================================ -->
+    <section style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+        <div style="text-align: center; margin-bottom: 32px;">
+            <h2 style="font-size: 32px; font-weight: 800; color: var(--text-primary);">All Cameroon National Exams</h2>
+            <p style="color: var(--text-secondary); font-size: 18px;">Choose your exam and start preparing today</p>
+        </div>
+        <div class="exam-grid">
+            <div class="exam-card" onclick="window.location.href='courses.html?exam=o-level'">
+                <div class="exam-icon">📘</div>
+                <h4>O Level</h4>
+                <p>12 Subjects</p>
+            </div>
+            <div class="exam-card" onclick="window.location.href='courses.html?exam=a-level'">
+                <div class="exam-icon">📗</div>
+                <h4>A Level</h4>
+                <p>11 Subjects</p>
+            </div>
+            <div class="exam-card" onclick="window.location.href='courses.html?exam=bacc'">
+                <div class="exam-icon">📕</div>
+                <h4>BACC</h4>
+                <p>4 Series</p>
+            </div>
+            <div class="exam-card" onclick="window.location.href='courses.html?exam=bepc'">
+                <div class="exam-icon">📙</div>
+                <h4>BEPC</h4>
+                <p>6 Subjects</p>
+            </div>
+            <div class="exam-card" onclick="window.location.href='courses.html?exam=technical'">
+                <div class="exam-icon">⚙️</div>
+                <h4>Technical GCE</h4>
+                <p>5 Streams</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- FEATURES - Using .features-grid from style.css -->
+    <!-- ============================================ -->
+    <section style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+        <div style="text-align: center; margin-bottom: 32px;">
+            <h2 style="font-size: 32px; font-weight: 800; color: var(--text-primary);">What We Offer</h2>
+            <p style="color: var(--text-secondary); font-size: 18px;">Everything you need to ace your exams</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon-wrapper purple">📝</div>
+                <h3>Past Questions</h3>
+                <p>Access past papers with detailed marking schemes</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrapper green">📚</div>
+                <h3>Revision Pamphlets</h3>
+                <p>Comprehensive revision notes for all subjects</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrapper orange">🧪</div>
+                <h3>Interactive Quizzes</h3>
+                <p>Test your knowledge with instant feedback</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrapper blue">📊</div>
+                <h3>Progress Tracking</h3>
+                <p>Monitor your learning and identify weak areas</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- CTA - Using .cta-section from style.css -->
+    <!-- ============================================ -->
+    <section style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+        <div class="cta-section">
+            <h2>Ready to Excel?</h2>
+            <p>Join thousands of students already preparing with EduCamLab.</p>
+            <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                <a href="register.html" class="btn btn-primary btn-lg">Get Started Free</a>
+                <a href="courses.html" class="btn btn-outline-light btn-lg">Browse Courses</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- FOOTER - Using semantic HTML with style.css classes -->
+    <!-- ============================================ -->
+    <footer style="background: var(--gray-900); margin-top: 40px; padding: 40px 20px 0;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--gray-700);">
+                <!-- Brand -->
+                <div>
+                    <div style="font-size: 24px; font-weight: 800; color: white; margin-bottom: 8px;">📚 EduCamLab</div>
+                    <p style="color: var(--gray-400); font-size: 14px; line-height: 1.6;">Cameroon's exam preparation platform for GCE, BACC, BEPC &amp; Technical GCE.</p>
+                    <div style="margin-top: 16px; display: flex; gap: 12px;">
+                        <a href="#" style="color: var(--gray-400); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#4f46e5'" onmouseout="this.style.color=''"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: var(--gray-400); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#4f46e5'" onmouseout="this.style.color=''"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color: var(--gray-400); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#4f46e5'" onmouseout="this.style.color=''"><i class="fab fa-youtube"></i></a>
+                        <a href="#" style="color: var(--gray-400); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#4f46e5'" onmouseout="this.style.color=''"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <!-- Links -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                    <div>
+                        <h4 style="color: white; font-weight: 600; font-size: 16px; margin-bottom: 12px;">Quick Links</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin-bottom: 8px;"><a href="index.html" style="color: var(--gray-400); text-decoration: none; font-size: 14px; transition: color 0.3s;" onmouseover="this.style.color='#4f46e5'" onmouseout="this.style.color=''">Home</a></li>
+                            <li style="margin-bottom: 8px;"><a href="courses.html" style="color: var(--gray-400); text-decoration: none; font-size: 14px; transition: color 0.3s;" onmouseover="this.style.color='#4f46e5'" onmouseout="this.style.color=''">Courses</a></li>
+                            <li style="margin-bottom: 8px;"><a href="policy/about.html" style="color: var(--gray-400); text-decoration: none; font-size: 14px; transition: color 0.3s;" onmouseover="this.style.color='#4f46e5'" onmouseout="this.style.color=''">About</a></li>
+                            <li style="margin-bottom: 8px;"><a href="contact.html" style="color: var(--gray-400); text-decoration: none; font-size: 14px; transition: color 0.3s;" onmouseover="this.style.color='#4f46e5'" onmouseout="this.style.color=''">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: white; font-weight: 600; font-size: 16px; margin-bottom: 12px;">Exams</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin-bottom: 8px;"><a href="courses.html?exam=o-level" style="color: var(--gray-400); text-decoration: none; font-size: 14px; transition: color 0.3s;" onmouseover="this.style.color='#4f46e5'" onmouseout="this.style.color=''">O Level</a></li>
+                            <li style="margin-bottom: 8px;"><a href="courses.html?exam=a-level" style="color: var(--gray-400); text-decoration: none; font-size: 14px; transition: color 0.3s;" onmouseover="this.style.color='#4f46e5'" onmouseout="this.style.color=''">A Level</a></li>
+                            <li style="margin-bottom: 8px;"><a href="courses.html?exam=bacc" style="color: var(--gray-400); text-decoration: none; font-size: 14px; transition: color 0.3s;" onmouseover="this.style.color='#4f46e5'" onmouseout="this.style.color=''">BACC</a></li>
+                            <li style="margin-bottom: 8px;"><a href="courses.html?exam=bepc" style="color: var(--gray-400); text-decoration: none; font-size: 14px; transition: color 0.3s;" onmouseover="this.style.color='#4f46e5'" onmouseout="this.style.color=''">BEPC</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: white; font-weight: 600; font-size: 16px; margin-bottom: 12px;">Legal</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin-bottom: 8px;"><a href="policy/privacy.html" style="color: var(--gray-400); text-decoration: none; font-size: 14px; transition: color 0.3s;" onmouseover="this.style.color='#4f46e5'" onmouseout="this.style.color=''">Privacy Policy</a></li>
+                            <li style="margin-bottom: 8px;"><a href="policy/terms.html" style="color: var(--gray-400); text-decoration: none; font-size: 14px; transition: color 0.3s;" onmouseover="this.style.color='#4f46e5'" onmouseout="this.style.color=''">Terms of Service</a></li>
+                            <li style="margin-bottom: 8px;"><a href="policy/faq.html" style="color: var(--gray-400); text-decoration: none; font-size: 14px; transition: color 0.3s;" onmouseover="this.style.color='#4f46e5'" onmouseout="this.style.color=''">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 20px 0; text-align: center; color: var(--gray-500); font-size: 14px;">
+                &copy; 2026 EduCamLab. All rights reserved. Made with ❤️ in Cameroon
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- SCRIPTS -->
+    <!-- ============================================ -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('open');
+            });
+        });
+
+        // Dark mode toggle (optional - add if you have a toggle button)
+        // You can add a dark mode toggle in the header if needed
+    </script>
+</body>
+</html>
