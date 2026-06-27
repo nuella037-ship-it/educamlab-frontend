@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accounting - A Level | EduCamLab</title>
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
+    <!-- ============================================ -->
+    <!-- HEADER -->
+    <!-- ============================================ -->
     <header>
         <nav>
             <div class="logo">📚 EduCamLab</div>
@@ -28,107 +31,274 @@
         </nav>
     </header>
 
-    <div style="max-width:1200px; margin:40px auto; padding:0 20px;">
-        <div style="display:flex; gap:8px; font-size:14px; color:var(--text-muted); margin-bottom:24px; flex-wrap:wrap;">
-            <a href="../../index.html" style="color:var(--primary);">Home</a>
-            <span>/</span>
-            <a href="../../courses.html" style="color:var(--primary);">Courses</a>
-            <span>/</span>
-            <span style="font-weight:500;">A Level</span>
-            <span>/</span>
-            <span style="color:var(--text-primary); font-weight:600;">Accounting</span>
+    <!-- ============================================ -->
+    <!-- COURSE CONTENT -->
+    <!-- ============================================ -->
+    <div class="course-detail-wrapper">
+
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="../../index.html">Home</a>
+            <span class="separator">/</span>
+            <a href="../../courses.html">Courses</a>
+            <span class="separator">/</span>
+            <span>GCE A Level</span>
+            <span class="separator">/</span>
+            <span style="color: var(--text-primary); font-weight: 600;">Accounting</span>
         </div>
 
-        <div style="display:grid; grid-template-columns:2fr 1fr; gap:40px;">
-            <div style="background:var(--bg-card); border-radius:var(--border-radius); padding:32px; border:1px solid var(--border-color); box-shadow:var(--shadow);">
-                <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
-                    <span style="font-size:32px;">📊</span>
-                    <span class="badge badge-info">A Level</span>
-                    <span class="badge badge-primary">Code: A0505</span>
-                </div>
-                <h1 style="font-size:28px; font-weight:800;">Accounting</h1>
-                <p style="color:var(--text-muted);">Advanced Accounting A Level resources covering financial reporting, management accounting, and auditing.</p>
+        <div class="course-detail-grid">
 
-                <hr style="border:none; border-top:1px solid var(--border-color); margin:24px 0;">
+            <!-- ============================================ -->
+            <!-- MAIN CONTENT -->
+            <!-- ============================================ -->
+            <div class="course-main-content">
 
-                <h3 style="font-size:18px; font-weight:700; margin-bottom:16px;">📄 Past Papers</h3>
-                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:24px;">
-                    <a href="paper-1.html" class="btn btn-secondary" style="justify-content:center;">
-                        <i class="fas fa-file-alt"></i> Paper 1
-                    </a>
-                    <a href="paper-2.html" class="btn btn-secondary" style="justify-content:center;">
-                        <i class="fas fa-file-alt"></i> Paper 2
-                    </a>
-                    <a href="paper-3.html" class="btn btn-secondary" style="justify-content:center;">
-                        <i class="fas fa-file-alt"></i> Paper 3
-                    </a>
+                <!-- Course Header -->
+                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;">
+                    <span style="font-size: 32px;">📊</span>
+                    <span class="badge badge-info">GCE A Level</span>
+                    <span class="badge badge-primary">Code: 7110</span>
+                    <span class="badge badge-success">⭐ Popular</span>
                 </div>
 
-                <h3 style="font-size:18px; font-weight:700; margin-bottom:12px;">📅 Available Years</h3>
-                <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px;">
-                    <span class="badge" style="background:var(--bg-secondary); cursor:pointer;">2018</span>
-                    <span class="badge" style="background:var(--bg-secondary); cursor:pointer;">2019</span>
-                    <span class="badge" style="background:var(--bg-secondary); cursor:pointer;">2020</span>
-                    <span class="badge" style="background:var(--bg-secondary); cursor:pointer;">2021</span>
-                    <span class="badge" style="background:var(--bg-secondary); cursor:pointer;">2022</span>
-                    <span class="badge" style="background:var(--bg-secondary); cursor:pointer;">2023</span>
-                    <span class="badge" style="background:var(--primary); color:white; cursor:pointer;">2024</span>
+                <h1>Accounting</h1>
+                <p class="course-subtitle">
+                    Complete GCE A Level Accounting resources covering financial accounting, cost accounting, and business finance.
+                </p>
+
+                <!-- Course Description -->
+                <div class="course-description">
+                    <p>
+                        <strong>📖 Course Overview:</strong> This course covers the complete GCE A Level Accounting syllabus including 
+                        financial statements, double-entry bookkeeping, cost accounting, budgeting, and business finance. 
+                        Perfect for students preparing for the Cameroon GCE A Level Accounting examination.
+                    </p>
                 </div>
 
-                <h3 style="font-size:18px; font-weight:700; margin-bottom:12px;">📖 Revision Pamphlet</h3>
-                <div style="background:var(--bg-secondary); border-radius:8px; padding:16px;">
-                    <p><strong>Accounting A Level Pamphlet</strong></p>
-                    <p style="color:var(--text-muted); font-size:14px;">Advanced accounting revision guide with complex problems and solutions.</p>
-                    <button class="btn btn-primary btn-sm" onclick="showToast('Downloading pamphlet...', 'info')">
-                        <i class="fas fa-download"></i> Download
-                    </button>
+                <!-- Papers -->
+                <div class="course-details-section">
+                    <h3>📄 Past Papers</h3>
+                    <div class="detail-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                        <a href="paper-1.html" class="btn btn-secondary btn-block">Paper 1</a>
+                        <a href="paper-2.html" class="btn btn-secondary btn-block">Paper 2</a>
+                        <a href="paper-3.html" class="btn btn-secondary btn-block">Paper 3</a>
+                    </div>
+                </div>
+
+                <!-- Years -->
+                <div class="years-section">
+                    <h3>📅 Available Years</h3>
+                    <div class="years-tags">
+                        <span class="year-tag" onclick="viewYear('2018')">2018</span>
+                        <span class="year-tag" onclick="viewYear('2019')">2019</span>
+                        <span class="year-tag" onclick="viewYear('2020')">2020</span>
+                        <span class="year-tag" onclick="viewYear('2021')">2021</span>
+                        <span class="year-tag" onclick="viewYear('2022')">2022</span>
+                        <span class="year-tag" onclick="viewYear('2023')">2023</span>
+                        <span class="year-tag" style="background: var(--primary); color: white; border-color: var(--primary);" onclick="viewYear('2024')">2024 ✅</span>
+                    </div>
+                </div>
+
+                <!-- Revision Pamphlet -->
+                <div class="papers-section">
+                    <h3>📖 Revision Pamphlet</h3>
+                    <div style="background: var(--bg-secondary); border-radius: var(--border-radius-sm); padding: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                            <div>
+                                <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 2px;">
+                                    <i class="fas fa-book" style="color: var(--primary);"></i> GCE A Level Accounting Pamphlet
+                                </p>
+                                <p style="color: var(--text-muted); font-size: 14px; margin: 0;">
+                                    Comprehensive revision guide covering all GCE A Level Accounting topics with past paper solutions.
+                                </p>
+                                <p style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">
+                                    📄 50 pages • Includes marking schemes and examiner tips
+                                </p>
+                            </div>
+                            <button class="btn btn-primary" onclick="downloadPamphlet()">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic List -->
+                <div class="course-details-section">
+                    <h3>📋 Topics Covered</h3>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <span class="label"><i class="fas fa-check-circle" style="color: var(--success);"></i> Financial Statements</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label"><i class="fas fa-check-circle" style="color: var(--success);"></i> Double-Entry Bookkeeping</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label"><i class="fas fa-check-circle" style="color: var(--success);"></i> Cost Accounting</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label"><i class="fas fa-check-circle" style="color: var(--success);"></i> Budgeting & Variance Analysis</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label"><i class="fas fa-check-circle" style="color: var(--success);"></i> Cash Flow Statements</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label"><i class="fas fa-check-circle" style="color: var(--success);"></i> Business Finance</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label"><i class="fas fa-check-circle" style="color: var(--success);"></i> Partnership Accounts</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label"><i class="fas fa-check-circle" style="color: var(--success);"></i> Company Accounts</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reviews -->
+                <div class="review-section">
+                    <h3>⭐ Student Reviews</h3>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="background: var(--bg-secondary); border-radius: var(--border-radius-sm); padding: 16px;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <span style="font-weight: 600; color: var(--text-primary);">Sarah M.</span>
+                                <span style="color: #f59e0b;">★★★★★</span>
+                            </div>
+                            <p style="color: var(--text-secondary); font-size: 14px; margin: 0;">
+                                "The Accounting resources here are amazing! The past papers with marking schemes helped me understand complex topics easily."
+                            </p>
+                        </div>
+                        <div style="background: var(--bg-secondary); border-radius: var(--border-radius-sm); padding: 16px;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <span style="font-weight: 600; color: var(--text-primary);">John D.</span>
+                                <span style="color: #f59e0b;">★★★★★</span>
+                            </div>
+                            <p style="color: var(--text-secondary); font-size: 14px; margin: 0;">
+                                "The revision pamphlet was a lifesaver! I went from failing to scoring an A in my mock exams."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leave a Review -->
+                <div class="review-section">
+                    <h3>📝 Leave a Review</h3>
+                    <div class="review-form">
+                        <div class="stars-input">
+                            <span class="star" data-value="1" onclick="setReviewRating(1)">★</span>
+                            <span class="star" data-value="2" onclick="setReviewRating(2)">★</span>
+                            <span class="star" data-value="3" onclick="setReviewRating(3)">★</span>
+                            <span class="star" data-value="4" onclick="setReviewRating(4)">★</span>
+                            <span class="star" data-value="5" onclick="setReviewRating(5)">★</span>
+                        </div>
+                        <textarea id="reviewText" rows="3" placeholder="Share your experience with this course..."></textarea>
+                        <button onclick="submitReview()" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit Review
+                        </button>
+                        <div id="reviewMessage" style="margin-top: 12px;"></div>
+                    </div>
                 </div>
             </div>
 
-            <div style="position:sticky; top:100px; align-self:start;">
-                <div style="background:var(--bg-card); border-radius:var(--border-radius); padding:24px; border:1px solid var(--border-color); box-shadow:var(--shadow-lg);">
-                    <h3 style="font-size:16px; font-weight:700; margin-bottom:16px;">📚 Course Details</h3>
-                    <div style="padding:10px 0; border-bottom:1px solid var(--border-color);">
-                        <span style="color:var(--text-muted);">Level</span>
-                        <span style="float:right; font-weight:600;">A Level</span>
-                    </div>
-                    <div style="padding:10px 0; border-bottom:1px solid var(--border-color);">
-                        <span style="color:var(--text-muted);">Code</span>
-                        <span style="float:right; font-weight:600;">A0505</span>
-                    </div>
-                    <div style="padding:10px 0; border-bottom:1px solid var(--border-color);">
-                        <span style="color:var(--text-muted);">Papers</span>
-                        <span style="float:right; font-weight:600;">3</span>
-                    </div>
-                    <div style="padding:10px 0;">
-                        <span style="color:var(--text-muted);">Students</span>
-                        <span style="float:right; font-weight:600;">876</span>
+            <!-- ============================================ -->
+            <!-- SIDEBAR -->
+            <!-- ============================================ -->
+            <div class="course-sidebar">
+                <div class="sidebar-card">
+                    <div class="price-display">
+                        <div class="price free">Free</div>
+                        <div class="period">Full Access</div>
                     </div>
 
-                    <button class="btn btn-primary btn-block" onclick="showToast('Enrolled successfully!', 'success')" style="margin-top:16px;">
+                    <h3 style="font-size: 16px; font-weight: 700; margin: 16px 0 12px; color: var(--text-primary);">
+                        📚 Course Details
+                    </h3>
+                    <div style="padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+                        <span style="color: var(--text-muted);">Exam Board</span>
+                        <span style="float: right; font-weight: 600;">Cameroon GCE</span>
+                    </div>
+                    <div style="padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+                        <span style="color: var(--text-muted);">Level</span>
+                        <span style="float: right; font-weight: 600;">A Level</span>
+                    </div>
+                    <div style="padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+                        <span style="color: var(--text-muted);">Code</span>
+                        <span style="float: right; font-weight: 600;">7110</span>
+                    </div>
+                    <div style="padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+                        <span style="color: var(--text-muted);">Papers</span>
+                        <span style="float: right; font-weight: 600;">3</span>
+                    </div>
+                    <div style="padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+                        <span style="color: var(--text-muted);">Students</span>
+                        <span style="float: right; font-weight: 600;">876</span>
+                    </div>
+                    <div style="padding: 10px 0;">
+                        <span style="color: var(--text-muted);">Rating</span>
+                        <span style="float: right; font-weight: 600;">⭐ 4.6</span>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" onclick="enrollCourse()" style="margin-top: 16px;">
                         <i class="fas fa-user-plus"></i> Enroll Now
                     </button>
-                    <button class="btn btn-secondary btn-block" onclick="window.location.href='../../courses.html'" style="margin-top:8px;">
+                    <button class="btn btn-secondary btn-block" onclick="window.location.href='../../courses.html'" style="margin-top: 8px;">
                         <i class="fas fa-arrow-left"></i> Back to Courses
                     </button>
+
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> Full course access</li>
+                        <li><i class="fas fa-check-circle"></i> GCE past papers with marking schemes</li>
+                        <li><i class="fas fa-check-circle"></i> Revision pamphlet</li>
+                        <li><i class="fas fa-check-circle"></i> Practice quizzes</li>
+                        <li><i class="fas fa-check-circle"></i> Progress tracking</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- ============================================ -->
+    <!-- TOAST CONTAINER -->
+    <!-- ============================================ -->
     <div class="toast-container" id="toastContainer"></div>
 
+    <!-- ============================================ -->
+    <!-- SCRIPTS -->
+    <!-- ============================================ -->
     <script>
+        // =============================================
+        // AUTH CHECK
+        // =============================================
+        function isAuthenticated() {
+            return localStorage.getItem('token') !== null;
+        }
+
+        // =============================================
+        // TOAST NOTIFICATIONS
+        // =============================================
         function showToast(message, type = 'info') {
             const container = document.getElementById('toastContainer');
+            if (!container) return;
+
             const toast = document.createElement('div');
             toast.className = `toast toast-${type}`;
+            
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                warning: 'fa-exclamation-triangle',
+                info: 'fa-info-circle'
+            };
+            
             toast.innerHTML = `
-                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
+                <i class="fas ${icons[type] || icons.info}"></i>
                 <span>${message}</span>
-                <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+                <button class="toast-close" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
             `;
+            
             container.appendChild(toast);
+            
             setTimeout(() => {
                 if (toast.parentElement) {
                     toast.style.opacity = '0';
@@ -138,12 +308,109 @@
             }, 4000);
         }
 
+        // =============================================
+        // VIEW YEAR
+        // =============================================
+        function viewYear(year) {
+            if (!isAuthenticated()) {
+                if (confirm('Please login to access past questions from ' + year)) {
+                    window.location.href = '../../login.html?redirect=' + window.location.pathname;
+                }
+                return;
+            }
+            showToast('📅 Viewing past questions from ' + year, 'info');
+        }
+
+        // =============================================
+        // DOWNLOAD PAMPHLET
+        // =============================================
+        function downloadPamphlet() {
+            if (!isAuthenticated()) {
+                if (confirm('Please login to download the revision pamphlet.')) {
+                    window.location.href = '../../login.html?redirect=' + window.location.pathname;
+                }
+                return;
+            }
+            showToast('📖 Downloading GCE A Level Accounting Pamphlet...', 'success');
+        }
+
+        // =============================================
+        // ENROLL COURSE
+        // =============================================
+        function enrollCourse() {
+            if (!isAuthenticated()) {
+                if (confirm('Please login to enroll in this course.')) {
+                    window.location.href = '../../login.html?redirect=' + window.location.pathname;
+                }
+                return;
+            }
+            showToast('🎓 Enrolled successfully! Full access granted.', 'success');
+        }
+
+        // =============================================
+        // REVIEW SYSTEM
+        // =============================================
+        let selectedReviewRating = 0;
+
+        function setReviewRating(rating) {
+            selectedReviewRating = rating;
+            document.querySelectorAll('.star').forEach(star => {
+                const value = parseInt(star.dataset.value);
+                star.style.color = value <= rating ? '#f59e0b' : 'var(--gray-300)';
+            });
+        }
+
+        function submitReview() {
+            if (!isAuthenticated()) {
+                if (confirm('Please login to leave a review.')) {
+                    window.location.href = '../../login.html?redirect=' + window.location.pathname;
+                }
+                return;
+            }
+
+            const messageEl = document.getElementById('reviewMessage');
+
+            if (selectedReviewRating === 0) {
+                messageEl.innerHTML = `<div class="message message-error">❌ Please select a rating</div>`;
+                return;
+            }
+
+            const text = document.getElementById('reviewText').value.trim();
+            if (!text) {
+                messageEl.innerHTML = `<div class="message message-error">❌ Please write a review</div>`;
+                return;
+            }
+
+            messageEl.innerHTML = `<div class="message message-success">✅ Review submitted successfully!</div>`;
+            setReviewRating(0);
+            document.getElementById('reviewText').value = '';
+
+            setTimeout(() => {
+                messageEl.innerHTML = '';
+            }, 4000);
+        }
+
+        // =============================================
+        // MOBILE MENU
+        // =============================================
         document.getElementById('menuToggle')?.addEventListener('click', function() {
             document.querySelector('.nav-links').classList.toggle('open');
         });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelector('.nav-links').classList.remove('open');
+            });
+        });
     </script>
 
-    <script src="../../js/config.js"></script>
-    <script src="../../js/api.js"></script>
+    <!-- ============================================ -->
+    <!-- EXTERNAL SCRIPTS -->
+    <!-- ============================================ -->
+    <script src="../../../js/config.js"></script>
+    <script src="../../../js/utils.js"></script>
+    <script src="../../../js/api.js"></script>
+    <script src="../../../js/auth.js"></script>
+    <script src="../../../js/app.js"></script>
 </body>
 </html>
