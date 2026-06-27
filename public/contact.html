@@ -56,11 +56,21 @@
                 
                 <div class="info-item">
                     <div class="icon">
+                        <i class="fab fa-whatsapp" style="color: #25D366;"></i>
+                    </div>
+                    <div class="content">
+                        <h4>WhatsApp</h4>
+                        <p><a href="https://wa.me/237654122717" target="_blank" style="color: #25D366; font-weight: 600;">+237 654 122 717</a></p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="icon">
                         <i class="fas fa-phone"></i>
                     </div>
                     <div class="content">
                         <h4>Phone</h4>
-                        <p><a href="tel:+237671234567">+237 671 234 567</a></p>
+                        <p><a href="tel:+237654122717">+237 654 122 717</a></p>
                     </div>
                 </div>
 
@@ -183,6 +193,20 @@
                         <span class="form-hint">Be as detailed as possible so we can assist you better</span>
                     </div>
 
+                    <!-- WhatsApp Option -->
+                    <div style="margin: 12px 0 16px; padding: 12px 16px; background: var(--bg-secondary); border-radius: var(--border-radius-sm); border: 1px solid var(--border-color);">
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" id="sendToWhatsApp" checked>
+                            <span style="font-size: 14px; color: var(--text-secondary);">
+                                <i class="fab fa-whatsapp" style="color: #25D366;"></i> 
+                                Send message to admin WhatsApp
+                            </span>
+                        </label>
+                        <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0 0 32px;">
+                            Your message will be sent directly to our support team on WhatsApp
+                        </p>
+                    </div>
+
                     <!-- Submit Button -->
                     <button type="submit" class="btn-submit" id="contactBtn">
                         <i class="fas fa-paper-plane"></i> Send Message
@@ -192,7 +216,7 @@
         </div>
 
         <!-- ============================================ -->
-        <!-- FAQ QUICK LINKS - Using .contact-info-sidebar style -->
+        <!-- FAQ QUICK LINKS -->
         <!-- ============================================ -->
         <div style="margin-top: 40px;">
             <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text-primary); text-align: center;">
@@ -212,7 +236,7 @@
                         How do I get my PIN?
                     </h4>
                     <p style="font-size: 14px; color: var(--text-secondary); margin: 0;">
-                        Contact admin or check your SMS after payment confirmation.
+                        Contact admin on WhatsApp or check your SMS after payment confirmation.
                     </p>
                 </div>
                 <div style="padding: 16px 20px; background: var(--bg-card); border-radius: var(--border-radius-sm); border-left: 4px solid var(--primary); box-shadow: var(--shadow);">
@@ -254,6 +278,12 @@
     <!-- ============================================ -->
     <script>
         // =============================================
+        // CONFIGURATION
+        // =============================================
+        const ADMIN_WHATSAPP = '237654122717';
+        const WHATSAPP_URL = `https://wa.me/${ADMIN_WHATSAPP}`;
+
+        // =============================================
         // MOBILE MENU TOGGLE
         // =============================================
         document.getElementById('menuToggle')?.addEventListener('click', function() {
@@ -275,6 +305,63 @@
         });
 
         // =============================================
+        // SHOW MESSAGE
+        // =============================================
+        function showMessage(container, type, message) {
+            if (!container) return;
+
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle',
+                warning: 'fa-exclamation-triangle'
+            };
+
+            const classes = {
+                success: 'message-success',
+                error: 'message-error',
+                info: 'message-info',
+                warning: 'message-info'
+            };
+
+            container.innerHTML = `
+                <div class="message ${classes[type] || 'message-info'}" role="alert">
+                    <i class="fas ${icons[type] || icons.info}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // =============================================
+        // SEND TO WHATSAPP
+        // =============================================
+        function sendToWhatsApp(name, phone, subject, message) {
+            // Format message for WhatsApp
+            const whatsappMessage = `📬 *New Contact Form Submission*
+            
+👤 *Name:* ${name}
+📱 *Phone:* +237 ${phone}
+📋 *Subject:* ${subject}
+
+💬 *Message:*
+${message}
+
+---
+📅 Sent from EduCamLab Contact Form`;
+
+            // Encode for URL
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            const url = `${WHATSAPP_URL}?text=${encodedMessage}`;
+            
+            // Open WhatsApp in new tab
+            window.open(url, '_blank');
+            
+            return true;
+        }
+
+        // =============================================
         // FORM SUBMISSION
         // =============================================
         document.getElementById('contactForm')?.addEventListener('submit', async function(e) {
@@ -286,6 +373,7 @@
             const phone = document.getElementById('contactPhone');
             const subject = document.getElementById('contactSubject');
             const message = document.getElementById('contactMessage');
+            const sendToWhatsAppCheck = document.getElementById('sendToWhatsApp');
 
             // Clear previous messages
             container.innerHTML = '';
@@ -310,7 +398,7 @@
                 hasError = true;
             } else if (phone.value.length !== 9) {
                 phone.classList.add('error');
-                container.innerHTML = `<div class="message message-error">❌ Please enter a valid 9-digit phone number</div>`;
+                showMessage(container, 'error', '❌ Please enter a valid 9-digit phone number');
                 hasError = true;
             }
 
@@ -326,7 +414,7 @@
 
             if (hasError) {
                 if (!container.innerHTML) {
-                    container.innerHTML = `<div class="message message-error">❌ Please fill in all required fields correctly</div>`;
+                    showMessage(container, 'error', '❌ Please fill in all required fields correctly');
                 }
                 return;
             }
@@ -338,8 +426,10 @@
             btn.innerHTML = '<span class="spinner"></span> Sending...';
 
             try {
-                // Check if API exists
-                if (typeof API !== 'undefined' && API.sendContact) {
+                // Check if API exists and we want to use it
+                const useAPI = typeof API !== 'undefined' && API.sendContact && !sendToWhatsAppCheck.checked;
+
+                if (useAPI) {
                     const result = await API.sendContact({
                         name: name.value.trim(),
                         phone: phone.value.trim(),
@@ -348,14 +438,8 @@
                     });
 
                     if (result.success) {
-                        container.innerHTML = `
-                            <div class="message message-success">
-                                <i class="fas fa-check-circle"></i>
-                                ✅ Message sent! We'll get back to you within 24-48 hours.
-                            </div>
-                        `;
+                        showMessage(container, 'success', '✅ Message sent! We\'ll get back to you within 24-48 hours.');
                         this.reset();
-                        // Remove success/error states
                         document.querySelectorAll('.form-group input, .form-group select, .form-group textarea').forEach(el => {
                             el.classList.remove('error', 'success');
                         });
@@ -363,25 +447,44 @@
                         throw new Error(result.message || 'Failed to send message');
                     }
                 } else {
-                    // Fallback: Simulate success for testing
-                    container.innerHTML = `
-                        <div class="message message-success">
-                            <i class="fas fa-check-circle"></i>
-                            ✅ Message sent! We'll get back to you within 24-48 hours.
-                        </div>
-                    `;
-                    this.reset();
-                    document.querySelectorAll('.form-group input, .form-group select, .form-group textarea').forEach(el => {
-                        el.classList.remove('error', 'success');
-                    });
+                    // Send to WhatsApp
+                    const sent = sendToWhatsApp(
+                        name.value.trim(),
+                        phone.value.trim(),
+                        subject.options[subject.selectedIndex]?.text || subject.value,
+                        message.value.trim()
+                    );
+
+                    if (sent) {
+                        showMessage(container, 'success', '✅ Message sent to WhatsApp! We\'ll get back to you shortly.');
+                        this.reset();
+                        document.querySelectorAll('.form-group input, .form-group select, .form-group textarea').forEach(el => {
+                            el.classList.remove('error', 'success');
+                        });
+                    } else {
+                        throw new Error('Failed to open WhatsApp');
+                    }
                 }
+
             } catch (error) {
-                container.innerHTML = `
-                    <div class="message message-error">
-                        <i class="fas fa-exclamation-circle"></i>
-                        ❌ ${error.message || 'Something went wrong. Please try again.'}
-                    </div>
-                `;
+                // Fallback: Try sending to WhatsApp directly
+                try {
+                    const sent = sendToWhatsApp(
+                        name.value.trim(),
+                        phone.value.trim(),
+                        subject.options[subject.selectedIndex]?.text || subject.value,
+                        message.value.trim()
+                    );
+                    
+                    if (sent) {
+                        showMessage(container, 'success', '✅ Message sent to WhatsApp! We\'ll get back to you shortly.');
+                        this.reset();
+                    } else {
+                        showMessage(container, 'error', '❌ ' + (error.message || 'Something went wrong. Please try again.'));
+                    }
+                } catch (fallbackError) {
+                    showMessage(container, 'error', '❌ ' + (fallbackError.message || 'Something went wrong. Please try again.'));
+                }
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
@@ -390,11 +493,11 @@
     </script>
 
     <!-- Load API scripts (if they exist) -->
-        <script src="js/config.js"></script>
-        <script src="js/utils.js"></script>
-        <script src="js/api.js"></script>
-        <script src="js/auth.js"></script>
-        <script src="js/app.js"></script>
-        <script src="js/script.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
