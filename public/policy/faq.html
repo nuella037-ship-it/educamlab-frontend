@@ -10,6 +10,9 @@
 </head>
 <body>
 
+    <!-- ============================================ -->
+    <!-- HEADER - Using style.css nav pattern -->
+    <!-- ============================================ -->
     <header>
         <nav>
             <div class="logo">📚 EduCamLab</div>
@@ -28,159 +31,510 @@
         </nav>
     </header>
 
-    <div style="max-width:800px; margin:40px auto; padding:0 20px 60px;">
-        <div style="text-align:center; margin-bottom:40px;">
-            <h1 style="font-size:36px; font-weight:800; color:var(--text-primary);">❓ Frequently Asked Questions</h1>
-            <p style="font-size:18px; color:var(--text-secondary);">Find answers to the most common questions</p>
+    <!-- ============================================ -->
+    <!-- FAQ CONTENT -->
+    <!-- ============================================ -->
+    <div style="max-width: 800px; margin: 40px auto; padding: 0 20px 60px;">
+
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h1 style="font-size: 36px; font-weight: 800; color: var(--text-primary);">
+                ❓ Frequently Asked Questions
+            </h1>
+            <p style="font-size: 18px; color: var(--text-secondary);">
+                Find answers to the most common questions about EduCamLab
+            </p>
         </div>
 
-        <!-- Search -->
-        <div style="margin-bottom:24px; position:relative;">
-            <i class="fas fa-search" style="position:absolute; left:16px; top:50%; transform:translateY(-50%); color:var(--text-muted);"></i>
-            <input type="text" id="faqSearch" placeholder="Search questions..." oninput="searchFAQ()" style="width:100%; padding:14px 20px 14px 48px; border:2px solid var(--border-color); border-radius:var(--border-radius); font-size:16px; background:var(--bg-card); color:var(--text-primary); transition:border-color 0.3s;">
+        <!-- Search Bar -->
+        <div style="margin-bottom: 24px; position: relative;">
+            <i class="fas fa-search" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+            <input 
+                type="text" 
+                id="faqSearch" 
+                placeholder="Search questions..." 
+                oninput="searchFAQ()" 
+                style="width: 100%; padding: 14px 20px 14px 48px; border: 2px solid var(--border-color); border-radius: var(--border-radius); font-size: 16px; font-family: inherit; background: var(--bg-card); color: var(--text-primary); transition: var(--transition);"
+                onfocus="this.style.borderColor='var(--primary)'; this.style.boxShadow='0 0 0 4px rgba(79,70,229,0.1)'"
+                onblur="this.style.borderColor=''; this.style.boxShadow=''"
+            >
         </div>
 
+        <!-- Category Filters -->
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
+            <button onclick="filterCategory('all')" class="category-filter active" data-category="all" style="padding: 8px 16px; border: 2px solid var(--primary); border-radius: 20px; background: var(--primary); color: white; cursor: pointer; font-weight: 600; font-size: 13px; font-family: inherit; transition: var(--transition);">All</button>
+            <button onclick="filterCategory('general')" class="category-filter" data-category="general" style="padding: 8px 16px; border: 2px solid var(--border-color); border-radius: 20px; background: transparent; color: var(--text-secondary); cursor: pointer; font-weight: 500; font-size: 13px; font-family: inherit; transition: var(--transition);">General</button>
+            <button onclick="filterCategory('account')" class="category-filter" data-category="account" style="padding: 8px 16px; border: 2px solid var(--border-color); border-radius: 20px; background: transparent; color: var(--text-secondary); cursor: pointer; font-weight: 500; font-size: 13px; font-family: inherit; transition: var(--transition);">Account</button>
+            <button onclick="filterCategory('pin')" class="category-filter" data-category="pin" style="padding: 8px 16px; border: 2px solid var(--border-color); border-radius: 20px; background: transparent; color: var(--text-secondary); cursor: pointer; font-weight: 500; font-size: 13px; font-family: inherit; transition: var(--transition);">PIN</button>
+            <button onclick="filterCategory('courses')" class="category-filter" data-category="courses" style="padding: 8px 16px; border: 2px solid var(--border-color); border-radius: 20px; background: transparent; color: var(--text-secondary); cursor: pointer; font-weight: 500; font-size: 13px; font-family: inherit; transition: var(--transition);">Courses</button>
+            <button onclick="filterCategory('payment')" class="category-filter" data-category="payment" style="padding: 8px 16px; border: 2px solid var(--border-color); border-radius: 20px; background: transparent; color: var(--text-secondary); cursor: pointer; font-weight: 500; font-size: 13px; font-family: inherit; transition: var(--transition);">Payment</button>
+            <button onclick="filterCategory('technical')" class="category-filter" data-category="technical" style="padding: 8px 16px; border: 2px solid var(--border-color); border-radius: 20px; background: transparent; color: var(--text-secondary); cursor: pointer; font-weight: 500; font-size: 13px; font-family: inherit; transition: var(--transition);">Technical</button>
+        </div>
+
+        <!-- FAQ List -->
         <div id="faqList">
-            <!-- General -->
-            <div class="faq-item" data-category="general" style="background:var(--bg-card); border-radius:var(--border-radius); border:1px solid var(--border-color); margin-bottom:12px; overflow:hidden; box-shadow:var(--shadow);">
-                <div class="faq-question" onclick="toggleFAQ(this)" style="padding:20px 24px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600; font-size:16px; color:var(--text-primary); transition:background 0.3s;">
-                    <span>What is EduCamLab? <span style="display:inline-block; background:rgba(79,70,229,0.1); color:var(--primary); padding:2px 12px; border-radius:12px; font-size:12px; font-weight:600; margin-left:12px;">General</span></span>
-                    <span style="font-size:20px; color:var(--text-muted); transition:transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
+
+            <!-- ============================================ -->
+            <!-- CATEGORY: GENERAL -->
+            <!-- ============================================ -->
+            <div class="faq-item" data-category="general" style="background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow);">
+                <div class="faq-question" onclick="toggleFAQ(this)" style="padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; color: var(--text-primary); transition: background 0.3s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background=''">
+                    <span>
+                        What is EduCamLab?
+                        <span style="display: inline-block; background: rgba(79,70,229,0.1); color: var(--primary); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: 12px;">General</span>
+                    </span>
+                    <span style="font-size: 20px; color: var(--text-muted); transition: transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
                 </div>
-                <div class="faq-answer" style="padding:0 24px; max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; color:var(--text-secondary); line-height:1.7;">
-                    <p style="margin:0;">EduCamLab is Cameroon's leading exam preparation platform. We provide comprehensive resources for GCE (O Level and A Level), BACC, BEPC, and Technical GCE exams.</p>
+                <div class="faq-answer" style="padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-secondary); line-height: 1.7;">
+                    <p style="margin: 0;">EduCamLab is Cameroon's leading exam preparation platform. We provide comprehensive resources for GCE (O Level and A Level), BACC, BEPC, and Technical GCE exams. Our platform offers past questions, revision pamphlets, interactive quizzes, and progress tracking to help students excel in their national exams.</p>
                 </div>
             </div>
 
-            <div class="faq-item" data-category="general" style="background:var(--bg-card); border-radius:var(--border-radius); border:1px solid var(--border-color); margin-bottom:12px; overflow:hidden; box-shadow:var(--shadow);">
-                <div class="faq-question" onclick="toggleFAQ(this)" style="padding:20px 24px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600; font-size:16px; color:var(--text-primary); transition:background 0.3s;">
-                    <span>Who is EduCamLab for? <span style="display:inline-block; background:rgba(79,70,229,0.1); color:var(--primary); padding:2px 12px; border-radius:12px; font-size:12px; font-weight:600; margin-left:12px;">General</span></span>
-                    <span style="font-size:20px; color:var(--text-muted); transition:transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
+            <div class="faq-item" data-category="general" style="background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow);">
+                <div class="faq-question" onclick="toggleFAQ(this)" style="padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; color: var(--text-primary); transition: background 0.3s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background=''">
+                    <span>
+                        Who is EduCamLab for?
+                        <span style="display: inline-block; background: rgba(79,70,229,0.1); color: var(--primary); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: 12px;">General</span>
+                    </span>
+                    <span style="font-size: 20px; color: var(--text-muted); transition: transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
                 </div>
-                <div class="faq-answer" style="padding:0 24px; max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; color:var(--text-secondary); line-height:1.7;">
-                    <p style="margin:0;">EduCamLab is designed for students preparing for Cameroon national exams, including O Level, A Level, BACC, BEPC, and Technical GCE.</p>
-                </div>
-            </div>
-
-            <!-- Account -->
-            <div class="faq-item" data-category="account" style="background:var(--bg-card); border-radius:var(--border-radius); border:1px solid var(--border-color); margin-bottom:12px; overflow:hidden; box-shadow:var(--shadow);">
-                <div class="faq-question" onclick="toggleFAQ(this)" style="padding:20px 24px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600; font-size:16px; color:var(--text-primary); transition:background 0.3s;">
-                    <span>How do I create an account? <span style="display:inline-block; background:rgba(79,70,229,0.1); color:var(--primary); padding:2px 12px; border-radius:12px; font-size:12px; font-weight:600; margin-left:12px;">Account</span></span>
-                    <span style="font-size:20px; color:var(--text-muted); transition:transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
-                </div>
-                <div class="faq-answer" style="padding:0 24px; max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; color:var(--text-secondary); line-height:1.7;">
-                    <p style="margin:0;">Click "Get Started" or "Create Account", fill in your details including name, phone number, and password. You'll receive a PIN from admin after payment confirmation.</p>
-                </div>
-            </div>
-
-            <div class="faq-item" data-category="account" style="background:var(--bg-card); border-radius:var(--border-radius); border:1px solid var(--border-color); margin-bottom:12px; overflow:hidden; box-shadow:var(--shadow);">
-                <div class="faq-question" onclick="toggleFAQ(this)" style="padding:20px 24px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600; font-size:16px; color:var(--text-primary); transition:background 0.3s;">
-                    <span>What if I forgot my password? <span style="display:inline-block; background:rgba(79,70,229,0.1); color:var(--primary); padding:2px 12px; border-radius:12px; font-size:12px; font-weight:600; margin-left:12px;">Account</span></span>
-                    <span style="font-size:20px; color:var(--text-muted); transition:transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
-                </div>
-                <div class="faq-answer" style="padding:0 24px; max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; color:var(--text-secondary); line-height:1.7;">
-                    <p style="margin:0;">Click "Forgot Password" on the login page, enter your phone number, and we'll send you a password reset link via SMS.</p>
+                <div class="faq-answer" style="padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-secondary); line-height: 1.7;">
+                    <p style="margin: 0;">EduCamLab is designed for students preparing for Cameroon national exams, including:</p>
+                    <ul style="margin: 8px 0 0 20px; padding-left: 0;">
+                        <li><strong>O Level</strong> (Form 4 &amp; 5)</li>
+                        <li><strong>A Level</strong> (Lower &amp; Upper Sixth)</li>
+                        <li><strong>BACC</strong> (Séries A, B, C, D)</li>
+                        <li><strong>BEPC</strong></li>
+                        <li><strong>Technical GCE</strong></li>
+                    </ul>
                 </div>
             </div>
 
-            <!-- PIN -->
-            <div class="faq-item" data-category="pin" style="background:var(--bg-card); border-radius:var(--border-radius); border:1px solid var(--border-color); margin-bottom:12px; overflow:hidden; box-shadow:var(--shadow);">
-                <div class="faq-question" onclick="toggleFAQ(this)" style="padding:20px 24px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600; font-size:16px; color:var(--text-primary); transition:background 0.3s;">
-                    <span>What is a PIN and how do I get it? <span style="display:inline-block; background:rgba(79,70,229,0.1); color:var(--primary); padding:2px 12px; border-radius:12px; font-size:12px; font-weight:600; margin-left:12px;">PIN</span></span>
-                    <span style="font-size:20px; color:var(--text-muted); transition:transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
+            <div class="faq-item" data-category="general" style="background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow);">
+                <div class="faq-question" onclick="toggleFAQ(this)" style="padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; color: var(--text-primary); transition: background 0.3s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background=''">
+                    <span>
+                        Is EduCamLab free?
+                        <span style="display: inline-block; background: rgba(79,70,229,0.1); color: var(--primary); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: 12px;">General</span>
+                    </span>
+                    <span style="font-size: 20px; color: var(--text-muted); transition: transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
                 </div>
-                <div class="faq-answer" style="padding:0 24px; max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; color:var(--text-secondary); line-height:1.7;">
-                    <p style="margin:0;">A PIN is a 6-character code that allows you to access the platform. You receive your PIN from the admin after payment confirmation via SMS.</p>
-                </div>
-            </div>
-
-            <!-- Courses -->
-            <div class="faq-item" data-category="courses" style="background:var(--bg-card); border-radius:var(--border-radius); border:1px solid var(--border-color); margin-bottom:12px; overflow:hidden; box-shadow:var(--shadow);">
-                <div class="faq-question" onclick="toggleFAQ(this)" style="padding:20px 24px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600; font-size:16px; color:var(--text-primary); transition:background 0.3s;">
-                    <span>What courses are available? <span style="display:inline-block; background:rgba(79,70,229,0.1); color:var(--primary); padding:2px 12px; border-radius:12px; font-size:12px; font-weight:600; margin-left:12px;">Courses</span></span>
-                    <span style="font-size:20px; color:var(--text-muted); transition:transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
-                </div>
-                <div class="faq-answer" style="padding:0 24px; max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; color:var(--text-secondary); line-height:1.7;">
-                    <p style="margin:0;">We offer resources for all Cameroon national exams including O Level, A Level, BACC, BEPC, and Technical GCE.</p>
+                <div class="faq-answer" style="padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-secondary); line-height: 1.7;">
+                    <p style="margin: 0;">EduCamLab offers both free and premium content. Registration and basic access are free. Premium features including full course access, past questions, and revision pamphlets require a subscription. We offer flexible plans starting from 150 XAF per day.</p>
                 </div>
             </div>
 
-            <!-- Payments -->
-            <div class="faq-item" data-category="payment" style="background:var(--bg-card); border-radius:var(--border-radius); border:1px solid var(--border-color); margin-bottom:12px; overflow:hidden; box-shadow:var(--shadow);">
-                <div class="faq-question" onclick="toggleFAQ(this)" style="padding:20px 24px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600; font-size:16px; color:var(--text-primary); transition:background 0.3s;">
-                    <span>How much does EduCamLab cost? <span style="display:inline-block; background:rgba(79,70,229,0.1); color:var(--primary); padding:2px 12px; border-radius:12px; font-size:12px; font-weight:600; margin-left:12px;">Payment</span></span>
-                    <span style="font-size:20px; color:var(--text-muted); transition:transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
+            <!-- ============================================ -->
+            <!-- CATEGORY: ACCOUNT -->
+            <!-- ============================================ -->
+            <div class="faq-item" data-category="account" style="background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow);">
+                <div class="faq-question" onclick="toggleFAQ(this)" style="padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; color: var(--text-primary); transition: background 0.3s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background=''">
+                    <span>
+                        How do I create an account?
+                        <span style="display: inline-block; background: rgba(79,70,229,0.1); color: var(--primary); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: 12px;">Account</span>
+                    </span>
+                    <span style="font-size: 20px; color: var(--text-muted); transition: transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
                 </div>
-                <div class="faq-answer" style="padding:0 24px; max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; color:var(--text-secondary); line-height:1.7;">
-                    <p style="margin:0;">We offer flexible subscription plans: Daily (150 XAF), Weekly (800 XAF), Monthly (2,500 XAF), and Annual (15,000 XAF).</p>
+                <div class="faq-answer" style="padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-secondary); line-height: 1.7;">
+                    <p style="margin: 0;">To create an account:</p>
+                    <ol style="margin: 8px 0 0 20px; padding-left: 0;">
+                        <li>Click <strong>"Get Started"</strong> or <strong>"Create Account"</strong> on the homepage</li>
+                        <li>Fill in your details: First name, Last name, Phone number, and Password</li>
+                        <li>Agree to the Terms of Service and Privacy Policy</li>
+                        <li>Click <strong>"Create Account"</strong></li>
+                        <li>You'll receive a verification code via SMS</li>
+                        <li>Enter the code to verify your account</li>
+                        <li>After verification, contact admin via WhatsApp to get your PIN</li>
+                    </ol>
                 </div>
             </div>
+
+            <div class="faq-item" data-category="account" style="background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow);">
+                <div class="faq-question" onclick="toggleFAQ(this)" style="padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; color: var(--text-primary); transition: background 0.3s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background=''">
+                    <span>
+                        What if I forgot my password?
+                        <span style="display: inline-block; background: rgba(79,70,229,0.1); color: var(--primary); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: 12px;">Account</span>
+                    </span>
+                    <span style="font-size: 20px; color: var(--text-muted); transition: transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer" style="padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-secondary); line-height: 1.7;">
+                    <p style="margin: 0;">If you forgot your password:</p>
+                    <ol style="margin: 8px 0 0 20px; padding-left: 0;">
+                        <li>Click <strong>"Forgot Password"</strong> on the login page</li>
+                        <li>Enter your 9-digit phone number</li>
+                        <li>You'll receive a password reset link via SMS</li>
+                        <li>Follow the link to create a new password</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="account" style="background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow);">
+                <div class="faq-question" onclick="toggleFAQ(this)" style="padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; color: var(--text-primary); transition: background 0.3s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background=''">
+                    <span>
+                        Can I delete my account?
+                        <span style="display: inline-block; background: rgba(79,70,229,0.1); color: var(--primary); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: 12px;">Account</span>
+                    </span>
+                    <span style="font-size: 20px; color: var(--text-muted); transition: transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer" style="padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-secondary); line-height: 1.7;">
+                    <p style="margin: 0;">Yes, you can delete your account at any time. Go to your <strong>Profile</strong> page and click <strong>"Delete Account"</strong> in the Danger Zone section. Please note that this action is <strong>permanent</strong> and cannot be undone. All your data will be permanently removed.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- CATEGORY: PIN -->
+            <!-- ============================================ -->
+            <div class="faq-item" data-category="pin" style="background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow);">
+                <div class="faq-question" onclick="toggleFAQ(this)" style="padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; color: var(--text-primary); transition: background 0.3s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background=''">
+                    <span>
+                        What is a PIN and how do I get it?
+                        <span style="display: inline-block; background: rgba(79,70,229,0.1); color: var(--primary); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: 12px;">PIN</span>
+                    </span>
+                    <span style="font-size: 20px; color: var(--text-muted); transition: transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer" style="padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-secondary); line-height: 1.7;">
+                    <p style="margin: 0;">A <strong>PIN</strong> is a 6-character alphanumeric code that allows you to access the platform. Here's how to get it:</p>
+                    <ol style="margin: 8px 0 0 20px; padding-left: 0;">
+                        <li>Create your account on EduCamLab</li>
+                        <li>Verify your phone number via SMS</li>
+                        <li>Contact admin via WhatsApp at <strong>+237 654 122 717</strong></li>
+                        <li>Make your payment for the subscription plan</li>
+                        <li>Admin will send you your unique PIN via SMS</li>
+                        <li>Use this PIN along with your phone and password to login</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="pin" style="background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow);">
+                <div class="faq-question" onclick="toggleFAQ(this)" style="padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; color: var(--text-primary); transition: background 0.3s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background=''">
+                    <span>
+                        What if I lost my PIN?
+                        <span style="display: inline-block; background: rgba(79,70,229,0.1); color: var(--primary); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: 12px;">PIN</span>
+                    </span>
+                    <span style="font-size: 20px; color: var(--text-muted); transition: transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer" style="padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-secondary); line-height: 1.7;">
+                    <p style="margin: 0;">If you lost your PIN, contact admin via WhatsApp at <strong>+237 654 122 717</strong> or email <strong>support@educamlab.com</strong>. You will need to verify your identity to receive a new PIN. Please do not share your PIN with anyone.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- CATEGORY: COURSES -->
+            <!-- ============================================ -->
+            <div class="faq-item" data-category="courses" style="background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow);">
+                <div class="faq-question" onclick="toggleFAQ(this)" style="padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; color: var(--text-primary); transition: background 0.3s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background=''">
+                    <span>
+                        What subjects are available?
+                        <span style="display: inline-block; background: rgba(79,70,229,0.1); color: var(--primary); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: 12px;">Courses</span>
+                    </span>
+                    <span style="font-size: 20px; color: var(--text-muted); transition: transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer" style="padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-secondary); line-height: 1.7;">
+                    <p style="margin: 0;">We offer a wide range of subjects across all exam levels:</p>
+                    <ul style="margin: 8px 0 0 20px; padding-left: 0;">
+                        <li><strong>O Level:</strong> Accounting, Biology, Chemistry, Mathematics, Physics, English, French, Geography, History, Economics, Commerce, Computer Science</li>
+                        <li><strong>A Level:</strong> Accounting, Biology, Chemistry, Mathematics, Physics, Economics, English, French, Geography, History, Computer Science</li>
+                        <li><strong>BACC:</strong> Série A, B, C, D</li>
+                        <li><strong>BEPC:</strong> French, English, Mathematics, Science</li>
+                        <li><strong>Technical GCE:</strong> Building &amp; Construction, Electrical Engineering, Mechanical Engineering</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="courses" style="background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow);">
+                <div class="faq-question" onclick="toggleFAQ(this)" style="padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; color: var(--text-primary); transition: background 0.3s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background=''">
+                    <span>
+                        What resources are available for each course?
+                        <span style="display: inline-block; background: rgba(79,70,229,0.1); color: var(--primary); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: 12px;">Courses</span>
+                    </span>
+                    <span style="font-size: 20px; color: var(--text-muted); transition: transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer" style="padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-secondary); line-height: 1.7;">
+                    <p style="margin: 0;">Each course includes:</p>
+                    <ul style="margin: 8px 0 0 20px; padding-left: 0;">
+                        <li><strong>📄 Past Questions:</strong> Previous exam papers with detailed marking schemes</li>
+                        <li><strong>📚 Revision Pamphlets:</strong> Comprehensive study notes and topic summaries</li>
+                        <li><strong>🧪 Interactive Quizzes:</strong> Test your knowledge with instant feedback</li>
+                        <li><strong>📊 Progress Tracking:</strong> Monitor your learning and identify weak areas</li>
+                        <li><strong>📅 Exam Years:</strong> Access past papers from multiple years</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="courses" style="background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow);">
+                <div class="faq-question" onclick="toggleFAQ(this)" style="padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; color: var(--text-primary); transition: background 0.3s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background=''">
+                    <span>
+                        How do I access my courses?
+                        <span style="display: inline-block; background: rgba(79,70,229,0.1); color: var(--primary); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: 12px;">Courses</span>
+                    </span>
+                    <span style="font-size: 20px; color: var(--text-muted); transition: transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer" style="padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-secondary); line-height: 1.7;">
+                    <p style="margin: 0;">Once you have an account and PIN:</p>
+                    <ol style="margin: 8px 0 0 20px; padding-left: 0;">
+                        <li>Log in with your phone number, password, and PIN</li>
+                        <li>Go to the <strong>Courses</strong> page</li>
+                        <li>Browse by exam level (O Level, A Level, BACC, BEPC, Technical GCE)</li>
+                        <li>Select a subject to view its resources</li>
+                        <li>Access past questions, pamphlets, and quizzes</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- CATEGORY: PAYMENT -->
+            <!-- ============================================ -->
+            <div class="faq-item" data-category="payment" style="background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow);">
+                <div class="faq-question" onclick="toggleFAQ(this)" style="padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; color: var(--text-primary); transition: background 0.3s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background=''">
+                    <span>
+                        How much does EduCamLab cost?
+                        <span style="display: inline-block; background: rgba(79,70,229,0.1); color: var(--primary); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: 12px;">Payment</span>
+                    </span>
+                    <span style="font-size: 20px; color: var(--text-muted); transition: transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer" style="padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-secondary); line-height: 1.7;">
+                    <p style="margin: 0;">We offer flexible subscription plans to suit your needs:</p>
+                    <ul style="margin: 8px 0 0 20px; padding-left: 0;">
+                        <li><strong>Daily:</strong> 150 XAF</li>
+                        <li><strong>Weekly:</strong> 800 XAF</li>
+                        <li><strong>Monthly:</strong> 2,500 XAF</li>
+                        <li><strong>Annual:</strong> 15,000 XAF</li>
+                    </ul>
+                    <p style="margin-top: 8px;">Payments are accepted via <strong>Orange Money</strong> and <strong>MTN Mobile Money</strong>. Contact admin via WhatsApp at <strong>+237 654 122 717</strong> to make payment and receive your PIN.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="payment" style="background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow);">
+                <div class="faq-question" onclick="toggleFAQ(this)" style="padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; color: var(--text-primary); transition: background 0.3s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background=''">
+                    <span>
+                        Do you offer refunds?
+                        <span style="display: inline-block; background: rgba(79,70,229,0.1); color: var(--primary); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: 12px;">Payment</span>
+                    </span>
+                    <span style="font-size: 20px; color: var(--text-muted); transition: transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer" style="padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-secondary); line-height: 1.7;">
+                    <p style="margin: 0;">Yes, we offer refunds within <strong>30 days</strong> of purchase for unused subscriptions. To request a refund:</p>
+                    <ol style="margin: 8px 0 0 20px; padding-left: 0;">
+                        <li>Contact us at <strong>support@educamlab.com</strong></li>
+                        <li>Provide your phone number and payment details</li>
+                        <li>Explain the reason for your refund request</li>
+                        <li>We will process your refund within 5-7 business days</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- CATEGORY: TECHNICAL -->
+            <!-- ============================================ -->
+            <div class="faq-item" data-category="technical" style="background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow);">
+                <div class="faq-question" onclick="toggleFAQ(this)" style="padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; color: var(--text-primary); transition: background 0.3s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background=''">
+                    <span>
+                        I'm having trouble logging in. What should I do?
+                        <span style="display: inline-block; background: rgba(79,70,229,0.1); color: var(--primary); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: 12px;">Technical</span>
+                    </span>
+                    <span style="font-size: 20px; color: var(--text-muted); transition: transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer" style="padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-secondary); line-height: 1.7;">
+                    <p style="margin: 0;">If you're having trouble logging in:</p>
+                    <ol style="margin: 8px 0 0 20px; padding-left: 0;">
+                        <li>Make sure you're using the correct phone number (9 digits)</li>
+                        <li>Check that your password is correct (case-sensitive)</li>
+                        <li>Verify that your PIN is exactly 6 characters (alphanumeric)</li>
+                        <li>Try resetting your password if needed</li>
+                        <li>Clear your browser cache and cookies</li>
+                        <li>Try a different browser or device</li>
+                        <li>If the issue persists, contact support at <strong>support@educamlab.com</strong></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="technical" style="background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow);">
+                <div class="faq-question" onclick="toggleFAQ(this)" style="padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; color: var(--text-primary); transition: background 0.3s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background=''">
+                    <span>
+                        I'm not receiving SMS verification codes. What should I do?
+                        <span style="display: inline-block; background: rgba(79,70,229,0.1); color: var(--primary); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: 12px;">Technical</span>
+                    </span>
+                    <span style="font-size: 20px; color: var(--text-muted); transition: transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer" style="padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-secondary); line-height: 1.7;">
+                    <p style="margin: 0;">If you're not receiving SMS verification codes:</p>
+                    <ol style="margin: 8px 0 0 20px; padding-left: 0;">
+                        <li>Make sure you entered the correct phone number (9 digits)</li>
+                        <li>Check that your phone has network coverage</li>
+                        <li>Try clicking <strong>"Resend Code"</strong> on the verification page</li>
+                        <li>Check if you have SMS blocking enabled on your phone</li>
+                        <li>Wait a few minutes and try again</li>
+                        <li>If the issue persists, contact support at <strong>support@educamlab.com</strong></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="technical" style="background: var(--bg-card); border-radius: var(--border-radius); border: 1px solid var(--border-color); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow);">
+                <div class="faq-question" onclick="toggleFAQ(this)" style="padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 16px; color: var(--text-primary); transition: background 0.3s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background=''">
+                    <span>
+                        Which browsers are supported?
+                        <span style="display: inline-block; background: rgba(79,70,229,0.1); color: var(--primary); padding: 2px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-left: 12px;">Technical</span>
+                    </span>
+                    <span style="font-size: 20px; color: var(--text-muted); transition: transform 0.3s;"><i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="faq-answer" style="padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-secondary); line-height: 1.7;">
+                    <p style="margin: 0;">EduCamLab works best on modern browsers:</p>
+                    <ul style="margin: 8px 0 0 20px; padding-left: 0;">
+                        <li><strong>Google Chrome</strong> (recommended)</li>
+                        <li><strong>Mozilla Firefox</strong></li>
+                        <li><strong>Microsoft Edge</strong></li>
+                        <li><strong>Safari</strong> (latest version)</li>
+                    </ul>
+                    <p style="margin-top: 8px;">We also support mobile browsers on Android and iOS devices.</p>
+                </div>
+            </div>
+
         </div>
 
         <!-- No Results -->
-        <div id="noResults" style="display:none; text-align:center; padding:40px 20px; color:var(--text-muted);">
-            <i class="fas fa-search" style="font-size:48px; display:block; margin-bottom:12px;"></i>
-            <h3>No results found</h3>
-            <p>Try adjusting your search terms</p>
+        <div id="noResults" style="display: none; text-align: center; padding: 40px 20px; color: var(--text-muted);">
+            <i class="fas fa-search" style="font-size: 48px; display: block; margin-bottom: 12px; opacity: 0.5;"></i>
+            <h3 style="color: var(--text-primary);">No results found</h3>
+            <p style="font-size: 14px;">Try adjusting your search terms or browse by category</p>
+            <button onclick="resetSearch()" class="btn btn-primary" style="margin-top: 12px;">
+                <i class="fas fa-undo"></i> Reset Search
+            </button>
         </div>
 
         <!-- Contact Support -->
-        <div style="text-align:center; margin-top:32px; padding:32px; background:var(--bg-secondary); border-radius:var(--border-radius); border:1px solid var(--border-color);">
-            <h3 style="font-size:18px; font-weight:700; color:var(--text-primary);">Still have questions?</h3>
-            <p style="color:var(--text-muted); margin-bottom:12px;">Our team is here to help you.</p>
-            <a href="../contact.html" class="btn btn-primary">
-                <i class="fas fa-envelope"></i> Contact Support
-            </a>
+        <div style="text-align: center; margin-top: 32px; padding: 32px; background: var(--bg-secondary); border-radius: var(--border-radius); border: 1px solid var(--border-color);">
+            <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary);">Still have questions?</h3>
+            <p style="color: var(--text-muted); margin-bottom: 12px;">Our team is here to help you. Contact us anytime.</p>
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                <a href="../contact.html" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i> Contact Support
+                </a>
+                <a href="https://wa.me/237654122717" target="_blank" class="btn btn-secondary" style="border-color: #25D366; color: #25D366;" onmouseover="this.style.background='#25D366'; this.style.color='white'" onmouseout="this.style.background=''; this.style.color='#25D366'">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
         </div>
+
     </div>
 
+    <!-- ============================================ -->
+    <!-- SCRIPTS -->
+    <!-- ============================================ -->
     <script>
+        // =============================================
+        // TOGGLE FAQ
+        // =============================================
         function toggleFAQ(element) {
             const answer = element.nextElementSibling;
             const isOpen = answer.style.maxHeight && answer.style.maxHeight !== '0px';
             
+            // Close all
             document.querySelectorAll('.faq-answer').forEach(a => {
                 a.style.maxHeight = '0';
                 a.style.padding = '0 24px';
             });
-            document.querySelectorAll('.faq-question .toggle-icon i').forEach(i => {
+            document.querySelectorAll('.faq-question .fa-chevron-down').forEach(i => {
                 i.style.transform = 'rotate(0deg)';
             });
             
+            // Open clicked
             if (!isOpen) {
                 answer.style.maxHeight = '500px';
                 answer.style.padding = '0 24px 20px';
-                element.querySelector('.toggle-icon i').style.transform = 'rotate(180deg)';
+                element.querySelector('.fa-chevron-down').style.transform = 'rotate(180deg)';
             }
         }
 
+        // =============================================
+        // SEARCH FAQ
+        // =============================================
         function searchFAQ() {
-            const query = document.getElementById('faqSearch').value.toLowerCase();
+            const query = document.getElementById('faqSearch').value.toLowerCase().trim();
             const items = document.querySelectorAll('.faq-item');
             let hasResults = false;
 
             items.forEach(item => {
                 const question = item.querySelector('.faq-question').textContent.toLowerCase();
                 const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
-                const matches = query === '' || question.includes(query) || answer.includes(query);
-                item.style.display = matches ? '' : 'none';
-                if (matches) hasResults = true;
+                const category = item.dataset.category;
+                
+                // Check if matches search
+                const matchesSearch = query === '' || question.includes(query) || answer.includes(query);
+                
+                // Check if matches current category filter
+                const activeCategory = document.querySelector('.category-filter.active');
+                const currentCategory = activeCategory ? activeCategory.dataset.category : 'all';
+                const matchesCategory = currentCategory === 'all' || category === currentCategory;
+                
+                const visible = matchesSearch && matchesCategory;
+                item.style.display = visible ? '' : 'none';
+                if (visible) hasResults = true;
             });
 
             document.getElementById('noResults').style.display = hasResults ? 'none' : 'block';
         }
 
-        // Open first FAQ by default
-        document.addEventListener('DOMContentLoaded', function() {
-            const firstQuestion = document.querySelector('.faq-question');
-            if (firstQuestion) {
-                setTimeout(() => firstQuestion.click(), 500);
-            }
-        });
+        // =============================================
+        // FILTER CATEGORY
+        // =============================================
+        function filterCategory(category) {
+            // Update active button
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.background = 'transparent';
+                btn.style.color = 'var(--text-secondary)';
+                btn.style.borderColor = 'var(--border-color)';
+                
+                if (btn.dataset.category === category) {
+                    btn.classList.add('active');
+                    btn.style.background = 'var(--primary)';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = 'var(--primary)';
+                }
+            });
+            
+            // Re-apply search with new category filter
+            searchFAQ();
+        }
 
+        // =============================================
+        // RESET SEARCH
+        // =============================================
+        function resetSearch() {
+            document.getElementById('faqSearch').value = '';
+            filterCategory('all');
+            document.getElementById('faqSearch').focus();
+        }
+
+        // =============================================
+        // MOBILE MENU
+        // =============================================
         document.getElementById('menuToggle')?.addEventListener('click', function() {
             document.querySelector('.nav-links').classList.toggle('open');
         });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('open');
+            });
+        });
+
+        // =============================================
+        // OPEN FIRST FAQ BY DEFAULT
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstQuestion = document.querySelector('.faq-question');
+            if (firstQuestion) {
+                setTimeout(() => {
+                    firstQuestion.click();
+                }, 500);
+            }
+        });
+
+        // =============================================
+        // CONSOLE
+        // =============================================
+        console.log('%c❓ FAQ - EduCamLab', 'font-size: 16px; font-weight: bold; color: #4f46e5;');
+        console.log('%c📚 Find answers to your questions here.', 'font-size: 12px; color: #6b7280;');
     </script>
 
     <script src="../js/config.js"></script>
