@@ -10,7 +10,9 @@
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- ============================================ -->
+    <!-- HEADER - Using style.css nav pattern -->
+    <!-- ============================================ -->
     <header>
         <nav>
             <div class="logo">📚 EduCamLab</div>
@@ -28,100 +30,357 @@
         </nav>
     </header>
 
-    <!-- Dashboard Content -->
-    <div class="dashboard-container">
-        <!-- Welcome -->
-        <div class="welcome-card">
-            <div>
-                <h1 id="greeting">👋 Good morning, <span id="userName">Student</span></h1>
+    <!-- ============================================ -->
+    <!-- DASHBOARD - Using .dashboard-wrapper -->
+    <!-- ============================================ -->
+    <div class="dashboard-wrapper">
+
+        <!-- ============================================ -->
+        <!-- WELCOME SECTION - Using .welcome-section -->
+        <!-- ============================================ -->
+        <div class="welcome-section">
+            <div class="welcome-content">
+                <div class="greeting" id="greeting">👋 Good morning</div>
+                <h1 id="userName">Student</h1>
                 <p>Continue your exam preparation journey</p>
+                <div class="welcome-stats">
+                    <div class="stat">
+                        <span class="number" id="enrolledCount">0</span>
+                        <span>Enrolled</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number" id="completedCount">0</span>
+                        <span>Completed</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number" id="progressPercent">0%</span>
+                        <span>Progress</span>
+                    </div>
+                </div>
             </div>
-            <div class="user-avatar" id="userAvatar">S</div>
+            <div class="welcome-avatar" id="userAvatar">S</div>
         </div>
 
-        <!-- PIN Status -->
-        <div class="pin-card" id="pinCard">
-            <div class="pin-info">
+        <!-- ============================================ -->
+        <!-- PIN STATUS - Using .pin-status-card -->
+        <!-- ============================================ -->
+        <div class="pin-status-card" id="pinCard">
+            <div class="pin-status-content">
                 <span class="pin-icon">🔑</span>
                 <div>
                     <span class="pin-label">Your PIN</span>
                     <span class="pin-value" id="userPin">No PIN assigned</span>
                 </div>
-                <span class="pin-status" id="pinStatus">Inactive</span>
+                <span class="pin-status-badge badge badge-warning" id="pinStatus">Inactive</span>
             </div>
         </div>
 
-        <!-- Stats -->
+        <!-- ============================================ -->
+        <!-- STATS GRID - Using .stats-grid -->
+        <!-- ============================================ -->
         <div class="stats-grid">
             <div class="stat-card">
-                <span class="stat-icon">📚</span>
-                <span class="stat-number" id="enrolledCount">0</span>
+                <div class="stat-icon">📚</div>
+                <span class="stat-number" id="enrolledCount2">0</span>
                 <span class="stat-label">Enrolled</span>
             </div>
             <div class="stat-card">
-                <span class="stat-icon">✅</span>
-                <span class="stat-number" id="completedCount">0</span>
+                <div class="stat-icon">✅</div>
+                <span class="stat-number" id="completedCount2">0</span>
                 <span class="stat-label">Completed</span>
             </div>
             <div class="stat-card">
-                <span class="stat-icon">📊</span>
-                <span class="stat-number" id="progressPercent">0%</span>
+                <div class="stat-icon">📊</div>
+                <span class="stat-number" id="progressPercent2">0%</span>
                 <span class="stat-label">Progress</span>
             </div>
             <div class="stat-card">
-                <span class="stat-icon">🏆</span>
+                <div class="stat-icon">🏆</div>
                 <span class="stat-number" id="streakCount">0</span>
                 <span class="stat-label">Day Streak</span>
             </div>
         </div>
 
-        <!-- Recent Courses -->
+        <!-- ============================================ -->
+        <!-- RECENT COURSES - Using .section-header and .course-grid -->
+        <!-- ============================================ -->
         <div class="section-header">
             <h2>📖 Your Courses</h2>
-            <a href="courses.html">View All →</a>
-        </div>
-        <div class="course-grid" id="recentCourses">
-            <p style="color: var(--text-muted); text-align:center; padding:40px;">No courses enrolled yet. <a href="courses.html">Browse courses</a></p>
+            <a href="courses.html" class="view-all">View All →</a>
         </div>
 
-        <!-- Quick Access -->
-        <div class="section-header">
+        <div class="course-grid" id="recentCourses">
+            <!-- Courses will be rendered here -->
+        </div>
+
+        <!-- ============================================ -->
+        <!-- QUICK ACCESS - Using exam grid -->
+        <!-- ============================================ -->
+        <div class="section-header" style="margin-top: 32px;">
             <h2>⚡ Quick Access</h2>
         </div>
-        <div class="quick-grid">
-            <div class="quick-card" onclick="window.location.href='courses.html?exam=o-level'">
-                <span>📘</span>
+
+        <div class="exam-grid">
+            <div class="exam-card" onclick="window.location.href='courses.html?exam=o-level'">
+                <div class="exam-icon">📘</div>
                 <h4>O Level</h4>
+                <p>12 Subjects</p>
             </div>
-            <div class="quick-card" onclick="window.location.href='courses.html?exam=a-level'">
-                <span>📗</span>
+            <div class="exam-card" onclick="window.location.href='courses.html?exam=a-level'">
+                <div class="exam-icon">📗</div>
                 <h4>A Level</h4>
+                <p>11 Subjects</p>
             </div>
-            <div class="quick-card" onclick="window.location.href='courses.html?exam=bacc'">
-                <span>📕</span>
+            <div class="exam-card" onclick="window.location.href='courses.html?exam=bacc'">
+                <div class="exam-icon">📕</div>
                 <h4>BACC</h4>
+                <p>4 Series</p>
             </div>
-            <div class="quick-card" onclick="window.location.href='courses.html?exam=bepc'">
-                <span>📙</span>
+            <div class="exam-card" onclick="window.location.href='courses.html?exam=bepc'">
+                <div class="exam-icon">📙</div>
                 <h4>BEPC</h4>
+                <p>6 Subjects</p>
+            </div>
+            <div class="exam-card" onclick="window.location.href='courses.html?exam=technical'">
+                <div class="exam-icon">⚙️</div>
+                <h4>Technical GCE</h4>
+                <p>5 Streams</p>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- RECENT ACTIVITY (Optional - adds value) -->
+        <!-- ============================================ -->
+        <div class="section-header" style="margin-top: 32px;">
+            <h2>🔄 Recent Activity</h2>
+        </div>
+
+        <div class="activity-feed" id="activityFeed">
+            <div class="activity-empty">
+                <i class="fas fa-clock"></i>
+                <p>No recent activity yet</p>
+                <p style="font-size: 13px;">Start exploring courses to see your activity here</p>
             </div>
         </div>
     </div>
 
+    <!-- ============================================ -->
+    <!-- SCRIPTS -->
+    <!-- ============================================ -->
     <script>
-        // Logout
+        // =============================================
+        // SAMPLE COURSE DATA
+        // =============================================
+        const enrolledCourses = [
+            { id: 'o-mathematics', title: 'Mathematics', level: 'O Level', icon: '📐', progress: 75, papers: 2 },
+            { id: 'o-english', title: 'English Language', level: 'O Level', icon: '📝', progress: 60, papers: 2 },
+            { id: 'a-biology', title: 'Biology', level: 'A Level', icon: '🧬', progress: 40, papers: 3 },
+        ];
+
+        // =============================================
+        // SAMPLE ACTIVITY DATA
+        // =============================================
+        const sampleActivities = [
+            { type: 'enrollment', title: 'Enrolled in Mathematics', time: '2 hours ago', icon: '📐', color: 'enrollment' },
+            { type: 'quiz', title: 'Completed Quiz: Algebra', time: '5 hours ago', icon: '🧪', color: 'system' },
+            { type: 'progress', title: 'Reached 75% in English', time: '1 day ago', icon: '📊', color: 'system' },
+        ];
+
+        // =============================================
+        // GET GREETING
+        // =============================================
+        function getGreeting() {
+            const hour = new Date().getHours();
+            if (hour < 12) return '🌅 Good morning';
+            if (hour < 17) return '☀️ Good afternoon';
+            return '🌙 Good evening';
+        }
+
+        // =============================================
+        // GET USER INITIALS
+        // =============================================
+        function getUserInitials() {
+            // Try to get from localStorage
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            if (userData.name) {
+                return userData.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+            }
+            return 'S';
+        }
+
+        // =============================================
+        // RENDER DASHBOARD
+        // =============================================
+        function renderDashboard() {
+            // Welcome
+            document.getElementById('greeting').textContent = getGreeting();
+            
+            // Get user name
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            const userName = userData.name || 'Student';
+            document.getElementById('userName').textContent = userName;
+            
+            // Avatar
+            document.getElementById('userAvatar').textContent = getUserInitials();
+
+            // PIN (mock data - replace with actual API call)
+            const hasPin = false; // Change based on actual user data
+            const pinElement = document.getElementById('userPin');
+            const pinStatus = document.getElementById('pinStatus');
+            
+            if (hasPin) {
+                pinElement.textContent = '••••••';
+                pinStatus.textContent = 'Active';
+                pinStatus.className = 'pin-status-badge badge badge-success';
+            } else {
+                pinElement.textContent = 'No PIN assigned';
+                pinStatus.textContent = 'Inactive';
+                pinStatus.className = 'pin-status-badge badge badge-warning';
+            }
+
+            // Stats
+            const enrolled = enrolledCourses.length;
+            const completed = enrolledCourses.filter(c => c.progress === 100).length;
+            const avgProgress = enrolled > 0 ? Math.round(enrolledCourses.reduce((sum, c) => sum + c.progress, 0) / enrolled) : 0;
+            const streak = 7; // Mock streak
+
+            document.getElementById('enrolledCount').textContent = enrolled;
+            document.getElementById('enrolledCount2').textContent = enrolled;
+            document.getElementById('completedCount').textContent = completed;
+            document.getElementById('completedCount2').textContent = completed;
+            document.getElementById('progressPercent').textContent = avgProgress + '%';
+            document.getElementById('progressPercent2').textContent = avgProgress + '%';
+            document.getElementById('streakCount').textContent = streak;
+
+            // Recent Courses
+            const coursesContainer = document.getElementById('recentCourses');
+            
+            if (enrolledCourses.length === 0) {
+                coursesContainer.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <i class="fas fa-book-open"></i>
+                        <h3>No courses enrolled yet</h3>
+                        <p>Start your exam preparation journey today</p>
+                        <a href="courses.html" class="btn btn-primary" style="margin-top: 12px;">
+                            <i class="fas fa-search"></i> Browse Courses
+                        </a>
+                    </div>
+                `;
+            } else {
+                coursesContainer.innerHTML = enrolledCourses.map(course => `
+                    <div class="course-card" onclick="window.location.href='course-detail.html?id=${course.id}'">
+                        <div class="course-image" style="background: linear-gradient(135deg, var(--primary-light), var(--primary));">
+                            ${course.icon}
+                        </div>
+                        <div class="course-body">
+                            <h4>${course.title}</h4>
+                            <p>${course.level} • ${course.papers} Papers</p>
+                            <div class="progress-container">
+                                <div class="progress-label">
+                                    <span>Progress</span>
+                                    <span>${course.progress}%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${course.progress}%;"></div>
+                                </div>
+                            </div>
+                            <div class="course-meta">
+                                <span><i class="fas fa-clock"></i> ${course.progress}% complete</span>
+                            </div>
+                        </div>
+                        <div class="course-footer">
+                            <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); window.location.href='course-detail.html?id=${course.id}'">
+                                <i class="fas fa-arrow-right"></i> Continue
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Activity Feed
+            const activityFeed = document.getElementById('activityFeed');
+            
+            if (sampleActivities.length === 0) {
+                activityFeed.innerHTML = `
+                    <div class="activity-empty">
+                        <i class="fas fa-clock"></i>
+                        <p>No recent activity yet</p>
+                        <p style="font-size: 13px;">Start exploring courses to see your activity here</p>
+                    </div>
+                `;
+            } else {
+                activityFeed.innerHTML = sampleActivities.map(activity => `
+                    <div class="activity-item">
+                        <div class="activity-icon ${activity.color}">${activity.icon}</div>
+                        <div class="activity-content">
+                            <div class="activity-title">${activity.title}</div>
+                            <div class="activity-time">${activity.time}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // =============================================
+        // LOGOUT
+        // =============================================
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
-                API.clearToken();
+                // Clear auth
+                if (typeof API !== 'undefined' && API.clearToken) {
+                    API.clearToken();
+                }
                 localStorage.removeItem('userData');
+                localStorage.removeItem('token');
                 window.location.href = 'index.html';
             }
         }
+
+        // =============================================
+        // MOBILE MENU
+        // =============================================
+        document.getElementById('menuToggle')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('open');
+            });
+        });
+
+        // =============================================
+        // INIT
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is authenticated
+            if (typeof Auth !== 'undefined' && !Auth.isAuthenticated()) {
+                // Redirect to login if not authenticated
+                window.location.href = 'login.html?redirect=dashboard.html';
+                return;
+            }
+
+            // Try to load user data from API if available
+            if (typeof API !== 'undefined' && API.getUser) {
+                API.getUser()
+                    .then(data => {
+                        if (data && data.name) {
+                            localStorage.setItem('userData', JSON.stringify(data));
+                        }
+                        renderDashboard();
+                    })
+                    .catch(() => {
+                        // Fallback to stored data
+                        renderDashboard();
+                    });
+            } else {
+                renderDashboard();
+            }
+        });
     </script>
 
     <script src="js/config.js"></script>
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
-    <script src="js/dashboard.js"></script>
 </body>
 </html>
