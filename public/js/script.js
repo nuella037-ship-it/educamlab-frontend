@@ -535,7 +535,10 @@ const PageController = {
         if (subjectsEl) subjectsEl.textContent = subjects.size;
     },
 
-    // -------- COURSE DETAIL HELPERS --------
+    // ============================================
+    // COURSE DETAIL HELPERS (UPDATED WITH AUTH CHECK)
+    // ============================================
+
     _initCourseDetail() {
         this._loadCourse();
     },
@@ -552,6 +555,13 @@ const PageController = {
         const course = this.courses?.find(c => c.id === id);
         if (course) {
             this.currentCourse = course;
+            
+            // CHECK AUTHENTICATION
+            if (!this._isAuthenticated()) {
+                this._showLoginRequired(course);
+                return;
+            }
+            
             this._renderCourseDetail(course);
             return;
         }
@@ -559,11 +569,46 @@ const PageController = {
         this._fetchCourseFromAPI(id);
     },
 
+    _isAuthenticated() {
+        return localStorage.getItem('token') !== null && typeof Auth !== 'undefined' && Auth.isAuthenticated();
+    },
+
+    _showLoginRequired(course) {
+        const loading = document.getElementById('loadingState');
+        const content = document.getElementById('courseContent');
+        const loginRequired = document.getElementById('loginRequired');
+        
+        if (loading) loading.style.display = 'none';
+        if (content) content.style.display = 'none';
+        
+        // Update breadcrumb with course name
+        if (course) {
+            document.getElementById('breadcrumbExam').textContent = course.exam?.toUpperCase() || '';
+            document.getElementById('breadcrumbSubject').textContent = course.title || '';
+        }
+        
+        if (loginRequired) {
+            loginRequired.style.display = 'block';
+            // Update the sample preview with course-specific info if available
+            if (course) {
+                const previewTitle = loginRequired.querySelector('h4');
+                if (previewTitle) previewTitle.textContent = `📖 ${course.title} - Preview`;
+            }
+        }
+    },
+
     async _fetchCourseFromAPI(id) {
         try {
             const result = await API.getCourseById(id);
             if (result.success) {
                 this.currentCourse = result.data;
+                
+                // CHECK AUTHENTICATION
+                if (!this._isAuthenticated()) {
+                    this._showLoginRequired(result.data);
+                    return;
+                }
+                
                 this._renderCourseDetail(result.data);
             } else {
                 this._showCourseError();
@@ -583,7 +628,10 @@ const PageController = {
     _renderCourseDetail(course) {
         const loading = document.getElementById('loadingState');
         const content = document.getElementById('courseContent');
+        const loginRequired = document.getElementById('loginRequired');
+        
         if (loading) loading.style.display = 'none';
+        if (loginRequired) loginRequired.style.display = 'none';
         if (content) content.style.display = 'block';
 
         const badgeEl = document.getElementById('courseBadge');
