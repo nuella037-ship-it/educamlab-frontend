@@ -10,6 +10,9 @@
 </head>
 <body>
 
+    <!-- ============================================ -->
+    <!-- HEADER - Using style.css nav pattern -->
+    <!-- ============================================ -->
     <header>
         <nav>
             <div class="logo">📚 EduCamLab</div>
@@ -28,60 +31,354 @@
         </nav>
     </header>
 
-    <div style="max-width:800px; margin:40px auto; padding:0 20px 60px;">
-        <div style="background:var(--bg-card); border-radius:var(--border-radius); padding:40px; border:1px solid var(--border-color); box-shadow:var(--shadow);">
-            <h1 style="font-size:32px; font-weight:800; margin-bottom:8px; color:var(--text-primary);">Terms of Service</h1>
-            <p style="color:var(--text-muted); font-size:14px; margin-bottom:24px;">Last Updated: June 2026</p>
+    <!-- ============================================ -->
+    <!-- TERMS CONTENT -->
+    <!-- ============================================ -->
+    <div style="max-width: 800px; margin: 40px auto; padding: 0 20px 60px;">
 
-            <p>Welcome to EduCamLab! By using our platform, you agree to the following terms and conditions.</p>
+        <div style="background: var(--bg-card); border-radius: var(--border-radius); padding: 40px; border: 1px solid var(--border-color); box-shadow: var(--shadow);">
 
-            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">1. Acceptance of Terms</h2>
-            <p style="color:var(--text-secondary);">By accessing or using EduCamLab, you agree to be bound by these Terms of Service.</p>
+            <!-- Header -->
+            <h1 style="font-size: 32px; font-weight: 800; margin-bottom: 4px; color: var(--text-primary);">
+                <i class="fas fa-file-contract" style="color: var(--primary);"></i> Terms of Service
+            </h1>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;">
+                Last Updated: <strong>June 2026</strong>
+            </p>
 
-            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">2. User Accounts</h2>
-            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
-                <li>You must provide accurate and complete information when creating an account.</li>
-                <li>You are responsible for maintaining the security of your account credentials.</li>
-                <li>You must be at least 13 years old to use our platform.</li>
-                <li>Your phone number is your primary identifier.</li>
-            </ul>
+            <p style="color: var(--text-secondary); font-size: 16px; line-height: 1.7; margin-bottom: 24px;">
+                Welcome to <strong>EduCamLab</strong>! By using our platform, you agree to be bound by these Terms of Service. 
+                Please read them carefully before accessing or using our services.
+            </p>
 
-            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">3. PIN and Access</h2>
-            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
-                <li>Your access PIN is provided by the administrator after payment confirmation.</li>
-                <li>You are responsible for keeping your PIN secure.</li>
-                <li>Do not share your PIN with others.</li>
-                <li>We reserve the right to revoke PINs for security reasons.</li>
-            </ul>
+            <!-- ============================================ -->
+            <!-- SECTION 1 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">1</span>
+                    Acceptance of Terms
+                </h2>
+                <p style="color: var(--text-secondary); line-height: 1.7; padding-left: 36px;">
+                    By accessing or using EduCamLab, you agree to be bound by these Terms of Service and our 
+                    <a href="privacy.html" style="color: var(--primary); text-decoration: none;">Privacy Policy</a>. 
+                    If you do not agree with any part of these terms, you must not use our platform.
+                </p>
+            </div>
 
-            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">4. Subscription & Payments</h2>
-            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
-                <li>Subscription plans are billed in advance on a daily, weekly, monthly, or annual basis.</li>
-                <li>All payments are processed securely through our payment partners.</li>
-                <li>Refunds are available within 30 days of purchase for unused subscriptions.</li>
-            </ul>
+            <!-- ============================================ -->
+            <!-- SECTION 2 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">2</span>
+                    User Accounts
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-top: 4px;"></i>
+                        <span>You must provide accurate and complete information when creating an account.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-top: 4px;"></i>
+                        <span>You are solely responsible for maintaining the security of your account credentials (phone number, password, and PIN).</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-top: 4px;"></i>
+                        <span>You must be at least <strong>13 years old</strong> to use our platform. Users under 13 must have parental consent.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-top: 4px;"></i>
+                        <span>Your phone number serves as your primary identifier. You must have a valid Cameroon phone number.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-top: 4px;"></i>
+                        <span>You are responsible for all activities that occur under your account.</span>
+                    </li>
+                </ul>
+            </div>
 
-            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">5. Content & Intellectual Property</h2>
-            <ul style="color:var(--text-secondary); line-height:1.7; padding-left:24px;">
-                <li>All content on EduCamLab is owned by EduCamLab or our content partners.</li>
-                <li>You may access and use content for personal, non-commercial purposes.</li>
-                <li>You may not reproduce, distribute, or modify content without permission.</li>
-            </ul>
+            <!-- ============================================ -->
+            <!-- SECTION 3 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">3</span>
+                    PIN and Access
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-key" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>Your access PIN is provided by the administrator after successful payment confirmation.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-key" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>You are responsible for keeping your PIN secure and confidential.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-key" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>Do not share your PIN with others. Sharing PINs is strictly prohibited.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-key" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>We reserve the right to revoke or change PINs for security reasons or policy violations.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-key" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>If you suspect your PIN has been compromised, contact admin immediately.</span>
+                    </li>
+                </ul>
+            </div>
 
-            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">6. Termination</h2>
-            <p style="color:var(--text-secondary);">We reserve the right to suspend or terminate accounts that violate these terms.</p>
+            <!-- ============================================ -->
+            <!-- SECTION 4 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">4</span>
+                    Subscription &amp; Payments
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-credit-card" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>Subscription plans are billed in advance on a <strong>daily, weekly, monthly, or annual</strong> basis.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-credit-card" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>All payments are processed securely through our payment partners (Orange Money, MTN Mobile Money, etc.).</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-credit-card" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>Refunds are available within <strong>30 days</strong> of purchase for unused subscriptions.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-credit-card" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>Subscription fees are non-refundable after the 30-day refund period.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-credit-card" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>We reserve the right to change subscription prices with prior notice.</span>
+                    </li>
+                </ul>
+            </div>
 
-            <h2 style="font-size:20px; font-weight:700; margin:24px 0 12px; color:var(--text-primary);">7. Contact Us</h2>
-            <p style="color:var(--text-secondary);">If you have questions about these terms, please <a href="../contact.html" style="color:var(--primary);">contact us</a>.</p>
+            <!-- ============================================ -->
+            <!-- SECTION 5 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">5</span>
+                    Content &amp; Intellectual Property
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-copyright" style="color: var(--danger); margin-top: 4px;"></i>
+                        <span>All content on EduCamLab is owned by <strong>EduCamLab</strong> or our content partners.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-copyright" style="color: var(--danger); margin-top: 4px;"></i>
+                        <span>You may access and use content for <strong>personal, non-commercial</strong> educational purposes.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-copyright" style="color: var(--danger); margin-top: 4px;"></i>
+                        <span>You may <strong>not</strong> reproduce, distribute, modify, or create derivative works from our content without permission.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-copyright" style="color: var(--danger); margin-top: 4px;"></i>
+                        <span>All past question papers, pamphlets, and quizzes are protected by copyright law.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-copyright" style="color: var(--danger); margin-top: 4px;"></i>
+                        <span>You may share links to our platform but not redistribute content directly.</span>
+                    </li>
+                </ul>
+            </div>
 
-            <a href="../index.html" style="display:inline-block; margin-top:24px; color:var(--primary); text-decoration:none; font-weight:500;"><i class="fas fa-arrow-left"></i> Back to Home</a>
+            <!-- ============================================ -->
+            <!-- SECTION 6 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">6</span>
+                    User Conduct
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-ban" style="color: var(--danger); margin-top: 4px;"></i>
+                        <span>You agree to use the platform for <strong>educational purposes only</strong>.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-ban" style="color: var(--danger); margin-top: 4px;"></i>
+                        <span>You must not attempt to gain unauthorized access to other users' accounts.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-ban" style="color: var(--danger); margin-top: 4px;"></i>
+                        <span>You must not use the platform for any illegal or fraudulent activities.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-ban" style="color: var(--danger); margin-top: 4px;"></i>
+                        <span>You must not harass, abuse, or threaten other users or staff.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-ban" style="color: var(--danger); margin-top: 4px;"></i>
+                        <span>You must not upload malicious code or attempt to compromise platform security.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SECTION 7 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">7</span>
+                    Termination
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-user-slash" style="color: var(--danger); margin-top: 4px;"></i>
+                        <span>We reserve the right to <strong>suspend or terminate</strong> accounts that violate these terms.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-user-slash" style="color: var(--danger); margin-top: 4px;"></i>
+                        <span>Accounts with fraudulent payment activity will be immediately terminated.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-user-slash" style="color: var(--danger); margin-top: 4px;"></i>
+                        <span>You may delete your account at any time by contacting support.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-user-slash" style="color: var(--danger); margin-top: 4px;"></i>
+                        <span>Upon termination, your access to content and services will be revoked immediately.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SECTION 8 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">8</span>
+                    Privacy &amp; Data Protection
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-shield-alt" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>We collect and process your data in accordance with our <a href="privacy.html" style="color: var(--primary); text-decoration: none;">Privacy Policy</a>.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-shield-alt" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>Your personal information is stored securely and never shared with third parties without your consent.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-shield-alt" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>We use your phone number solely for account verification and communication.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SECTION 9 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">9</span>
+                    Limitations of Liability
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>EduCamLab is provided on an <strong>"as is"</strong> basis without warranties of any kind.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>We do not guarantee that the platform will be error-free or uninterrupted.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>We are not liable for any direct, indirect, or consequential damages arising from platform use.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--warning); margin-top: 4px;"></i>
+                        <span>We are not responsible for exam results or user performance based on platform content.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SECTION 10 -->
+            <!-- ============================================ -->
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                    <span style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">10</span>
+                    Changes to Terms
+                </h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 36px; list-style: none;">
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-edit" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>We reserve the right to update these Terms of Service at any time.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-edit" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>Changes will be posted on this page with an updated "Last Updated" date.</span>
+                    </li>
+                    <li style="padding: 4px 0; display: flex; gap: 10px;">
+                        <i class="fas fa-edit" style="color: var(--info); margin-top: 4px;"></i>
+                        <span>Continued use of the platform constitutes acceptance of the updated terms.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- CONTACT SECTION -->
+            <!-- ============================================ -->
+            <div style="background: var(--bg-secondary); border-radius: var(--border-radius-sm); padding: 20px; margin-top: 24px; border-left: 4px solid var(--primary);">
+                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary);">
+                    <i class="fas fa-envelope" style="color: var(--primary);"></i> Contact Us
+                </h3>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;">
+                    If you have any questions about these Terms of Service, please contact us:
+                </p>
+                <p style="color: var(--text-secondary); font-size: 14px;">
+                    📧 <a href="mailto:support@educamlab.com" style="color: var(--primary); text-decoration: none;">support@educamlab.com</a><br>
+                    📞 <a href="tel:+237654122717" style="color: var(--primary); text-decoration: none;">+237 654 122 717</a>
+                </p>
+            </div>
+
+            <!-- Back to Home -->
+            <div style="margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                <a href="../index.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--primary); text-decoration: none; font-weight: 500; transition: var(--transition);" onmouseover="this.style.gap='12px'" onmouseout="this.style.gap='8px'">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+
         </div>
     </div>
 
+    <!-- ============================================ -->
+    <!-- SCRIPTS -->
+    <!-- ============================================ -->
     <script>
+        // =============================================
+        // MOBILE MENU TOGGLE
+        // =============================================
         document.getElementById('menuToggle')?.addEventListener('click', function() {
             document.querySelector('.nav-links').classList.toggle('open');
         });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('open');
+            });
+        });
+
+        // =============================================
+        // CONSOLE
+        // =============================================
+        console.log('%c📜 Terms of Service', 'font-size: 16px; font-weight: bold; color: #4f46e5;');
+        console.log('%c📅 Last Updated: June 2026', 'font-size: 12px; color: #6b7280;');
     </script>
 
     <script src="../js/config.js"></script>
