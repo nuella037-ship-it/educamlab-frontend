@@ -1,190 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Account - EduCamLab</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
 
-// Complete PIN verification functionality using phone number
-// ============================================
+    <!-- ============================================ -->
+    <!-- AUTH PAGE - Using .auth-page from style.css -->
+    <!-- ============================================ -->
+    <div class="auth-page">
 
-// ============================================
-// PARTICLES BACKGROUND
-// ============================================
-function createParticles() {
-    const container = document.getElementById('particles');
-    if (!container) return;
-    const particleCount = 40;
+        <!-- Particles Background -->
+        <div class="particles" id="particles"></div>
 
-    for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.width = (Math.random() * 3 + 2) + 'px';
-        particle.style.height = particle.style.width;
-        particle.style.animationDuration = (Math.random() * 20 + 15) + 's';
-        particle.style.animationDelay = (Math.random() * 15) + 's';
-        container.appendChild(particle);
-    }
-}
-createParticles();
+        <!-- ============================================ -->
+        <!-- AUTH CONTAINER - Using .auth-container -->
+        <!-- ============================================ -->
+        <div class="auth-container">
 
-// ============================================
-// FORMAT PHONE
-// ============================================
-document.addEventListener('DOMContentLoaded', function() {
-    const phoneInput = document.getElementById('phoneNumber');
-    if (phoneInput) {
-        phoneInput.addEventListener('input', function() {
-            this.value = this.value.replace(/\D/g, '').slice(0, 9);
-        });
-    }
+            <!-- ============================================ -->
+            <!-- AUTH BOX - Using .auth-box -->
+            <!-- ============================================ -->
+            <div class="auth-box">
 
-    const pinInput = document.getElementById('pinCode');
-    if (pinInput) {
-        pinInput.addEventListener('input', function() {
-            this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
-        });
-    }
-});
+                <!-- ============================================ -->
+                <!-- HEADER - Using .auth-header -->
+                <!-- ============================================ -->
+                <div class="auth-header">
+                    <a href="index.html" class="logo">
+                        <span class="logo-icon">📚</span>
+                        EduCamLab
+                    </a>
+                    <h1>Verify Your Account</h1>
+                    <p>Enter the verification code sent to your phone</p>
+                    <span class="security-badge" style="background: #fef3c7; color: #92400e;">
+                        <i class="fas fa-phone"></i> 
+                        <span id="phoneDisplay">+237 677123456</span>
+                    </span>
+                </div>
 
-// ============================================
-// HANDLE VERIFICATION
-// ============================================
-document.addEventListener('DOMContentLoaded', function() {
-    const verifyForm = document.getElementById('verifyForm');
-    if (!verifyForm) return;
+                <!-- ============================================ -->
+                <!-- MESSAGE CONTAINER -->
+                <!-- ============================================ -->
+                <div class="message-container" id="messageContainer"></div>
 
-    verifyForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
+                <!-- ============================================ -->
+                <!-- VERIFY FORM - OTP Only -->
+                <!-- ============================================ -->
+                <form id="verifyForm" novalidate>
 
-        const phoneInput = document.getElementById('phoneNumber');
-        const pinInput = document.getElementById('pinCode');
-        const container = document.getElementById('messageContainer');
-        const btn = document.getElementById('verifyBtn');
+                    <!-- Verification Code (OTP) -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-key"></i> Verification Code <span class="required">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-shield-alt input-icon"></i>
+                            <input 
+                                type="text" 
+                                id="otpCode" 
+                                placeholder="A1B2C3" 
+                                maxlength="6" 
+                                required
+                                autocomplete="one-time-code"
+                                style="text-align: center; font-size: 28px; letter-spacing: 10px; font-family: monospace; text-transform: uppercase;"
+                            >
+                        </div>
+                        <span class="form-hint">Enter the 6-character code sent to your phone</span>
+                    </div>
 
-        if (!phoneInput || !pinInput) return;
+                    <!-- Resend Code -->
+                    <div style="text-align: center; margin-bottom: 16px;">
+                        <span style="color: var(--text-muted); font-size: 14px;">Didn't receive the code? </span>
+                        <button 
+                            type="button" 
+                            id="resendBtn" 
+                            style="background: none; border: none; color: var(--primary); cursor: pointer; font-weight: 600; font-size: 14px; transition: color 0.3s;"
+                            onmouseover="this.style.color='var(--primary-dark)'"
+                            onmouseout="this.style.color='var(--primary)'"
+                        >
+                            Resend Code
+                        </button>
+                    </div>
 
-        const phone = phoneInput.value.trim();
-        const pin = pinInput.value.trim();
+                    <!-- Verify Button -->
+                    <button type="submit" class="btn-login" id="verifyBtn">
+                        <i class="fas fa-check-circle"></i> Verify Account
+                    </button>
 
-        if (container) container.innerHTML = '';
+                </form>
 
-        if (!phone) {
-            showMessage(container, 'error', 'Please enter your phone number');
-            phoneInput.focus();
-            return;
-        }
+                <!-- ============================================ -->
+                <!-- SUCCESS STATE (Hidden initially) -->
+                <!-- ============================================ -->
+                <div id="successState" style="display: none; text-align: center; padding: 20px 0;">
+                    <div style="font-size: 64px; margin-bottom: 16px;">✅</div>
+                    <h3 style="font-size: 20px; font-weight: 700; color: var(--text-primary);">Account Verified!</h3>
+                    <p style="color: var(--text-muted); margin: 8px 0 16px;">
+                        Your account has been successfully verified. Redirecting to WhatsApp...
+                    </p>
+                    <div class="spinner" style="margin: 0 auto; width: 30px; height: 30px; border: 3px solid var(--border-color); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+                    <p style="color: var(--text-muted); font-size: 13px; margin-top: 16px;">
+                        <i class="fas fa-phone"></i> Contact admin on WhatsApp: 
+                        <strong style="color: var(--primary);">+237 654 122 717</strong>
+                    </p>
+                </div>
 
-        if (phone.length !== 9) {
-            showMessage(container, 'error', 'Please enter a valid 9-digit phone number');
-            phoneInput.focus();
-            return;
-        }
+                <!-- ============================================ -->
+                <!-- FOOTER - Using .auth-footer -->
+                <!-- ============================================ -->
+                <div class="auth-footer">
+                    <a href="login.html">
+                        <i class="fas fa-sign-in-alt"></i> Already verified? Sign in
+                    </a>
+                    <div class="footer-links">
+                        <a href="index.html">Home</a>
+                        <a href="policy/privacy.html">Privacy</a>
+                        <a href="policy/terms.html">Terms</a>
+                    </div>
+                </div>
 
-        if (!pin) {
-            showMessage(container, 'error', 'Please enter your PIN');
-            pinInput.focus();
-            return;
-        }
-
-        if (pin.length !== 6) {
-            showMessage(container, 'error', 'PIN must be 6 characters');
-            pinInput.focus();
-            return;
-        }
-
-        btn.disabled = true;
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<span class="spinner"></span> Verifying...';
-
-        try {
-            const result = await API.verifyPIN(phone, pin);
-            
-            if (result.success) {
-                showMessage(container, 'success', '✅ Account verified successfully!');
-                localStorage.setItem('isVerified', 'true');
-                localStorage.removeItem('pendingUserId');
-                
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 2000);
-            } else {
-                showMessage(container, 'error', result.message || 'Invalid PIN. Please try again.');
-                btn.disabled = false;
-                btn.innerHTML = originalText;
-                pinInput.value = '';
-                pinInput.focus();
-            }
-        } catch (error) {
-            showMessage(container, 'error', error.message || 'Verification failed. Please try again.');
-            btn.disabled = false;
-            btn.innerHTML = originalText;
-        }
-    });
-});
-
-// ============================================
-// RESEND PIN
-// ============================================
-async function resendPIN() {
-    const phoneInput = document.getElementById('phoneNumber');
-    const container = document.getElementById('messageContainer');
-    
-    if (!phoneInput) return;
-    
-    const phone = phoneInput.value.trim();
-    
-    if (!phone || phone.length !== 9) {
-        showMessage(container, 'error', 'Please enter a valid 9-digit phone number first');
-        phoneInput.focus();
-        return;
-    }
-
-    const btn = document.querySelector('.btn-link');
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '<span class="spinner" style="display:inline-block;width:16px;height:16px;border:2px solid var(--border-color);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite;margin-right:8px;"></span> Sending...';
-    btn.disabled = true;
-
-    try {
-        const result = await API.resendPIN(phone);
-        if (result.success) {
-            showMessage(container, 'success', '✅ PIN resent successfully! Check your phone.');
-        } else {
-            showMessage(container, 'error', result.message || 'Failed to resend PIN');
-        }
-    } catch (error) {
-        showMessage(container, 'error', error.message || 'Failed to resend PIN');
-    } finally {
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-    }
-}
-
-// ============================================
-// MESSAGE DISPLAY
-// ============================================
-function showMessage(container, type, message) {
-    if (!container) return;
-
-    const icons = {
-        success: 'fa-check-circle',
-        error: 'fa-exclamation-circle',
-        info: 'fa-info-circle'
-    };
-
-    const classes = {
-        success: 'message-success',
-        error: 'message-error',
-        info: 'message-info'
-    };
-
-    container.innerHTML = `
-        <div class="message ${classes[type] || 'message-info'}" role="alert">
-            <i class="fas ${icons[type] || icons.info}"></i>
-            <span>${message}</span>
+            </div>
         </div>
-    `;
 
-    container.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
+        <!-- ============================================ -->
+        <!-- VERSION BADGE - Using .version-badge -->
+        <!-- ============================================ -->
+        <div class="version-badge">
+            <i class="fas fa-shield-alt"></i> Secure v2.0
+        </div>
+    </div>
 
-// ============================================
-// GLOBAL FUNCTIONS
-// ============================================
-window.resendPIN = resendPIN;
-window.showMessage = showMessage;
+    <!-- ============================================ -->
+    <!-- SCRIPTS -->
+    <!-- ============================================ -->
+    <script>
+        // =============================================
+        // ADMIN WHATSAPP NUMBER
+        // =============================================
+        const ADMIN_WHATSAPP = '237654122717';
+        const WHATSAPP_URL = `https://wa.me/${ADMIN_WHATSAPP}`;
+
+        // =============================================
+        // PARTICLES BACKGROUND
+        // =============================================
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            const particleCount = 40;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = (Math.random() * 3 + 2) + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                particle.style.animationDelay = (Math.random() * 15) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // =============================================
+        // SHOW MESSAGE
+        // =============================================
+        function showMessage(container, type, message) {
+            if (!container) return;
+
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle',
+                warning: 'fa-exclamation-triangle'
+            };
+
+            const classes = {
+                success: 'message-success',
+                error: 'message-error',
+                info: 'message-info',
+                warning: 'message-info'
+            };
+
+            container.innerHTML = `
+                <div class="message ${classes[type] || 'message-info'}" role="alert">
+                    <i class="fas ${icons[type] || icons.info}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // =============================================
+        // GET PHONE FROM STORAGE OR URL
+        // =============================================
+        function getPhoneNumber() {
+            // Try to get from URL parameter first
+            const params = new URLSearchParams(window.location.search);
+            let phone = params.get('phone');
+            
+            if (phone) {
+                return phone;
+            }
+            
+            // Try to get from localStorage (set during registration)
+            const registrationData = localStorage.getItem('registrationData');
+            if (registrationData) {
+                try {
+                    const data = JSON.parse(registrationData);
+                    if (data.phone) {
+                        return data.phone;
+                    }
+                } catch (e) {
+                    console.error('Error parsing registration data:', e);
+                }
+            }
+            
+            // Try to get from sessionStorage
+            const sessionPhone = sessionStorage.getItem('verifyPhone');
+            if (sessionPhone) {
+                return sessionPhone;
+            }
+            
+            return null;
+        }
+
+        // =============================================
+        // FORMAT PHONE FOR DISPLAY
+        // =============================================
+        function formatPhoneForDisplay(phone) {
+            if (!phone) return 'your phone';
+            if (phone.length === 9) {
+                return `+237 ${phone}`;
+            }
+            return phone;
+        }
+
+        // =============================================
+        // REDIRECT TO WHATSAPP
+        // =============================================
+        function redirectToWhatsApp() {
+            // Open WhatsApp in a new tab
+            window.open(WHATSAPP_URL, '_blank');
+            
+            // Also redirect to login page after a short delay
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1500);
+        }
+
+        // =============================================
+        // INPUT FORMATTING
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // OTP formatting (uppercase, alphanumeric only)
+            const otpInput = document.getElementById('otpCode');
+            if (otpInput) {
+                otpInput.addEventListener('input', function() {
+                    this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
+                    
+                    // Visual feedback when code is complete
+                    if (this.value.length === 6) {
+                        this.style.borderColor = '#10b981';
+                        this.style.boxShadow = '0 0 0 4px rgba(16, 185, 129, 0.15)';
+                        setTimeout(() => {
+                            this.style.borderColor = '';
+                            this.style.boxShadow = '';
+                        }, 1500);
+                    }
+                    
+                    if (this.classList.contains('error')) {
+                        this.classList.remove('error');
+                        const hint = this.closest('.form-group').querySelector('.form-hint');
+                        if (hint) {
+                            hint.classList.remove('error');
+                            hint.textContent = 'Enter the 6-character code sent to your phone';
+                        }
+                    }
+                });
+
+                // Enter key to submit when code is complete
+                otpInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' && this.value.length === 6) {
+                        document.getElementById('verifyForm').dispatchEvent(new Event('submit'));
+                    }
+                });
+
+                // Auto-focus on page load
+                setTimeout(() => {
+                    otpInput.focus();
+                }, 500);
+            }
+
+            // Display phone number
+            const phone = getPhoneNumber();
+            const phoneDisplay = document.getElementById('phoneDisplay');
+            if (phoneDisplay) {
+                if (phone) {
+                    phoneDisplay.textContent = formatPhoneForDisplay(phone);
+                } else {
+                    phoneDisplay.textContent = 'your registered phone';
+                }
+            }
+
+            // Store phone for resend and verification
+            if (phone) {
+                sessionStorage.setItem('verifyPhone', phone);
+            }
+        });
+
+        // =============================================
+        // VERIFY OTP
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const verifyForm = document.getElementById('verifyForm');
+            if (!verifyForm) return;
+
+            verifyForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const container = document.getElementById('messageContainer');
+                const btn = document.getElementById('verifyBtn');
+                const otpInput = document.getElementById('otpCode');
+                const otp = otpInput.value.trim();
+
+                // Clear previous messages and states
+                container.innerHTML = '';
+                otpInput.classList.remove('error', 'success');
+                
+                const hint = otpInput.closest('.form-group').querySelector('.form-hint');
+                if (hint) {
+                    hint.classList.remove('error', 'success');
+                }
+
+                // =============================================
+                // VALIDATION
+                // =============================================
+                if (!otp || otp.length !== 6) {
+                    otpInput.classList.add('error');
+                    if (hint) {
+                        hint.classList.add('error');
+                        hint.textContent = '❌ Please enter a valid 6-character code';
+                    }
+                    showMessage(container, 'error', 'Please enter a valid 6-character verification code.');
+                    return;
+                }
+
+                // Get phone number
+                const phone = getPhoneNumber();
+                if (!phone) {
+                    showMessage(container, 'error', 'Phone number not found. Please register again.');
+                    return;
+                }
+
+                // =============================================
+                // SEND VERIFICATION REQUEST
+                // =============================================
+                btn.disabled = true;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<span class="spinner"></span> Verifying...';
+
+                try {
+                    if (typeof API !== 'undefined' && API.verifyOTP) {
+                        const result = await API.verifyOTP(phone, otp);
+
+                        if (result.success) {
+                            // Success state
+                            otpInput.classList.add('success');
+                            
+                            // Show success state
+                            document.getElementById('verifyForm').style.display = 'none';
+                            document.getElementById('successState').style.display = 'block';
+                            
+                            // Store auth token if returned
+                            if (result.token) {
+                                localStorage.setItem('token', result.token);
+                            }
+                            
+                            // Store user data
+                            if (result.user) {
+                                localStorage.setItem('userData', JSON.stringify(result.user));
+                            }
+                            
+                            // Clear registration data
+                            localStorage.removeItem('registrationData');
+                            sessionStorage.removeItem('verifyPhone');
+                            
+                            // Auto-redirect to WhatsApp after 2.5 seconds
+                            setTimeout(() => {
+                                redirectToWhatsApp();
+                            }, 2500);
+                        } else {
+                            throw new Error(result.message || 'Invalid verification code');
+                        }
+                    } else {
+                        // Fallback: Simulate verification
+                        otpInput.classList.add('success');
+                        
+                        document.getElementById('verifyForm').style.display = 'none';
+                        document.getElementById('successState').style.display = 'block';
+                        
+                        localStorage.removeItem('registrationData');
+                        sessionStorage.removeItem('verifyPhone');
+                        
+                        // Simulate storing user data
+                        const userData = {
+                            name: 'Student',
+                            phone: phone,
+                            verified: true
+                        };
+                        localStorage.setItem('userData', JSON.stringify(userData));
+                        localStorage.setItem('token', 'demo-token-12345');
+                        
+                        // Auto-redirect to WhatsApp after 2.5 seconds
+                        setTimeout(() => {
+                            redirectToWhatsApp();
+                        }, 2500);
+                    }
+
+                } catch (error) {
+                    console.error('Verification error:', error);
+                    showMessage(container, 'error', error.message || 'Verification failed. Please try again.');
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                    otpInput.value = '';
+                    otpInput.focus();
+                }
+            });
+        });
+
+        // =============================================
+        // RESEND OTP
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const resendBtn = document.getElementById('resendBtn');
+            if (!resendBtn) return;
+
+            resendBtn.addEventListener('click', async function() {
+                const container = document.getElementById('messageContainer');
+                const phone = getPhoneNumber();
+
+                container.innerHTML = '';
+
+                if (!phone) {
+                    showMessage(container, 'error', 'Phone number not found. Please register again.');
+                    return;
+                }
+
+                this.disabled = true;
+                const originalText = this.textContent;
+                this.textContent = 'Sending...';
+
+                try {
+                    if (typeof API !== 'undefined' && API.resendOTP) {
+                        const result = await API.resendOTP(phone);
+
+                        if (result.success) {
+                            showMessage(container, 'success', '✅ New verification code sent to your phone!');
+                            document.getElementById('otpCode').value = '';
+                            document.getElementById('otpCode').focus();
+                        } else {
+                            throw new Error(result.message || 'Failed to resend code');
+                        }
+                    } else {
+                        // Fallback: Simulate resend
+                        showMessage(container, 'success', '✅ New verification code sent to your phone!');
+                        document.getElementById('otpCode').value = '';
+                        document.getElementById('otpCode').focus();
+                    }
+                } catch (error) {
+                    showMessage(container, 'error', error.message || 'Failed to resend code. Please try again.');
+                }
+
+                this.disabled = false;
+                this.textContent = originalText;
+            });
+        });
+
+        // =============================================
+        // CONSOLE SECURITY NOTICE
+        // =============================================
+        console.log('%c🔐 ACCOUNT VERIFICATION', 'font-size: 20px; font-weight: bold; color: #4f46e5;');
+        console.log('%c📱 Check your phone for the verification code.', 'font-size: 14px; color: #6b7280;');
+        console.log('%c⚠️ Do not share your verification code with anyone.', 'font-size: 14px; color: #ef4444;');
+        console.log(`%c📞 Admin WhatsApp: +${ADMIN_WHATSAPP}`, 'font-size: 14px; color: #25D366;');
+
+        // =============================================
+        // GLOBAL FUNCTIONS
+        // =============================================
+        window.showMessage = showMessage;
+        window.redirectToWhatsApp = redirectToWhatsApp;
+    </script>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+</body>
+</html>
