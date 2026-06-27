@@ -182,88 +182,6 @@
                 </form>
 
                 <!-- ============================================ -->
-                <!-- OTP VERIFICATION FORM (Hidden initially) -->
-                <!-- ============================================ -->
-                <form id="otpForm" style="display: none;" novalidate>
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <div style="font-size: 48px; margin-bottom: 8px;">📱</div>
-                        <h3 style="font-size: 18px; font-weight: 700; color: var(--text-primary);">Verify Your Phone</h3>
-                        <p style="color: var(--text-muted); font-size: 14px;">
-                            We sent a verification code to <strong id="otpPhoneDisplay">+237 677123456</strong>
-                        </p>
-                    </div>
-
-                    <!-- OTP Input -->
-                    <div class="form-group">
-                        <label>
-                            Verification Code <span class="required">*</span>
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-shield-alt input-icon"></i>
-                            <input 
-                                type="text" 
-                                id="otpCode" 
-                                placeholder="A1B2C3" 
-                                maxlength="6" 
-                                required
-                                autocomplete="one-time-code"
-                                style="text-align: center; font-size: 24px; letter-spacing: 8px; font-family: monospace; text-transform: uppercase;"
-                            >
-                        </div>
-                        <span class="form-hint">Enter the 6-character code sent to your phone</span>
-                    </div>
-
-                    <!-- Resend OTP -->
-                    <div style="text-align: center; margin-bottom: 16px;">
-                        <span style="color: var(--text-muted); font-size: 14px;">Didn't receive the code? </span>
-                        <button 
-                            type="button" 
-                            id="resendOtpBtn" 
-                            style="background: none; border: none; color: var(--primary); cursor: pointer; font-weight: 600; font-size: 14px; transition: color 0.3s;"
-                            onmouseover="this.style.color='var(--primary-dark)'"
-                            onmouseout="this.style.color='var(--primary)'"
-                        >
-                            Resend Code
-                        </button>
-                    </div>
-
-                    <!-- OTP Message Container -->
-                    <div class="message-container" id="otpMessageContainer"></div>
-
-                    <!-- Verify Button -->
-                    <button type="submit" class="btn-register" id="verifyOtpBtn">
-                        <i class="fas fa-check-circle"></i> Verify Account
-                    </button>
-
-                    <!-- Back to Register -->
-                    <div style="text-align: center; margin-top: 16px;">
-                        <button 
-                            type="button" 
-                            onclick="goBackToRegister()" 
-                            style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px; transition: color 0.3s;"
-                            onmouseover="this.style.color='var(--primary)'"
-                            onmouseout="this.style.color='var(--text-muted)'"
-                        >
-                            <i class="fas fa-arrow-left"></i> Back to registration
-                        </button>
-                    </div>
-                </form>
-
-                <!-- ============================================ -->
-                <!-- SUCCESS STATE (Hidden initially) -->
-                <!-- ============================================ -->
-                <div id="successState" style="display: none; text-align: center; padding: 20px 0;">
-                    <div style="font-size: 64px; margin-bottom: 16px;">🎉</div>
-                    <h3 style="font-size: 20px; font-weight: 700; color: var(--text-primary);">Account Created Successfully!</h3>
-                    <p style="color: var(--text-muted); margin: 8px 0 16px;">
-                        Your account has been verified. Redirecting to login...
-                    </p>
-                    <a href="login.html" class="btn btn-primary">
-                        <i class="fas fa-sign-in-alt"></i> Go to Login
-                    </a>
-                </div>
-
-                <!-- ============================================ -->
                 <!-- FOOTER - Using .auth-footer -->
                 <!-- ============================================ -->
                 <div class="auth-footer">
@@ -397,26 +315,6 @@
         }
 
         // =============================================
-        // STORE REGISTRATION DATA
-        // =============================================
-        let registrationData = {};
-
-        function storeRegistrationData(data) {
-            registrationData = data;
-            localStorage.setItem('registrationData', JSON.stringify(data));
-        }
-
-        function getRegistrationData() {
-            const data = localStorage.getItem('registrationData');
-            return data ? JSON.parse(data) : {};
-        }
-
-        function clearRegistrationData() {
-            localStorage.removeItem('registrationData');
-            registrationData = {};
-        }
-
-        // =============================================
         // INPUT FORMATTING & VALIDATION
         // =============================================
         document.addEventListener('DOMContentLoaded', function() {
@@ -443,7 +341,6 @@
                 passwordInput.addEventListener('input', function() {
                     updatePasswordStrength(this.value);
                     
-                    // Remove error state when typing
                     if (this.classList.contains('error')) {
                         this.classList.remove('error');
                         const hint = this.closest('.form-group').querySelector('.form-hint');
@@ -483,36 +380,6 @@
                         hint.textContent = 'Passwords must match';
                         hint.style.color = '';
                         hint.classList.remove('error', 'success');
-                    }
-                });
-            }
-
-            // OTP formatting
-            const otpInput = document.getElementById('otpCode');
-            if (otpInput) {
-                otpInput.addEventListener('input', function() {
-                    this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
-                    
-                    if (this.value.length === 6) {
-                        this.style.borderColor = '#10b981';
-                        setTimeout(() => {
-                            this.style.borderColor = '';
-                        }, 1500);
-                    }
-                    
-                    if (this.classList.contains('error')) {
-                        this.classList.remove('error');
-                        const hint = this.closest('.form-group').querySelector('.form-hint');
-                        if (hint) {
-                            hint.classList.remove('error');
-                            hint.textContent = 'Enter the 6-character code sent to your phone';
-                        }
-                    }
-                });
-
-                otpInput.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' && this.value.length === 6) {
-                        document.getElementById('otpForm').dispatchEvent(new Event('submit'));
                     }
                 });
             }
@@ -617,43 +484,47 @@
                     });
 
                     if (result.success) {
-                        // Store registration data for OTP verification
-                        storeRegistrationData({
+                        // Store phone in session storage for verify page
+                        sessionStorage.setItem('verifyPhone', phone);
+                        
+                        // Store registration data for backup
+                        localStorage.setItem('registrationData', JSON.stringify({
                             firstname: firstName,
                             lastname: lastName,
                             phone: phone,
                             password: password
-                        });
+                        }));
 
-                        // Show OTP form
-                        document.getElementById('registerForm').style.display = 'none';
-                        document.getElementById('otpForm').style.display = 'block';
-                        document.getElementById('otpPhoneDisplay').textContent = `+237 ${phone}`;
-                        document.getElementById('formTitle').textContent = 'Verify Your Phone';
-                        document.getElementById('formSubtitle').textContent = 'Enter the code sent to your phone';
-                        
-                        showMessage(document.getElementById('otpMessageContainer'), 'success', 
-                            '✅ Verification code sent to your phone!');
+                        // Show success message
+                        showMessage(container, 'success', 
+                            '✅ Registration successful! Redirecting to verification...'
+                        );
+
+                        // Redirect to verify page with phone number as URL parameter
+                        setTimeout(() => {
+                            window.location.href = `verify.html?phone=${phone}`;
+                        }, 1500);
+
                     } else {
                         throw new Error(result.message || 'Registration failed');
                     }
                 } else {
                     // Fallback: Simulate registration
-                    storeRegistrationData({
+                    sessionStorage.setItem('verifyPhone', phone);
+                    localStorage.setItem('registrationData', JSON.stringify({
                         firstname: firstName,
                         lastname: lastName,
                         phone: phone,
                         password: password
-                    });
+                    }));
 
-                    document.getElementById('registerForm').style.display = 'none';
-                    document.getElementById('otpForm').style.display = 'block';
-                    document.getElementById('otpPhoneDisplay').textContent = `+237 ${phone}`;
-                    document.getElementById('formTitle').textContent = 'Verify Your Phone';
-                    document.getElementById('formSubtitle').textContent = 'Enter the code sent to your phone';
-                    
-                    showMessage(document.getElementById('otpMessageContainer'), 'success', 
-                        '✅ Verification code sent to your phone!');
+                    showMessage(container, 'success', 
+                        '✅ Registration successful! Redirecting to verification...'
+                    );
+
+                    setTimeout(() => {
+                        window.location.href = `verify.html?phone=${phone}`;
+                    }, 1500);
                 }
             } catch (error) {
                 showMessage(container, 'error', error.message || 'Registration failed. Please try again.');
@@ -661,126 +532,6 @@
                 btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
             }
         });
-
-        // =============================================
-        // OTP VERIFICATION
-        // =============================================
-        document.getElementById('otpForm')?.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const container = document.getElementById('otpMessageContainer');
-            const btn = document.getElementById('verifyOtpBtn');
-            const otpInput = document.getElementById('otpCode');
-            const otp = otpInput.value.trim();
-
-            container.innerHTML = '';
-            otpInput.classList.remove('error');
-
-            if (!otp || otp.length !== 6) {
-                otpInput.classList.add('error');
-                showMessage(container, 'error', 'Please enter a valid 6-character verification code');
-                return;
-            }
-
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner"></span> Verifying...';
-
-            try {
-                const data = getRegistrationData();
-                const phone = data.phone || '';
-
-                if (!phone) {
-                    throw new Error('Registration data not found. Please go back and register again.');
-                }
-
-                if (typeof API !== 'undefined' && API.verifyOTP) {
-                    const result = await API.verifyOTP(phone, otp);
-
-                    if (result.success) {
-                        // Show success state
-                        document.getElementById('otpForm').style.display = 'none';
-                        document.getElementById('successState').style.display = 'block';
-                        
-                        // Clear registration data
-                        clearRegistrationData();
-                        
-                        // Auto-redirect after 3 seconds
-                        setTimeout(() => {
-                            window.location.href = 'login.html';
-                        }, 3000);
-                    } else {
-                        throw new Error(result.message || 'Invalid verification code');
-                    }
-                } else {
-                    // Fallback: Simulate verification
-                    document.getElementById('otpForm').style.display = 'none';
-                    document.getElementById('successState').style.display = 'block';
-                    clearRegistrationData();
-                    
-                    setTimeout(() => {
-                        window.location.href = 'login.html';
-                    }, 3000);
-                }
-            } catch (error) {
-                showMessage(container, 'error', error.message || 'Verification failed. Please try again.');
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-check-circle"></i> Verify Account';
-                otpInput.value = '';
-                otpInput.focus();
-            }
-        });
-
-        // =============================================
-        // RESEND OTP
-        // =============================================
-        document.getElementById('resendOtpBtn')?.addEventListener('click', async function() {
-            const container = document.getElementById('otpMessageContainer');
-            const data = getRegistrationData();
-            const phone = data.phone || '';
-
-            container.innerHTML = '';
-
-            if (!phone) {
-                showMessage(container, 'error', 'Phone number not found. Please go back and register again.');
-                return;
-            }
-
-            this.disabled = true;
-            const originalText = this.textContent;
-            this.textContent = 'Sending...';
-
-            try {
-                if (typeof API !== 'undefined' && API.resendOTP) {
-                    const result = await API.resendOTP(phone);
-
-                    if (result.success) {
-                        showMessage(container, 'success', '✅ New verification code sent to your phone!');
-                    } else {
-                        throw new Error(result.message || 'Failed to resend code');
-                    }
-                } else {
-                    // Fallback: Simulate resend
-                    showMessage(container, 'success', '✅ New verification code sent to your phone!');
-                }
-            } catch (error) {
-                showMessage(container, 'error', error.message || 'Failed to resend code');
-            }
-
-            this.disabled = false;
-            this.textContent = originalText;
-        });
-
-        // =============================================
-        // GO BACK TO REGISTER
-        // =============================================
-        function goBackToRegister() {
-            document.getElementById('otpForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'block';
-            document.getElementById('formTitle').textContent = 'Create Account';
-            document.getElementById('formSubtitle').textContent = 'Start your learning journey today';
-            document.getElementById('otpMessageContainer').innerHTML = '';
-            document.getElementById('messageContainer').innerHTML = '';
-        }
 
         // =============================================
         // CONSOLE SECURITY NOTICE
@@ -793,7 +544,6 @@
         // =============================================
         window.togglePassword = togglePassword;
         window.showMessage = showMessage;
-        window.goBackToRegister = goBackToRegister;
     </script>
 
     <script src="js/config.js"></script>
