@@ -13,6 +13,12 @@ const PageController = {
     // ============================================
 
     init() {
+        // Initialize mobile menu first (critical for all pages)
+        this._initMobileMenu();
+        
+        // Initialize dark mode toggle
+        this._initDarkModeToggle();
+        
         const page = this.getCurrentPage();
         this[page]?.();
         
@@ -24,6 +30,103 @@ const PageController = {
     getCurrentPage() {
         const path = window.location.pathname.split('/').pop() || 'index.html';
         return path.replace('.html', '');
+    },
+
+    // ============================================
+    // MOBILE MENU HANDLER (FIXED)
+    // ============================================
+
+    _initMobileMenu() {
+        const menuBtn = document.getElementById('menuToggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (!menuBtn || !navLinks) return;
+
+        // Toggle menu on button click
+        menuBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            navLinks.classList.toggle('open');
+            // Toggle icon
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (navLinks.classList.contains('open') && 
+                !navLinks.contains(e.target) && 
+                !menuBtn.contains(e.target)) {
+                navLinks.classList.remove('open');
+                const icon = menuBtn.querySelector('i');
+                if (icon) {
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            }
+        });
+
+        // Close menu when a link is clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.classList.remove('open');
+                const icon = menuBtn.querySelector('i');
+                if (icon) {
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            });
+        });
+
+        // Close menu on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+                navLinks.classList.remove('open');
+                const icon = menuBtn.querySelector('i');
+                if (icon) {
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            }
+        });
+    },
+
+    // ============================================
+    // DARK MODE TOGGLE
+    // ============================================
+
+    _initDarkModeToggle() {
+        const toggle = document.getElementById('darkModeToggle');
+        if (!toggle) return;
+
+        // Set initial state
+        const isDark = localStorage.getItem('theme') === 'dark';
+        toggle.checked = isDark;
+        if (isDark) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+
+        toggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                if (window.App) window.App.showToast('🌙 Dark mode enabled', 'success');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                if (window.App) window.App.showToast('☀️ Light mode enabled', 'success');
+            }
+            
+            // Update status text if exists
+            const status = document.getElementById('darkModeStatus');
+            if (status) {
+                status.innerHTML = this.checked ? 
+                    'Dark mode is currently <strong>enabled</strong>' : 
+                    'Dark mode is currently <strong>disabled</strong>';
+            }
+        });
     },
 
     // ============================================
@@ -175,6 +278,16 @@ const PageController = {
         this._loadFiltersFromURL();
         this._applyFilters();
         this._updateStats();
+        this._initCourseSearch();
+    },
+
+    _initCourseSearch() {
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', Utils.debounce(() => {
+                this._applyFilters();
+            }, 300));
+        }
     },
 
     _buildCourses() {
@@ -359,7 +472,7 @@ const PageController = {
 
         grid.innerHTML = courses.map(c => `
             <div class="course-card" onclick="window.location.href='course-detail.html?id=${c.id}'">
-                <div class="course-image" style="display:flex;align-items:center;justify-content:center;font-size:48px;height:120px;background:linear-gradient(135deg,var(--primary-light),var(--primary));color:white;">
+                <div class="course-image" style="display:flex;align-items:center;justify-content:center;font-size:48px;height:120px;background:linear-gradient(135deg,var(--primary-light),var(--primary));color:white;position:relative;">
                     ${c.icon || '📚'}
                     <span class="course-badge" style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.2);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;color:white;">
                         ${c.exam?.toUpperCase() || ''}
@@ -436,7 +549,6 @@ const PageController = {
             return;
         }
 
-        // Try to get from courses data or API
         const course = this.courses?.find(c => c.id === id);
         if (course) {
             this.currentCourse = course;
@@ -444,7 +556,6 @@ const PageController = {
             return;
         }
 
-        // Fallback: try API
         this._fetchCourseFromAPI(id);
     },
 
@@ -475,7 +586,6 @@ const PageController = {
         if (loading) loading.style.display = 'none';
         if (content) content.style.display = 'block';
 
-        // Set basic info
         const badgeEl = document.getElementById('courseBadge');
         if (badgeEl) {
             badgeEl.textContent = course.badge || course.level || 'Course';
@@ -491,13 +601,11 @@ const PageController = {
         const codeEl = document.getElementById('courseCode');
         if (codeEl) codeEl.textContent = `Code: ${course.code || 'N/A'}`;
 
-        // Meta
         const metaLevel = document.getElementById('metaLevel');
         const metaPapers = document.getElementById('metaPapers');
         if (metaLevel) metaLevel.textContent = course.level || 'N/A';
         if (metaPapers) metaPapers.textContent = course.papers ? `${course.papers.length} Papers` : 'N/A';
 
-        // Details grid
         const detailGrid = document.getElementById('detailGrid');
         if (detailGrid) {
             const details = [
@@ -513,7 +621,6 @@ const PageController = {
             `).join('');
         }
 
-        // Papers
         const papersList = document.getElementById('papersList');
         if (papersList && course.papers?.length) {
             papersList.innerHTML = course.papers.map(p => `
@@ -525,7 +632,6 @@ const PageController = {
             `).join('');
         }
 
-        // Years
         const yearsTags = document.getElementById('yearsTags');
         if (yearsTags && course.years?.length) {
             yearsTags.innerHTML = course.years.map(y => `
@@ -533,14 +639,12 @@ const PageController = {
             `).join('');
         }
 
-        // Price
         const priceEl = document.getElementById('coursePrice');
         if (priceEl) {
             priceEl.textContent = course.price || 'Free';
             priceEl.className = `price ${course.price === 'Free' ? 'free' : ''}`;
         }
 
-        // Related
         const relatedGrid = document.getElementById('relatedGrid');
         if (relatedGrid) {
             const related = (this.courses || [])
@@ -812,7 +916,6 @@ const PageController = {
     },
 
     _initSettingsForms() {
-        // Tab switching
         document.querySelectorAll('.sidebar-item').forEach(item => {
             item.addEventListener('click', function() {
                 const tab = this.dataset.tab;
@@ -843,6 +946,16 @@ const PageController = {
         }
         this._createParticles();
         this._initLoginForm();
+        this._initPhoneInput();
+    },
+
+    _initPhoneInput() {
+        const phoneInput = document.getElementById('phoneNumber');
+        if (phoneInput) {
+            phoneInput.addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '').slice(0, 9);
+            });
+        }
     },
 
     _initLoginForm() {
@@ -1034,6 +1147,7 @@ const PageController = {
         this._createParticles();
         this._loadPhoneFromStorage();
         this._initVerifyForm();
+        this._initResendOTP();
     },
 
     _loadPhoneFromStorage() {
@@ -1115,6 +1229,24 @@ const PageController = {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-check-circle"></i> Verify Account';
             }
+        });
+    },
+
+    _initResendOTP() {
+        const resendBtn = document.getElementById('resendBtn');
+        if (!resendBtn) return;
+
+        resendBtn.addEventListener('click', function() {
+            const phone = sessionStorage.getItem('verifyPhone') || document.getElementById('phoneNumber')?.value.trim();
+            if (!phone || phone.length !== 9) {
+                if (window.App) window.App.showToast('Please enter a valid phone number first', 'error');
+                return;
+            }
+            if (window.App) window.App.showToast('New verification code sent!', 'success');
+            // Reset OTP input
+            const otpInput = document.getElementById('otpCode');
+            if (otpInput) otpInput.value = '';
+            otpInput?.focus();
         });
     },
 
@@ -1441,17 +1573,23 @@ const PageController = {
 // AUTO-INIT
 // ============================================
 
-// Wait for DOM and dependencies
 document.addEventListener('DOMContentLoaded', function() {
-    // Wait for App to initialize
-    if (window.App && !App.state.initialized) {
+    // Initialize App first if available
+    if (window.App && !App.state?.initialized) {
         document.addEventListener('app:ready', function() {
             PageController.init();
         });
+        // Fallback: initialize after a short delay
+        setTimeout(function() {
+            if (!PageController._initialized) {
+                PageController.init();
+                PageController._initialized = true;
+            }
+        }, 500);
     } else {
-        // If App is already ready or not available
         setTimeout(function() {
             PageController.init();
+            PageController._initialized = true;
         }, 100);
     }
 });
